@@ -1,0 +1,27 @@
+{% block content %}
+    <!--  NAVIGATION -->
+    {#<nav>#}
+        {#<ul class="menu">#}
+            {#<li><a href="{{ landing_page }}" class="active">Home</a></li>#}
+        {#</ul>#}
+    {#</nav>#}
+
+
+    {% include 'loginForm.html.twig' %}
+
+    {% include 'passwordresetform.html.twig' %}
+
+    {%  include 'registerForm.html.twig' %}
+
+
+
+
+    <!--  FOOTER   -->
+    <footer class="footer">
+        <h5><a href="{{ landing_page }}" class="heading">Virtual Learning Environment</a></h5>
+        <h6><a href="{{ landing_page }}" class="heading">IMAT  Final Year Project</a></h6>
+
+        <p id="footer"><a href="https://github.com/alexm1751/VirtualLearningEnvironment">Created by Alex Mason | All rights reserved</a></p>
+
+    </footer>
+{% endblock %}

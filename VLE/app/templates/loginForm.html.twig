@@ -1,0 +1,28 @@
+{% block login %}
+    <main class="main">
+    <!--    INTRO -->
+    <h3>Welcome</h3>
+    <h4>Please login or register below.</h4>
+
+    <!--    LOGIN  -->
+    <div class="forms">
+    <section class="login">
+        <form action="{{ action }}" method="{{ method }}">
+            <fieldset>
+                <h4>Login</h4>
+
+                <label>User Name</label>
+                <input type="text" placeholder="e.g. AlexMason123" name="loguser" value="{{ initial_input_box_value }}" required>
+
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter Password" name="logpass" value="{{ initial_input_box_value }}" required>
+
+                <button type="submit" id="login">Login</button>
+
+            </fieldset>
+
+        </form>
+
+    </section>
+{% endblock %}

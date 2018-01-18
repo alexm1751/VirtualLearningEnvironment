@@ -1,0 +1,27 @@
+{% block register %}
+    <!--    REGISTER  -->
+    <section class="register">
+        <!--    LOGIN  -->
+        <form action="{{ action3 }}" method="{{ method3 }}">
+            <fieldset>
+                <h4>Register</h4>
+                <label>User Name</label>
+                <input type="text" placeholder="e.g. AlexMason123" name="regusername" required>
+
+                <label>Full Name</label>
+                <input type="text" placeholder="e.g. Alex Mason" name="regname" required>
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter Password" name="regpass" required>
+
+                <label>Contact Number (no spaces)</label>
+                <input type="text" placeholder="e.g 447123456789" name="regnumber" required>
+
+                <label>Email (no spaces)</label>
+                <input type="text" placeholder="e.g alex@email.com" name="regemail" required>
+
+                <button type="submit" id="register">Register</button>
+            </fieldset>
+        </form>
+    </section>
+{% endblock %}

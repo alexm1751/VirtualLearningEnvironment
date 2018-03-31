@@ -11,6 +11,7 @@ $container['view'] = function ($container) {
         $container['settings']['view']['template_path'],
         $container['settings']['view']['twig'],
         [
+            'cache' => false,
             'debug' => true // This line should enable debug mode
         ]
     );
@@ -25,24 +26,41 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['mysql_wrapper'] = function ($container) {
+
+
+
+$container['MYSQLWrapper'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
-    require $class_path . 'mysql_wrapper.php';
-    $mysql_wrapper = new mysql_wrapper();
-    return $mysql_wrapper;
+    require $class_path . 'MYSQLWrapper.php';
+    $MYSQLWrapper = new MYSQLWrapper();
+    return $MYSQLWrapper;
 };
 
-$container['sql_queries'] = function ($container) {
+$container ['validator'] =  function ($container) {
     $class_path = $container->get('settings')['class_path'];
-    require $class_path . 'sql_queries.php';
-    $sql_queries = new sql_queries();
-    return $sql_queries;
+    require $class_path . 'validator.php';
+    $validator = new validator();
+    return $validator;
 };
 
-$container['bcrypt_wrapper'] = function ($container) {
+$container['user_model'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
-    require $class_path . 'bycrpt_wrapper.php';
-    $wrapper = new bycrpt_wrapper();
+    require $class_path . 'userModel.php';
+    $model = new userModel();
+    return $model;
+};
+
+$container['SQLQueries'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'SQLQueries.php';
+    $SQLQueries = new SQLQueries();
+    return $SQLQueries;
+};
+
+$container['BcryptWrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'BcryptWrapper.php';
+    $wrapper = new BcryptWrapper();
     return $wrapper;
 };
 

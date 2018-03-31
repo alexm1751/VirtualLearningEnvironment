@@ -9,10 +9,10 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+session_start();
+
 $app->get('/', function(Request $request, Response $response)
 {
-
-
     return $this->view->render($response,
         'homepage.html.twig',
         [
@@ -22,8 +22,6 @@ $app->get('/', function(Request $request, Response $response)
             'action' => 'index.php/loginhome',
             'method2' => 'post',
             'action2' => 'index.php/passwordreset',
-            'method3' => 'post',
-            'action3' => 'index.php/registerpass',
             'initial_input_box_value' => null,
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,

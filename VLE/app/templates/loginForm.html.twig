@@ -2,7 +2,7 @@
     <main class="main">
     <!--    INTRO -->
     <h3>Welcome</h3>
-    <h4>Please login or register below.</h4>
+    <h4>Please login below.</h4>
 
     <!--    LOGIN  -->
     <div class="forms">
@@ -11,15 +11,16 @@
             <fieldset>
                 <h4>Login</h4>
 
-                <label>User Name</label>
-                <input type="text" placeholder="e.g. AlexMason123" name="loguser" value="{{ initial_input_box_value }}" required>
+                <label>Email:</label>
+                <input type="text" placeholder="e.g. alex@mail.com" name="email" value="{{ initial_input_box_value }}" required>
 
 
-                <label>Password</label>
-                <input type="password" placeholder="Enter Password" name="logpass" value="{{ initial_input_box_value }}" required>
-
+                <label>Password:</label>
+                <input type="password" placeholder="Enter Password" name="password" value="{{ initial_input_box_value }}" required>
+                {{ errors | json_encode }}
                 <button type="submit" id="login">Login</button>
 
+                {{ csrf.field | raw }}
             </fieldset>
 
         </form>

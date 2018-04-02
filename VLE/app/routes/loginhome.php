@@ -39,11 +39,13 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
     }
 
     $email = $request->getParam('email');
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $password = $request->getParam('password');
     try{
         $userModel->check_db_login($db_handle,$SQLQueries,$wrapper_mysql, $email, $password);
        // var_dump($userModel);
     } catch (Exception $e){
+        $app->flash('global', "$e");
         return $response->withRedirect(LANDING_PAGE);
    }
 

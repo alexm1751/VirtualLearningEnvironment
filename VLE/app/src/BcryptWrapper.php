@@ -16,16 +16,17 @@ class BcryptWrapper
      * @param $p_string_to_hash String that needs to be hashed
      * @return bool|string hashed string
      */
-    public function create_hashed_password($p_string_to_hash)
+    public function create_hashed_string()
     {
-        $password_to_hash = $p_string_to_hash;
-        $bcrypt_hashed_password = '';
-        if (!empty($password_to_hash))
+
+        $string_to_hash = bin2hex(random_bytes(10));
+        $bcrypt_hashed_string = '';
+        if (!empty($string_to_hash))
         {
             $arr_options = array('cost' => BCRYPT_COST);
-            $bcrypt_hashed_password = password_hash($password_to_hash, BCRYPT_ALGO, $arr_options);
+            $bcrypt_hashed_string = password_hash($string_to_hash, BCRYPT_ALGO, $arr_options);
         }
-        return $bcrypt_hashed_password;
+        return $bcrypt_hashed_string;
     }
 
     /**Verifies a given hashed password against a clean string password to check for equality

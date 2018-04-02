@@ -23,7 +23,6 @@ $app->get('/', function(Request $request, Response $response)
             'action' => 'index.php/loginhome',
             'method2' => 'post',
             'action2' => 'index.php/passwordreset',
-            'initial_input_box_value' => null,
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',

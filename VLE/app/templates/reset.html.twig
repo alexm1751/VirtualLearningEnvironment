@@ -12,10 +12,10 @@
                 <h4>Password Reset</h4>
 
                 <label>User Name or Email</label>
-                <input type="text" placeholder="e.g. AlexMason123" name="reset" value="{{ initial_input_box_value }}" required>
-
-                <button type="submit" id="login">Login</button>
-
+                <input type="text" placeholder="e.g. AlexMason123" name="email" value="{{ initial_input_box_value }}" required>
+                {{ errors | json_encode }}
+                <button type="submit" id="Reset">Reset</button>
+                {{ csrf.field | raw }}
             </fieldset>
 
         </form>

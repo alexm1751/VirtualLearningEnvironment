@@ -56,4 +56,37 @@ class userModel{
 
 
     }
+    public function update_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email){
+        $hash = $p_bcryptwrapper->create_hashed_string();
+        $query_name = $p_sql_queries->update_user_hash($email,$hash);
+        try{
+            $p_wrapper_mysql->safe_query($query_name);
+        } catch(Exception $e){
+            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            return false;
+        }
+        return $hash;
+
+
+    }
+    public function check_db_user($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email){
+
+        $emailToCheck = $email;
+        $query_name = $p_sql_queries->check_user_exists($emailToCheck);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_name);
+        $stored_email = $p_wrapper_mysql->safe_fetch_array();
+        $name_entered = $p_wrapper_mysql->count_rows();
+        if ($name_entered <= 0) {
+            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            return false;
+        }
+        else{
+            //SetRESETHASH
+            //Email
+            return true;
+        }
+
+    }
+
 }

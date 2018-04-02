@@ -27,7 +27,9 @@ define('LANDING_PAGE', $_SERVER['SCRIPT_NAME']);
 define('LOGOUT_PAGE', $_SERVER['SCRIPT_NAME'] . '/logout');
 define('LOGGED_OUT', $_SERVER['SCRIPT_NAME'] . '/loggedOut');
 define('studentDashboard', $_SERVER['SCRIPT_NAME'] . '/studentDashboard');
-
+define('PASS_RESET', $_SERVER['SCRIPT_NAME'] . '/reset');
+define('RESET_FORM', $_SERVER['SCRIPT_NAME'] . '/passwordreset');
+define('recover_form', $_SERVER['SCRIPT_NAME'] . '/recover');
 define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);
 $m_max_length_password = 25;

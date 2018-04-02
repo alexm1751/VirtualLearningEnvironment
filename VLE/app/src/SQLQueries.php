@@ -49,4 +49,10 @@ class SQLQueries
         $m_sql_query_string .= "WHERE dbEmail =  '$email'";
         return $m_sql_query_string;
     }
+
+    public static function update_user_hash($email, $hash){
+        $m_sql_query_string  = "UPDATE vle_users set dbRecover_Hash = '$hash' ";
+        $m_sql_query_string .= "WHERE dbEmail = '$email' ";
+        return $m_sql_query_string;
+    }
 }

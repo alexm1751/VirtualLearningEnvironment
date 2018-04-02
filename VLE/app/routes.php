@@ -7,7 +7,6 @@
  */
 
 require 'routes/homepage.php';
-require 'routes/registerpass.php';
 require 'routes/loginhome.php';
 require 'routes/passwordreset.php';
 require 'routes/logout.php';
@@ -15,3 +14,5 @@ require 'routes/loggedout.php';
 require 'routes/studentDashboard.php';
 require 'routes/teacherDashboard.php';
 require 'routes/adminDashboard.php';
+require 'routes/reset.php';
+require 'routes/recover.php';

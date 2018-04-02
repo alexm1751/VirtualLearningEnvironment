@@ -1,3 +1,4 @@
+
 {% block login %}
     <main class="main">
     <!--    INTRO -->
@@ -20,9 +21,10 @@
                 {{ errors | json_encode }}
                 <button type="submit" id="login">Login</button>
 
-                {{ csrf.field | raw }}
+               {{ csrf.field | raw }}
             </fieldset>
-
+            <body onunload="">
+            </body>
         </form>
 
     </section>

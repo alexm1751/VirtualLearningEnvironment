@@ -24,7 +24,9 @@ $script_path = implode('/', $arr_script_filename) . '/';
 //define('CSS_PATH', $css_path);
 define('APP_NAME', 'Virtual Learning Environment - Homepage');
 define('LANDING_PAGE', $_SERVER['SCRIPT_NAME']);
-define('REGISTER_PAGE', $_SERVER['SCRIPT_NAME'].'/register');
+define('LOGOUT_PAGE', $_SERVER['SCRIPT_NAME'] . '/logout');
+define('LOGGED_OUT', $_SERVER['SCRIPT_NAME'] . '/loggedOut');
+define('studentDashboard', $_SERVER['SCRIPT_NAME'] . '/studentDashboard');
 
 define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);

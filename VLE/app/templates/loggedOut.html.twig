@@ -1,10 +1,25 @@
+{% extends 'layout.html.twig' %}
 {% block content %}
-
-
+    <meta Http-Equiv="Cache-Control" Content="no-cache">
+    <meta Http-Equiv="Pragma" Content="no-cache">
+    <meta Http-Equiv="Expires" Content="0">
+    {#<script type="text/javascript">#}
+        {#function noBack(){window.history.forward()#}
+        {#noBack()#}
+        {#window.onload=noBack;#}
+        {#window.onpageshow=function(evt){if(evt.persisted)noBack()#}
+        {#window.onunload=function(){void(0)#}
+    {#</script>#}
     <h1>You were logged out</h1>
 
-
-
+<body onunload="">
+</body>
+<script type="text/javascript">
+         setTimeout(function() {
+            window.location.reload(1);
+             window.onunload();
+        },5);
+</script>
 
     <!--  FOOTER   -->
     <footer class="footer">

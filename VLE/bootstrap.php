@@ -6,8 +6,9 @@
  * Time: 12:41
  */
 
-
-
+session_start();
+session_cache_expire(0);
+session_cache_limiter('private_no_expire:');
 
 require '../vendor/autoload.php';
 
@@ -27,14 +28,17 @@ require __DIR__ . '/app/middleware/validationErrors.php';
 
 require __DIR__ . '/app/middleware/csrfView.php';
 
+//require __DIR__ . '/app/middleware/cacheControl.php';
+
 $app->add(new \App\middleware\validationErrors($container));
+//$app->add(new \App\middleware\cacheControl($container));
 $app->add(new \App\middleware\csrfView($container));
 
 $container['csrf'] = function ($container){
     return new \Slim\Csrf\Guard;
 };
 
-$app->add($container->csrf);
+//$app->add($container->csrf);
 
 $app->run();
 

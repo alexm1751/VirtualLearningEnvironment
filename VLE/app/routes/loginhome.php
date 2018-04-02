@@ -10,14 +10,17 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Respect\Validation\Validator as v;
 
+//var_dump($_SESSION['user']);
+
+
+
+
 $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $response) use ($app) {
 
-    echo ('Logged In');
-    $c_arr_clean_message = [];
-
-    var_dump($request->getParams());
 
     $validator = $this->get('validator');
+
+    $userModel = $this->get('user_model');
 
     $db_handle = $this->get('dbase');
 
@@ -25,7 +28,6 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-    $bcrypt_wrapper = $this->get('BcryptWrapper');
 
     $validator->validate($request,[
         'email' => v::email()->noWhitespace()->notEmpty(),
@@ -33,39 +35,78 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
     ]);
 
     if ($validator->failed()){
-        return $response->withRedirect('/FinalYearProject/VLE_Public/');
+        return $response->withRedirect(LANDING_PAGE);
     }
-   // $arr_tainted_auth = $request->getParsedBody();
+
+    $email = $request->getParam('email');
+    $password = $request->getParam('password');
+    try{
+        $userModel->check_db_login($db_handle,$SQLQueries,$wrapper_mysql, $email, $password);
+       // var_dump($userModel);
+    } catch (Exception $e){
+        return $response->withRedirect(LANDING_PAGE);
+   }
 
 
-   // $arr_cleaned_auth = validation($validator, $arr_tainted_auth);
+   // var_dump($_SESSION['user']);
 
-    //$arr_hashed = hash_values($bcrypt_wrapper, $arr_cleaned_auth);
-
-
-    $username = '';
+//    || (time() - $_SESSION['timestamp'] > 900)){
+//        unset($_SESSION['user'], $_SESSION['timestamp']);
+//        header("location: /FinalYearProject/VLE_Public/");
+//        exit;
 //
-//        try {
-//            $login_details= $sms_model->check_db_login($db_handle,$sql_queries,$wrapper_mysql, $arr_hashed);
-//            $username = $sms_model->getUserName($db_handle,$sql_queries,$wrapper_mysql, $arr_hashed);
-//
-//        } catch (Exception $e) {
-//            return $response->withRedirect('/FinalYearProject/VLE_Public/');
-//        }
+//    }
+//    else {
+//        $_SESSION['timestamp'] = time(); //set new timestamp
+//    }
 
 
 
+if ($_SESSION['logged_in'] == true){
 
+        switch ($_SESSION['rank']){
+            case "1":
+                return $response->withRedirect(studentDashboard);
+                   // $response->withRedirect('/FinalYear/Project/VLE_Public/index.php/studentDashboard.php');
+                /*return $this->view->render($response,
+                    'student.html.twig',[
+                        'logout_page' => LOGOUT_PAGE,
+                    ]);*/
+                break;
 
-    return $this->view->render($response,
-        'loggedin.html.twig',
-        [
-            'css_path' => CSS_PATH,
-            'landing_page' => LANDING_PAGE,
-            'initial_input_box_value' => null,
-            'page_title' => APP_NAME,
-            //'username' => $username,
-            //'method' => 'post',
-            //'action' => 'vledashboard',
-        ]);
+            case "2":
+                return $response->withRedirect('/FinalYear/Project/VLE_Public/index.php/teacherDashboard.php');
+/*                return $this->view->render($response,
+                    'teacher.html.twig',[
+                        'logout_page' => LOGOUT_PAGE,
+                    ]);*/
+                break;
+
+            case "3":
+                return $response->withRedirect('/FinalYear/Project/VLE_Public/index.php/adminDashboard.php');
+                /*return $this->view->render($response,
+                    'admin.html.twig',[
+                        'logout_page' => LOGOUT_PAGE,
+                    ]);*/
+                break;
+
+            default:
+                return $this->view->render($response,
+                    'loggedin.html.twig',[
+                        'logout_page' => LOGOUT_PAGE,
+                    ]);
+        }
+}
+else {
+    return $response
+        ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+        ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+        ->withHeader("Pragma:", "no-cache")
+        ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+        ->withRedirect(LANDING_PAGE);
+    exit;
+
+}
 })->setName('loginhome');
+
+

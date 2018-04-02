@@ -17,16 +17,14 @@ class SQLQueries
     {
     }
 
-    /**Builds an SQL string to check if a phone number exists in the user table
-     * @param $email Phone number to check
-     * @return string string SQL select statement
-     */
+
     public static function check_user_exists($email)
     {
         $m_sql_query_string  = "SELECT dbEmail ";
         $m_sql_query_string .= "FROM vle_users ";
-        $m_sql_query_string .= "WHERE dbEmail =  $email";
+        $m_sql_query_string .= "WHERE dbEmail =  '$email' ";
         return $m_sql_query_string;
+
 
     }
 
@@ -37,7 +35,7 @@ class SQLQueries
     public static function check_password($email){
         $m_sql_query_string  = "SELECT dbpass ";
         $m_sql_query_string .= "FROM vle_users ";
-        $m_sql_query_string .= "WHERE dbEmail =  $email";
+        $m_sql_query_string .= "WHERE dbEmail =  '$email' ";
         return $m_sql_query_string;
     }
 
@@ -48,7 +46,7 @@ class SQLQueries
     public static function check_rank($email){
         $m_sql_query_string  = "SELECT dbRank ";
         $m_sql_query_string .= "FROM vle_users ";
-        $m_sql_query_string .= "WHERE dbEmail =  $email";
+        $m_sql_query_string .= "WHERE dbEmail =  '$email'";
         return $m_sql_query_string;
     }
 }

@@ -64,6 +64,9 @@ $container['BcryptWrapper'] = function ($container) {
     return $wrapper;
 };
 
+
+
+
 $container['dbase'] = function ($container) {
 
     $db_conf = $container['settings']['pdo'];

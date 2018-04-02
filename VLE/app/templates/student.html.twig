@@ -4,16 +4,15 @@
     <meta Http-Equiv="Pragma" Content="no-cache">
     <meta Http-Equiv="Expires" Content="0">
     {#<script type="text/javascript">#}
-        {#function noBack(){window.history.forward();}#}
-        {#noBack();#}
-        {#window.onload=noBack;#}
-        {#window.onpageshow=function(evt){if(evt.persisted)noBack();}#}
-        {#window.onunload=function(){void(0);}#}
+    {#function noBack(){window.history.forward();}#}
+    {#noBack();#}
+    {#window.onload=noBack;#}
+    {#window.onpageshow=function(evt){if(evt.persisted)noBack();}#}
+    {#window.onunload=function(){void(0);}#}
     {#</script>#}
     {% include 'navigation.html.twig' %}
-    <body onunload="">
-    </body>
-    <h1>There was an error, you do not have access.</h1>
+
+    <h1>Welcome Student</h1>
 
     <!--  FOOTER   -->
     <footer class="footer">

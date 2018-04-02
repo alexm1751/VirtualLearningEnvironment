@@ -9,7 +9,7 @@
 namespace App\middleware;
 
 
-class csrfView extends Middleware
+class csrfView extends middleware
 {
     public function __invoke($request, $response, $next)
     {

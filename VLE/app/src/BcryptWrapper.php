@@ -16,10 +16,10 @@ class BcryptWrapper
      * @param $p_string_to_hash String that needs to be hashed
      * @return bool|string hashed string
      */
-    public function create_hashed_string()
+    public function create_hashed_string($string_to_hash)
     {
 
-        $string_to_hash = bin2hex(random_bytes(10));
+
         $bcrypt_hashed_string = '';
         if (!empty($string_to_hash))
         {

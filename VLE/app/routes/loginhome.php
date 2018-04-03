@@ -41,6 +41,7 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
     $email = $request->getParam('email');
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $password = $request->getParam('password');
+    $password = filter_var($password, FILTER_SANITIZE_STRING);
     try{
         $userModel->check_db_login($db_handle,$SQLQueries,$wrapper_mysql, $email, $password);
        // var_dump($userModel);
@@ -77,7 +78,7 @@ if ($_SESSION['logged_in'] == true){
                 break;
 
             case "2":
-                return $response->withRedirect('/FinalYear/Project/VLE_Public/index.php/teacherDashboard.php');
+                return $response->withRedirect(teacherDashboard);
 /*                return $this->view->render($response,
                     'teacher.html.twig',[
                         'logout_page' => LOGOUT_PAGE,
@@ -85,7 +86,7 @@ if ($_SESSION['logged_in'] == true){
                 break;
 
             case "3":
-                return $response->withRedirect('/FinalYear/Project/VLE_Public/index.php/adminDashboard.php');
+                return $response->withRedirect(adminDashboard);
                 /*return $this->view->render($response,
                     'admin.html.twig',[
                         'logout_page' => LOGOUT_PAGE,

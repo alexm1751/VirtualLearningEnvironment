@@ -16,3 +16,4 @@ require 'routes/teacherDashboard.php';
 require 'routes/adminDashboard.php';
 require 'routes/reset.php';
 require 'routes/recover.php';
+require 'routes/recovered.php';

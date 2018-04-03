@@ -37,7 +37,9 @@ $app->post( '/reset', function(Request $request, Response $response)  {
 
 
     $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
-    $identifier = $userModel->update_Recover_Hash($db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper, $email);
+    $string_to_hash = bin2hex(random_bytes(20));
+
+    $userModel->update_Recover_Hash($db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper, $email, $string_to_hash);
 
 
     $mail = new PHPMailer(true);
@@ -56,7 +58,7 @@ $app->post( '/reset', function(Request $request, Response $response)  {
         We have received a request for a password reset on the account associated with this email address.
         </p>
         <p>
-        To confirm and reset your password, please click <a href=\"http://localhost$url?$email&$identifier\">here</a>.  If you did not initiate this request,
+        To confirm and reset your password, please click <a href=\"http://localhost$url?email=$email&identifier=$string_to_hash\">here</a>.  If you did not initiate this request,
         please disregard this message.
         </p>
         <p>
@@ -73,12 +75,14 @@ $app->post( '/reset', function(Request $request, Response $response)  {
         error_log('Mailer Error: ' . $mail->errorInfo());
         return "didn't work";
     }
-    return $identifier;
 
-
-
-
-
+    return $response
+        ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+        ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+        ->withHeader("Pragma:", "no-cache")
+        ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+        ->withRedirect(LANDING_PAGE);
+    exit;
 
 
 })->setName('reset');

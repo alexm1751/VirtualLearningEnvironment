@@ -1,23 +1,23 @@
 {% extends 'layout.html.twig' %}
-{% block content %}
-    <main class="main">
-    <!--    INTRO -->
-    <h3>Account Recovery</h3>
+        {% block content %}
+        <main class="main">
+            <!--    INTRO -->
+            <h3>Account Recovery</h3>
 
-    <!--    LOGIN  -->
-    <div class="forms">
-    <section class="login">
-        <form action="{{ action }}" method="{{ method }}">
-            <fieldset>
-                <h4>Password Reset</h4>
+            <!--    LOGIN  -->
+            <div class="forms">
+                <section class="login">
+                    <form action="{{ action }}" method="{{ method }}">
+                        <fieldset>
+                            <h4>Password Reset</h4>
 
-                <label>User Name or Email</label>
-                <input type="text" placeholder="e.g. AlexMason123" name="email" value="{{ initial_input_box_value }}" required>
-                {{ errors | json_encode }}
-                <button type="submit" id="Reset">Reset</button>
-                {{ csrf.field | raw }}
-            </fieldset>
+                            <label>User Name or Email</label>
+                            <input type="text" placeholder="e.g. AlexMason123" name="email" value="{{ initial_input_box_value }}" required>
+                            {{ errors | json_encode }}
+                            <button type="submit" id="Reset">Reset</button>
+                            {{ csrf.field | raw }}
+                        </fieldset>
 
-        </form>
-    </section>
+                    </form>
+                </section>
 {% endblock %}

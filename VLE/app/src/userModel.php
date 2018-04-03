@@ -56,16 +56,17 @@ class userModel{
 
 
     }
-    public function update_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email){
-        $hash = $p_bcryptwrapper->create_hashed_string();
+    public function update_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email, $string_to_hash){
+        $hash = $p_bcryptwrapper->create_hashed_string($string_to_hash);
         $query_name = $p_sql_queries->update_user_hash($email,$hash);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
         try{
             $p_wrapper_mysql->safe_query($query_name);
         } catch(Exception $e){
             throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
             return false;
         }
-        return $hash;
+        return true;
 
 
     }
@@ -86,6 +87,38 @@ class userModel{
             //Email
             return true;
         }
+
+    }
+    public function check_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $emailToCheck, $string_to_check){
+
+       // $userExists = $this->check_db_user($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $emailToCheck);
+        $query_hash = $p_sql_queries->check_hash($emailToCheck);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_hash);
+        $stored_hash = $p_wrapper_mysql->safe_fetch_array();
+        $hashToVerify = $stored_hash['dbRecover_Hash'];
+       // return $hashToVerify;
+   //     if(password_verify($string_to_check, $hashToVerify) == true){
+
+            return (password_verify($string_to_check, $hashToVerify));
+      //  }
+//        else{
+//            throw new Exception('Hash Not Working');
+//            return false;
+//        }
+    }
+    public function update_pass($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email, $string_to_hash){
+        $hash = $p_bcryptwrapper->create_hashed_string($string_to_hash);
+        $query_name = $p_sql_queries->update_pass($email,$hash);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        try{
+            $p_wrapper_mysql->safe_query($query_name);
+        } catch(Exception $e){
+            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            return false;
+        }
+        return true;
+
 
     }
 

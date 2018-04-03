@@ -55,4 +55,17 @@ class SQLQueries
         $m_sql_query_string .= "WHERE dbEmail = '$email' ";
         return $m_sql_query_string;
     }
+    public static function check_hash($email){
+        $m_sql_query_string  = "SELECT dbRecover_Hash ";
+        $m_sql_query_string .= "FROM vle_users ";
+        $m_sql_query_string .= "WHERE dbEmail =  '$email' ";
+        return $m_sql_query_string;
+    }
+
+    public static function update_pass($email, $hash){
+        $m_sql_query_string  = "UPDATE vle_users set dbPass = '$hash' ";
+        $m_sql_query_string .= "WHERE dbEmail = '$email' ";
+        return $m_sql_query_string;
+    }
+
 }

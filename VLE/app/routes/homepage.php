@@ -9,12 +9,7 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-//$app->get()
-//if($_SESSION['activity'] == 1){
-//    var_dump('inactive');
-//    $this->flash->addMessage('global',"You were logged out due to inactivity.");
-//    $_SESSION['activity'] = 0;
-//}
+
 
 $app->get('/', function(Request $request, Response $response)
 {
@@ -33,7 +28,7 @@ if($_SESSION['activity'] == 1){
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'flash' => $this->flash->addMessage('global',"You were logged out due to inactivity.")
+            'flash' => $this->flash->addMessage('warning',"You were logged out due to inactivity.")
         ]);}
     else{
     return $this->view->render($response,

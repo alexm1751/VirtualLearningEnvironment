@@ -1,8 +1,27 @@
-{% if flash('global') %}
-    <div class="alert alert-danger">
-        {{ flash('global')| first }}
+{% if flash('success') %}
+    <div class="alert alert-success">
+        {{ flash('success')| first }}
     </div>
 {% endif %}
+
+{% if flash('info') %}
+    <div class="alert alert-info">
+        {{ flash('info')| first }}
+    </div>
+{% endif %}
+
+{% if flash('warning') %}
+    <div class="alert alert-warning">
+        {{ flash('warning')| first }}
+    </div>
+{% endif %}
+
+{% if flash('danger') %}
+    <div class="alert alert-danger">
+        {{ flash('danger')| first }}
+    </div>
+{% endif %}
+
 
 
 

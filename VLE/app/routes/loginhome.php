@@ -48,7 +48,7 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
     try{
         $userModel->check_db_login($db_handle,$SQLQueries,$wrapper_mysql, $email, $password);
     } catch (Exception $e){
-        $this->flash->addMessage('global',"Issue With Email or Password. Please Try again.");
+        $this->flash->addMessage('danger',"Issue With Email or Password. Please Try again.");
         return $response->withRedirect(LANDING_PAGE);
    }
 
@@ -71,7 +71,7 @@ if ($_SESSION['logged_in'] == true){
                 break;
 
             default:
-                $this->flash->addMessage('global',"Oops! We aren't sure whats happened. Please try to login again.");
+                $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
                 return $response
                     ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
                     ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
@@ -82,7 +82,7 @@ if ($_SESSION['logged_in'] == true){
         }
 }
 else {
-    $this->flash->addMessage('global',"Oops! We aren't sure whats happened. Please try to login again.");
+    $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
 
     return $response
         ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")

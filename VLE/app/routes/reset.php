@@ -70,19 +70,27 @@ $app->post( '/reset', function(Request $request, Response $response)  {
         The VLE Team
         </p>";
     if(!$mail->send()) {
-        $error = new Slim\Flash\Messages();
-        $error->addMessageNow("error", "We're having trouble with our mail servers at the moment.  Please try again later, or contact us directly by phone.");
+        $this->flash->addMessage('info',"We're having trouble with our mail servers at the moment.  Please try again later, or contact us directly by phone.");
         error_log('Mailer Error: ' . $mail->errorInfo());
-        return "didn't work";
+        return $response
+            ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+            ->withHeader("Pragma:", "no-cache")
+            ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }else{
+        $this->flash->addMessage('success',"A Recovery Email has been sent!");
+        return $response
+            ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+            ->withHeader("Pragma:", "no-cache")
+            ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withRedirect(LANDING_PAGE);
+        exit;
     }
 
-    return $response
-        ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
-        ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
-        ->withHeader("Pragma:", "no-cache")
-        ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
-        ->withRedirect(LANDING_PAGE);
-    exit;
+
 
 
 })->setName('reset');

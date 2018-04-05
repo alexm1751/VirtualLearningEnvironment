@@ -15,7 +15,7 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
 {
 
     if (!$_SESSION['user']){
-        $this->flash->addMessage('global',"Invalid Request! No Access!");
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
             ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
@@ -63,7 +63,7 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
     unset ($_SESSION['email']);
     // Redirect to Homepage and Flash Reset Complete! success alert
 
-    $this->flash->addMessage('global',"Password Reset!");
+    $this->flash->addMessage('success',"Password Reset!");
     return $response
         ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
         ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")

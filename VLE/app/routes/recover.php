@@ -32,7 +32,7 @@ $app->get('/recover', function(Request $request, Response $response)
 
     }
     catch (Exception $e){
-        $this->flash->addMessage('global',"Invalid Request! No Access!");
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
             ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
@@ -47,7 +47,7 @@ $app->get('/recover', function(Request $request, Response $response)
     $userExists = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
 
     if($userExists == false || $hashWorks == false){
-        $this->flash->addMessage('global',"There was an issue with processing your request.");
+        $this->flash->addMessage('danger',"There was an issue with processing your request.");
         return $response
             ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")

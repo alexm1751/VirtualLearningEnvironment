@@ -10,7 +10,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/adminDashboard', function(Request $request, Response $response) {
 
     if((!$_SESSION['logged_in'])){
-        $this->flash->addMessage('global',"Invalid Request! No Access!");
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
         echo time();
         return $response
             ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")

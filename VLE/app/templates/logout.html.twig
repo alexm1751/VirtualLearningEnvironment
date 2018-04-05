@@ -1,35 +1,24 @@
 {% extends 'layout.html.twig' %}
+
 {% block content %}
-    <meta Http-Equiv="Cache-Control" Content="no-cache">
-    <meta Http-Equiv="Pragma" Content="no-cache">
-    <meta Http-Equiv="Expires" Content="0">
-    {#<script type="text/javascript">#}
-    {#function noBack(){window.history.forward()#}
-    {#noBack()#}
-    {#window.onload=noBack;#}
-    {#window.onpageshow=function(evt){if(evt.persisted)noBack()#}
-    {#window.onunload=function(){void(0)#}
-    {#</script>#}
-    <h1>Please confirm logout</h1>
+    {% include 'blanknav.html.twig' %}
+    <div class="row">
 
-    <div class="forms">
-    <section class="login">
-    <form action="{{ action }}" method="{{ method }}">
-        <fieldset>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Please Confirm Logout</div>
+                <div class="panel-body">
+                    <!--    Logout  -->
+                    <form action="{{ action }}" method="{{ method }}">
 
-            <button type="submit" id="login">LogOut</button>
-            {{ csrf.field | raw }}
-        </fieldset>
+                        <button type="submit" id="logout" class="btn btn-default">LogOut</button>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div>
 
-    </form>
+            </div>
 
 
-    <!--  FOOTER   -->
-    <footer class="footer">
-        <h5><a href="{{ landing_page }}" class="heading">Virtual Learning Environment</a></h5>
-        <h6><a href="{{ landing_page }}" class="heading">IMAT  Final Year Project</a></h6>
-
-        <p id="footer"><a href="https://github.com/alexm1751/VirtualLearningEnvironment">Created by Alex Mason | All rights reserved</a></p>
-
-    </footer>
+        </div>
+    </div>
 {% endblock %}

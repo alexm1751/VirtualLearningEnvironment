@@ -19,7 +19,9 @@ $container['view'] = function ($container) {
     // Instantiate and add Slim specific extension
     $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
     $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
+    $view->addExtension(new Knlv\Slim\Views\TwigMessages(
+        new Slim\Flash\Messages()
+    ));
     // This line should allow the use of {{ dump() }} debugging in Twig
     $view->addExtension(new \Twig_Extension_Debug());
 
@@ -27,7 +29,9 @@ $container['view'] = function ($container) {
 };
 
 
-
+$container['flash'] = function ($container){
+    return new \Slim\Flash\Messages;
+};
 
 $container['MYSQLWrapper'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
@@ -64,6 +68,9 @@ $container['BcryptWrapper'] = function ($container) {
     return $wrapper;
 };
 
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+};
 
 
 

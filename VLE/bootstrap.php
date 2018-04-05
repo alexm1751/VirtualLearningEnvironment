@@ -7,6 +7,18 @@
  */
 
 session_start();
+$_SESSION['activity']= 0;
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 890) && $_SESSION['user']) {
+
+    // last request was more than 15 minutes ago
+    $_SESSION = array();    // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+    session_start();
+    $_SESSION['activity'] = 1;
+    header("location: /FinalYearProject/VLE_Public/");
+    exit;
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 session_cache_expire(0);
 session_cache_limiter('private_no_expire:');
 
@@ -31,9 +43,9 @@ require __DIR__ . '/app/middleware/csrfView.php';
 
 
 
+
 $app->add(new \App\middleware\validationErrors($container));
 $app->add(new \App\middleware\csrfView($container));
-
 $container['csrf'] = function ($container){
     return new \Slim\Csrf\Guard;
 };

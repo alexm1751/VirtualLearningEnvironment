@@ -9,12 +9,12 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-
+use \Respect\Validation\Validator as v;
 
 
 $app->get('/recover', function(Request $request, Response $response)
 {
-    $validator = $this->get('validator');
+
     $userModel = $this->get('user_model');
     $db_handle = $this->get('dbase');
     $SQLQueries = $this->get('SQLQueries');
@@ -24,14 +24,30 @@ $app->get('/recover', function(Request $request, Response $response)
     $email = $request->getParam('email');
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $identifier = $request->getParam('identifier');
-    //$identifier = filter_var($identifier, FILTER_SANITIZE_STRING);
-//    var_dump($email . '' . $identifier);
+    $identifier = filter_var($identifier, FILTER_SANITIZE_STRING);
 
+
+    try{
+        $hashWorks = $userModel->check_recover_hash($db_handle,$SQLQueries,$wrapper_mysql, $email,$identifier);
+
+    }
+    catch (Exception $e){
+        $this->flash->addMessage('global',"Invalid Request! No Access!");
+        return $response
+            ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
+            ->withHeader("Pragma","no-cache")
+            ->withHeader('Expires','Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }
+
+    $_SESSION['email']= $email;
 
     $userExists = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
-    $hashWorks = $userModel->check_recover_hash($db_handle,$SQLQueries,$wrapper_mysql, $email,$identifier);
 
     if($userExists == false || $hashWorks == false){
+        $this->flash->addMessage('global',"There was an issue with processing your request.");
         return $response
             ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
@@ -52,7 +68,7 @@ $app->get('/recover', function(Request $request, Response $response)
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-
+            'email' => $email
 
         ]);
 

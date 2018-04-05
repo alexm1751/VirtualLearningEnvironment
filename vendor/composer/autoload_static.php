@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
 {
     public static $files = array (
-        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
     );
 
@@ -34,6 +34,10 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'K' => 
+        array (
+            'Knlv\\Slim\\Views\\' => 16,
         ),
         'I' => 
         array (
@@ -89,6 +93,10 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Knlv\\Slim\\Views\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kanellov/slim-twig-flash/src',
         ),
         'Interop\\Container\\' => 
         array (

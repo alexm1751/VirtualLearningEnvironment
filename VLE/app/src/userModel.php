@@ -22,27 +22,36 @@ class userModel{
      */
     public function check_db_login($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email, $password)
     {
-      // var_dump($email . $password);
+
         $emailToCheck = $email;
-        $passToCheck = $password;
+
 
         $query_name = $p_sql_queries->check_password($emailToCheck);
         $query_rank = $p_sql_queries->check_rank($emailToCheck);
-        //var_dump($query_name);
+        $query_hash = $p_sql_queries->check_hash($emailToCheck);
         $p_wrapper_mysql->set_db_handle($p_db_handle);
         $p_wrapper_mysql->safe_query($query_name);
         $stored_hash = $p_wrapper_mysql->safe_fetch_array();
         $p_wrapper_mysql->safe_query($query_rank);
         $rankQuery = $p_wrapper_mysql->safe_fetch_array();
+        $p_wrapper_mysql->safe_query($query_hash);
+        $hashQuery = $p_wrapper_mysql->safe_fetch_array();
+
+        $hash = $hashQuery['dbRecover_Hash'];
         $rank = $rankQuery['dbRank'];
-        var_dump($rank);
+
         $stored_password = $stored_hash['dbpass'];
         $name_entered = $p_wrapper_mysql->count_rows();
         if ($name_entered <= 0) {
             throw new Exception('Issue with Email or Password');
            return false;
         }
-        if (password_verify($password, $stored_password) != true){
+        elseif(password_verify($password, $stored_password) != true){
+            throw new Exception('Issue with Email or Password');
+            return false;
+        }
+        elseif ($hash){
+                //User has requested password change ineligible for login
             throw new Exception('Issue with Email or Password');
             return false;
         }
@@ -83,36 +92,61 @@ class userModel{
             return false;
         }
         else{
-            //SetRESETHASH
-            //Email
+
             return true;
         }
 
     }
     public function check_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $emailToCheck, $string_to_check){
 
-       // $userExists = $this->check_db_user($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $emailToCheck);
+
         $query_hash = $p_sql_queries->check_hash($emailToCheck);
         $p_wrapper_mysql->set_db_handle($p_db_handle);
         $p_wrapper_mysql->safe_query($query_hash);
         $stored_hash = $p_wrapper_mysql->safe_fetch_array();
         $hashToVerify = $stored_hash['dbRecover_Hash'];
-       // return $hashToVerify;
-   //     if(password_verify($string_to_check, $hashToVerify) == true){
+        if(password_verify($string_to_check, $hashToVerify) == true){
 
-            return (password_verify($string_to_check, $hashToVerify));
-      //  }
-//        else{
-//            throw new Exception('Hash Not Working');
-//            return false;
-//        }
+            return true;
+        }
+        else{
+
+            throw new Exception('Somethings Not right');
+            return false;
+        }
     }
-    public function update_pass($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email, $string_to_hash){
-        $hash = $p_bcryptwrapper->create_hashed_string($string_to_hash);
-        $query_name = $p_sql_queries->update_pass($email,$hash);
+    public function check_reset_initiated($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $emailToCheck){
+
+
+        $query_hash = $p_sql_queries->check_hash($emailToCheck);
         $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_hash);
+        $stored_hash = $p_wrapper_mysql->safe_fetch_array();
+        $hashToVerify = $stored_hash['dbRecover_Hash'];
+        if($hashToVerify != "NULL"){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function update_pass($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email, $string_to_hash){
+
         try{
-            $p_wrapper_mysql->safe_query($query_name);
+        $recoverHashReset = '';
+        $hash = $p_bcryptwrapper->create_hashed_string($string_to_hash);
+        $query_pass = $p_sql_queries->update_pass($email,$hash);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_pass);
+
+            $query_hash = $p_sql_queries->update_user_hash($email,$recoverHashReset);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_hash);
+
+
+
+
         } catch(Exception $e){
             throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
             return false;

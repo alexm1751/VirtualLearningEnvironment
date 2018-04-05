@@ -1,3 +1,14 @@
-{% if flash.global %}
-    <div class="global">{{ flash.global }}</div>
+{% if flash('global') %}
+    <div class="alert alert-danger">
+        {{ flash('global')| first }}
+    </div>
 {% endif %}
+
+
+
+{#
+ .alert-success,
+ .alert-info,
+  .alert-warning or
+  .alert-danger:
+  #}

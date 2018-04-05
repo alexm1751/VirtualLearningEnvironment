@@ -21,7 +21,7 @@ $script_filename = $_SERVER["SCRIPT_FILENAME"];
 $arr_script_filename = explode('/' , $script_filename, '-1');
 $script_path = implode('/', $arr_script_filename) . '/';
 
-//define('CSS_PATH', $css_path);
+/*define('CSS_PATH', $css_path);*/
 define('APP_NAME', 'Virtual Learning Environment - Homepage');
 define('LANDING_PAGE', $_SERVER['SCRIPT_NAME']);
 define('LOGOUT_PAGE', $_SERVER['SCRIPT_NAME'] . '/logout');

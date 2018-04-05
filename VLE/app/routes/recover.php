@@ -25,7 +25,8 @@ $app->get('/recover', function(Request $request, Response $response)
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $identifier = $request->getParam('identifier');
     $identifier = filter_var($identifier, FILTER_SANITIZE_STRING);
-
+    $_SESSION['email']= $email;
+    $_SESSION['identifier']= $identifier;
 
     try{
         $hashWorks = $userModel->check_recover_hash($db_handle,$SQLQueries,$wrapper_mysql, $email,$identifier);
@@ -33,6 +34,7 @@ $app->get('/recover', function(Request $request, Response $response)
     }
     catch (Exception $e){
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
+       // $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
             ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
@@ -42,7 +44,7 @@ $app->get('/recover', function(Request $request, Response $response)
         exit;
     }
 
-    $_SESSION['email']= $email;
+
 
     $userExists = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
 
@@ -68,7 +70,8 @@ $app->get('/recover', function(Request $request, Response $response)
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'email' => $email
+            'email' => $email,
+            'identifier' => $identifier
 
         ]);
 

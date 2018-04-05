@@ -14,7 +14,8 @@ use \Respect\Validation\Validator as v;
 $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $response) use ($app)
 {
 
-    if (!$_SESSION['user']){
+    if (!$_SESSION['email']){
+       // $this->flash->addMessage('danger',"Here");
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
             ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
@@ -32,23 +33,25 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
     $wrapper_mysql = $this->get('MYSQLWrapper');
     $bcryptwrapper = $this->get('BcryptWrapper');
 
+    $email = $_SESSION['email'];
+    $identifier = $_SESSION['identifier'];
 
 
     $validator->validate($request,[
-        'password' => v:: notEmpty()->stringType()
+        'password' => v:: noWhitespace()->notEmpty()->stringType()
     ]);
     $pass1 = $request->getParam('password');
 
     if ($validator->failed()){
-        return $response->withRedirect(recover_form);
+        return $response->withRedirect(recover_form . "?email=" . $email . "&identifier=" . $identifier );
     }
 
     $validator->validate($request,[
-        'password_confirm' => v:: notEmpty()->stringType()->equals($pass1)
+        'password_confirm' => v:: noWhitespace()->notEmpty()->stringType()->equals($pass1)
     ]);
 
     if ($validator->failed()){
-        return $response->withRedirect(recover_form);
+        return $response->withRedirect(recover_form . "?email=" . $email . "&identifier=" . $identifier);
     }
 
     $pass2 = $request->getParam('password_confirm');
@@ -61,6 +64,7 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
 
     //Remove Recover Hash
     unset ($_SESSION['email']);
+    unset ($_SESSION['identifier']);
     // Redirect to Homepage and Flash Reset Complete! success alert
 
     $this->flash->addMessage('success',"Password Reset!");

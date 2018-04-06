@@ -67,5 +67,11 @@ class SQLQueries
         $m_sql_query_string .= "WHERE dbEmail = '$email' ";
         return $m_sql_query_string;
     }
+    public static function get_name($email){
+        $m_sql_query_string  = "SELECT dbFullName ";
+        $m_sql_query_string .= "FROM vle_users ";
+        $m_sql_query_string .= "WHERE dbEmail =  '$email' ";
+        return $m_sql_query_string;
+    }
 
 }

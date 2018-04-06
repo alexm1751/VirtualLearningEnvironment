@@ -36,7 +36,6 @@ class userModel{
         $rankQuery = $p_wrapper_mysql->safe_fetch_array();
         $p_wrapper_mysql->safe_query($query_hash);
         $hashQuery = $p_wrapper_mysql->safe_fetch_array();
-
         $hash = $hashQuery['dbRecover_Hash'];
         $rank = $rankQuery['dbRank'];
 
@@ -144,9 +143,6 @@ class userModel{
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_hash);
 
-
-
-
         } catch(Exception $e){
             throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
             return false;
@@ -154,6 +150,24 @@ class userModel{
         return true;
 
 
+    }
+
+    public function getUserName($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email){
+        $default = 'User!';
+
+
+        $query_name = $p_sql_queries->get_name($email);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_name);
+        $name = $p_wrapper_mysql->safe_fetch_array();
+        $usersName = $name['dbFullName'];
+        if (!$usersName){
+            return $default;
+        }
+        else{
+
+            return $_SESSION['name']= $usersName ;
+        }
     }
 
 }

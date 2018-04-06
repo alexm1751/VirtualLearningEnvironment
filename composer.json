@@ -13,6 +13,7 @@
     "slim/csrf": "^0.8.2",
     "slim/flash": "^0.4.0",
     "phpmailer/phpmailer": "^6.0",
-    "kanellov/slim-twig-flash": "^0.2.0"
+    "kanellov/slim-twig-flash": "^0.2.0",
+    "google/recaptcha": "^1.1"
   }
 }

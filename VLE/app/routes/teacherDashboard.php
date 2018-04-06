@@ -8,7 +8,15 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/teacherDashboard', function(Request $request, Response $response) {
+    $validator = $this->get('validator');
 
+    $userModel = $this->get('user_model');
+
+    $db_handle = $this->get('dbase');
+
+    $SQLQueries = $this->get('SQLQueries');
+
+    $wrapper_mysql = $this->get('MYSQLWrapper');
     if((!$_SESSION['logged_in'])){
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
@@ -22,6 +30,9 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
 
     }
 
+   $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
+
+
     return $this->view->render($response,
         'teacher.html.twig',
         [
@@ -29,7 +40,7 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
             'logout_page' => LOGOUT_PAGE,
-
+            'name' => $name
 
         ]);
 

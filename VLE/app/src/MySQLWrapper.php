@@ -95,6 +95,7 @@ class MySQLWrapper
      */
     public function safe_fetch_array()
     {
+
         $m_arr_row = $this->c_obj_stmt->fetch(PDO::FETCH_ASSOC);
         return $m_arr_row;
     }

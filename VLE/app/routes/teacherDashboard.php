@@ -11,6 +11,7 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
     $validator = $this->get('validator');
 
     $userModel = $this->get('user_model');
+    $teacherModel = $this->get('teacher_model');
 
     $db_handle = $this->get('dbase');
 

@@ -70,7 +70,12 @@ if ($_SESSION['logged_in'] == true){
 
                 break;
 
+            case "4":
+                return $response->withRedirect(adminDashboard);
+
+                break;
             default:
+                $_SESSION = array();
                 $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
                 return $response
                     ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
@@ -82,8 +87,8 @@ if ($_SESSION['logged_in'] == true){
         }
 }
 else {
+    $_SESSION = array();
     $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
-
     return $response
         ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
         ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")

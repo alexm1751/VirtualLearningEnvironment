@@ -74,4 +74,12 @@ class SQLQueries
         return $m_sql_query_string;
     }
 
+    public static function get_modules($email){
+        $m_sql_query_string  = "SELECT c.dbModuleTitle ";
+        $m_sql_query_string .= "FROM vle_allocation z, vle_users a , vle_modules c ";
+        $m_sql_query_string .= "WHERE z.dbUniqueID = a.dbUniqueID  ";
+        $m_sql_query_string .= "AND z.dbModuleID = c.dbModuleID AND a.dbEmail=  '$email' ";
+        return $m_sql_query_string;
+    }
+
 }

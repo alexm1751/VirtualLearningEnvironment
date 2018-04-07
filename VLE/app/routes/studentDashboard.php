@@ -12,6 +12,7 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $validator = $this->get('validator');
 
     $userModel = $this->get('user_model');
+    $studentModel = $this->get('student_model');
 
     $db_handle = $this->get('dbase');
 
@@ -20,7 +21,7 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
 
-
+    $modules = $studentModel->getModules($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
     if((!$_SESSION['logged_in'])){
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
         return $response
@@ -43,7 +44,8 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
             'logout_page' => LOGOUT_PAGE,
-            'name' => $name
+            'name' => $name,
+            'modules' => $modules,
 
         ]);
 

@@ -20,6 +20,7 @@ class userModel{
      * @return bool true if the user exists in the database
      * @throws Exception
      */
+
     public function check_db_login($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email, $password)
     {
 

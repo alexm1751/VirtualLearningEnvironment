@@ -68,6 +68,27 @@ $container['BcryptWrapper'] = function ($container) {
     return $wrapper;
 };
 
+$container['admin_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'adminModel.php';
+    $model = new adminModel();
+    return $model;
+};
+
+$container['student_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'studentModel.php';
+    $model = new studentModel();
+    return $model;
+};
+
+$container['teacher_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'teacherModel.php';
+    $model = new teacherModel();
+    return $model;
+};
+
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };

@@ -33,6 +33,11 @@ define('PASS_RESET', $_SERVER['SCRIPT_NAME'] . '/reset');
 define('RESET_FORM', $_SERVER['SCRIPT_NAME'] . '/passwordreset');
 define('recover_form', $_SERVER['SCRIPT_NAME'] . '/recover');
 define('RECOVERED', $_SERVER['SCRIPT_NAME'] . '/recovered');
+define('module_page', $_SERVER['SCRIPT_NAME'] . '/modules');
+define('contact', $_SERVER['SCRIPT_NAME'] . '/contact');
+define('profile', $_SERVER['SCRIPT_NAME'] . '/profile');
+define('attendance', $_SERVER['SCRIPT_NAME'] . '/attendanceDashboard');
+
 define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);
 $m_max_length_password = 25;

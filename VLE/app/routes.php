@@ -17,3 +17,7 @@ require 'routes/adminDashboard.php';
 require 'routes/reset.php';
 require 'routes/recover.php';
 require 'routes/recovered.php';
+require 'routes/modules.php';
+require 'routes/contact.php';
+require 'routes/profile.php';
+require 'routes/attendanceDashboard.php';

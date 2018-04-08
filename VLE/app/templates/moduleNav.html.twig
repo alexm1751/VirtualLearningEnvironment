@@ -1,0 +1,46 @@
+{#{% extends'layout.html.twig' %}#}
+{% block content %}
+
+    <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>{{ module }}</h3>
+
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#">
+                    <i class="glyphicon glyphicon-home"></i>Announcements</a>
+            </li>
+            <li >
+                <a href="#pageSubmenu1">
+                    <i class="glyphicon glyphicon-education"></i>
+                    Learning Resources
+                </a>
+            </li>
+            <li>
+                <a href="#pageSubmenu2">
+                    <i class="glyphicon glyphicon-send"></i>
+                    Staff Information
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-file"></i>
+                    Assessment
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    Feedback Center
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+{% endblock %}

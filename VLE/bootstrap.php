@@ -7,8 +7,8 @@
  */
 
 session_start();
-$_SESSION['activity']= 0;
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 890) && $_SESSION['user']) {
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 870) && $_SESSION['user']) {
 
     // last request was more than 15 minutes ago
     $_SESSION = array();    // unset $_SESSION variable for the run-time
@@ -50,7 +50,7 @@ $container['csrf'] = function ($container){
     return new \Slim\Csrf\Guard;
 };
 
-$app->add($container->csrf);
+$app->add($container->get('csrf'));
 
 $app->run();
 

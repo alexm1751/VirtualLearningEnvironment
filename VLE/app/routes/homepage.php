@@ -16,6 +16,7 @@ $app->get('/', function(Request $request, Response $response)
 
 if($_SESSION['activity'] == 1){
     $_SESSION['activity'] = 0;
+    header("Refresh:0");
     return $this->view->render($response,
         'homepage.html.twig',
         [

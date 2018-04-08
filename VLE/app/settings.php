@@ -37,6 +37,7 @@ define('module_page', $_SERVER['SCRIPT_NAME'] . '/modules');
 define('contact', $_SERVER['SCRIPT_NAME'] . '/contact');
 define('profile', $_SERVER['SCRIPT_NAME'] . '/profile');
 define('attendance', $_SERVER['SCRIPT_NAME'] . '/attendanceDashboard');
+define ('update', $_SERVER['SCRIPT_NAME']. '/update');
 
 define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);

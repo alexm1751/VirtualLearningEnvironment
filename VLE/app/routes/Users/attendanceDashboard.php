@@ -31,14 +31,16 @@ $app->get('/attendanceDashboard', function(Request $request, Response $response)
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'module' => $moduleTitle,
             'module_page' => module_page,
             'studentDashboard' => studentDashboard,
             'contact' => contact,
             'attendance' => attendance,
             'profile' => profile,
             'name' => $name,
-            'modules' => $modules,
+            'modules' =>  $_SESSION['modules'],
+            'logout_page' => LOGOUT_PAGE,
+
+
 
 
         ]);

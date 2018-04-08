@@ -49,8 +49,8 @@ $container ['validator'] =  function ($container) {
 
 $container['user_model'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
-    require $class_path . 'userModel.php';
-    $model = new userModel();
+    require $class_path . 'AuthModel.php';
+    $model = new authModel();
     return $model;
 };
 

@@ -26,21 +26,22 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
     return $this->view->render($response,
         'profile.html.twig',
         [
-            'method' => 'post',
-            'action' => 'user_update',
-            'method2' => 'post',
-            'action2' => 'user_reset',
+            'method' => 'GET',
+            'action' => update,
+            'method2' => 'GET',
+            'action2' => update,
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'module' => $moduleTitle,
             'module_page' => module_page,
             'studentDashboard' => studentDashboard,
             'contact' => contact,
             'attendance' => attendance,
             'profile' => profile,
             'name' => $name,
-            'modules' =>$modules,
+            'modules' =>  $_SESSION['modules'],
+            'logout_page' => LOGOUT_PAGE,
+
 
 
         ]);

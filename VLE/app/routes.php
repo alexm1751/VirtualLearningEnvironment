@@ -6,18 +6,19 @@
  * Time: 12:40
  */
 
-require 'routes/homepage.php';
-require 'routes/loginhome.php';
-require 'routes/passwordreset.php';
-require 'routes/logout.php';
-require 'routes/loggedout.php';
-require 'routes/studentDashboard.php';
-require 'routes/teacherDashboard.php';
-require 'routes/adminDashboard.php';
-require 'routes/reset.php';
-require 'routes/recover.php';
-require 'routes/recovered.php';
-require 'routes/modules.php';
-require 'routes/contact.php';
-require 'routes/profile.php';
-require 'routes/attendanceDashboard.php';
+require 'routes/Auth/homepage.php';
+require 'routes/Auth/loginhome.php';
+require 'routes/Auth/passwordreset.php';
+require 'routes/Auth/logout.php';
+require 'routes/Auth/loggedOut.php';
+require 'routes/Users/studentDashboard.php';
+require 'routes/Users/teacherDashboard.php';
+require 'routes/Users/adminDashboard.php';
+require 'routes/Auth/reset.php';
+require 'routes/Auth/recover.php';
+require 'routes/Auth/recovered.php';
+require 'routes/Users/modules.php';
+require 'routes/Users/contact.php';
+require 'routes/Users/profile.php';
+require 'routes/Users/attendanceDashboard.php';
+require 'routes/sql_forms/update.php';

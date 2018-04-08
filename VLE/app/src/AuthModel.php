@@ -6,7 +6,7 @@
  * Time: 13:27
  */
 
-class userModel{
+class authModel{
     public function __construct(){}
 
     public function __destruct(){}

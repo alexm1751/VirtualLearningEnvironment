@@ -19,6 +19,7 @@ class MySQLWrapper
         $this->c_obj_sql_queries = null;
         $this->c_obj_stmt = null;
         $this->c_arr_errors = [];
+
     }
 
     public function __destruct() { }
@@ -100,16 +101,9 @@ class MySQLWrapper
         return $m_arr_row;
     }
 
-    /**Returns the ID of the last element inserted into the database
-     * @return mixed
-     */
-    public function last_inserted_ID()
+    public function safe_file_fetch()
     {
-        $m_sql_query = 'SELECT LAST_INSERT_ID()';
-
-        $this->safe_query($m_sql_query);
-        $m_arr_last_inserted_id = $this->safe_fetch_array();
-        $m_last_inserted_id = $m_arr_last_inserted_id['LAST_INSERT_ID()'];
-        return $m_last_inserted_id;
+        $m_file = $this->c_obj_stmt->fetch(PDO::PARAM_LOB);
+        return $m_file;
     }
 }

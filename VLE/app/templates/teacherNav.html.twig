@@ -1,0 +1,101 @@
+{#{% extends'layout.html.twig' %}#}
+{% block content %}
+
+    <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Welcome: {{ name }}!</h3>
+
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="{{ home }}">
+                    <i class="glyphicon glyphicon-home"></i>Home</a>
+            </li>
+            <li >
+                <a href="#pageSubmenu1" data-toggle="collapse"  aria-expanded="false">
+                    <i class="glyphicon glyphicon-edit"></i>Announcements</a>
+
+                    <ul class="collapse list-unstyled" id="pageSubmenu1">
+                            <li>
+                                <a href="#pageSubmenu2" data-toggle="collapse"  aria-expanded="false"><i class="glyphicon glyphicon-edit"></i>Courses</a>
+                                {% if modules is not null and modules|length > 0 %}
+                                            <ul class="collapse list-unstyled" id="pageSubmenu2">
+
+                                                {% for course in courses %}
+                                                    <li><a style="padding-left: 60px !important;" href="{{ course_announcement }}?course={{ course.dbCourseName }}">{{ course.dbCourseName }}</a></li>
+
+                                                {% endfor %}
+
+
+                                            </ul>
+                                        {% endif %}
+
+
+                            </li>
+                            <li>
+                                <a href="#pageSubmenu3" data-toggle="collapse"  aria-expanded="false"><i class="glyphicon glyphicon-edit"></i>Modules</a>
+                                {% if modules is not null and modules|length > 0 %}
+                                            <ul class="collapse list-unstyled" id="pageSubmenu3">
+
+                                                {% for module in modules %}
+                                                    <li>
+                                                        <a style="padding-left: 60px !important;" href="{{ module_announcement }}?module={{ module.dbModuleTitle }}">{{ module.dbModuleTitle }}</a>
+                                                    </li>
+
+                                                {% endfor %}
+
+
+                                            </ul>
+                                        {% endif %}</li>
+
+                    </ul>
+
+
+            </li>
+            <li >
+                <a href="#pageSubmenu4" data-toggle="collapse"  aria-expanded="false">
+                    <i class="glyphicon glyphicon-briefcase"></i>
+                    Modules
+                </a>
+                {% if modules is not null and modules|length > 0 %}
+                    <ul class="collapse list-unstyled" id="pageSubmenu4">
+
+                        {% for module in modules %}
+                            <li><a href="{{ module_content }}?module={{ module.dbModuleTitle }}">{{ module.dbModuleTitle }}</a></li>
+
+                        {% endfor %}
+
+
+                    </ul>
+                {% endif %}
+
+            </li>
+            <li>
+                <a href="{{ attendance_form }}">
+                    <i class="glyphicon glyphicon-duplicate"></i>
+                    Attendance
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                </ul>
+            </li>
+            <li>
+                <a href="{{ profile }}">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ contact }}">
+                    <i class="glyphicon glyphicon-send"></i>
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+{% endblock %}

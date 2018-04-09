@@ -35,4 +35,7 @@ $app->get('/update', function(Request $request, Response $response) {
     $id = $request->getParam('id');
     var_dump($id);
 
+
+    // Check user rank and check id else kick back
+
 })->setName('update');

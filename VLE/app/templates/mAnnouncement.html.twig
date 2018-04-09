@@ -1,0 +1,26 @@
+
+{% block content %}
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+
+        {% include 'teacherNav.html.twig' %}
+
+        <!-- Page Content Holder -->
+        <div id="content">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="{{ home }}">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li><a href="{{ module_announcement }}?module={{ module }}">{{ module }} Announcements</a></li>
+            </ul>
+
+            <h2>Test</h2>
+
+        </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+    </div>
+{% endblock %}

@@ -3,18 +3,27 @@
 CREATE DATABASE vle;
 */
 /*DROP TABLE STATEMENTS*/
-
-DROP TABLE IF EXISTS vle_users;
-DROP TABLE IF EXISTS vle_courses;
-DROP TABLE IF EXISTS vle_timetables;
-DROP TABLE IF EXISTS vle_announcements;
-DROP TABLE IF EXISTS vle_modules;
-DROP TABLE IF EXISTS vle_classes;
-DROP TABLE IF EXISTS vle_attendance;
-DROP TABLE IF EXISTS vle_submissions;
-DROP TABLE IF EXISTS vle_coursework;
-DROP TABLE IF EXISTS vle_module_allocation;
 DROP TABLE IF EXISTS vle_allocation;
+DROP TABLE IF EXISTS vle_module_allocation;
+DROP TABLE IF EXISTS vle_submissions;
+DROP TABLE IF EXISTS vle_attendance;
+DROP TABLE IF EXISTS vle_classes;
+DROP TABLE IF EXISTS vle_coursework;
+DROP TABLE IF EXISTS vle_announcements;
+DROP TABLE IF EXISTS vle_timetables;
+DROP TABLE IF EXISTS vle_modules;
+DROP TABLE IF EXISTS vle_courses;
+DROP TABLE IF EXISTS vle_users;
+
+
+
+
+
+
+
+
+
+
 
 
 /*subject/teacher table?
@@ -41,13 +50,14 @@ dbregistration_date TIMESTAMP,
 PRIMARY KEY (dbUniqueID)
 );
 
+ALTER TABLE vle_users ADD UNIQUE (dbEmail);
 ALTER TABLE vle_users AUTO_INCREMENT=1025;
 
 /*Dummy entries*/
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
 VALUES ('','Dummy', 'Dummy One',"The Moon",0123456789, 0,'', '', DEFAULT);
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
-VALUES ('','Dummy', 'Dummy Two',"Jupiter",0123456789, 0, '','', DEFAULT);
+VALUES ('','Dummy2', 'Dummy Two',"Jupiter",0123456789, 0, '','', DEFAULT);
 
 /*Students*/
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
@@ -277,4 +287,12 @@ FROM vle_allocation z, vle_users a, vle_courses b , vle_modules c
 WHERE z.dbUniqueID = a.dbUniqueID 
 AND z.dbCourseID = b.dbCourseID 
 AND z.dbModuleID = c.dbModuleID;
+
+
+
+SELECT c.dbModuleTitle
+FROM vle_allocation z, vle_users a , vle_modules c
+WHERE z.dbUniqueID = a.dbUniqueID 
+AND z.dbModuleID = c.dbModuleID AND a.dbEmail='ben@mail.co.uk';
+
 

@@ -8,6 +8,34 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/adminDashboard', function(Request $request, Response $response) {
+
+/*    if($_SESSION['rank'] != 3 || $_SESSION['rank'] != 4){
+        session_destroy();
+        session_start();
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
+        return $response
+            ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
+            ->withHeader("Pragma","no-cache")
+            ->withHeader('Expires','Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withHeader('Expires','0')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }*/
+    if((!$_SESSION['logged_in'])){
+        session_destroy();
+        session_start();
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
+        return $response
+            ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
+            ->withHeader("Pragma","no-cache")
+            ->withHeader('Expires','Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withHeader('Expires','0')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }
+
     $validator = $this->get('validator');
 
     $userModel = $this->get('user_model');
@@ -18,54 +46,16 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
     $SQLQueries = $this->get('SQLQueries');
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
-    if((!$_SESSION['logged_in'])){
-        $this->flash->addMessage('danger',"Invalid Request! No Access!");
-        echo time();
-        return $response
-            ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
-            ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
-            ->withHeader("Pragma","no-cache")
-            ->withHeader('Expires','Sun, 02 Jan 1990 00:00:00 GMT')
-            ->withHeader('Expires','0')
-            ->withRedirect(LANDING_PAGE);
-        exit;
 
-    }
 
     //if Rank 4 super admin, delete or add new admins!! :D
-
-    $name =$userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    $home = adminDashboard;
+    $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
+    $_SESSION['name'] = $name;
 
 
     if ($_SESSION['logged_in'] == true){
 
-        switch ($_SESSION['rank']){
-
-            case "3":
                 return $this->view->render($response,
                     'admin.html.twig',
                     [
@@ -73,35 +63,22 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
                         'page_heading_1' => APP_NAME,
                         'page_heading_2' => 'Virtual Learning Environment',
                         'logout_page' => LOGOUT_PAGE,
-                        'name' => $name
+                        'name' => $name,
+                        'rank' => $_SESSION['rank'],
+                        'home' => $home,
+                        'course_edit' => course_edit,
+                        'module_edit' => module_edit,
+                        'user_edit' => user_edit,
+                        'class_schedule' => class_schedule,
+                        'timetables' => timetables,
+                        'admin_edit' => admin_edit,
+                        'contact' => contact,
+                        'profile' => profile,
 
-                    ]);
 
-                break;
 
-            case "4":
-                return $this->view->render($response,
-                    'superAdmin.html.twig',
-                    [
-                        'page_title' => APP_NAME,
-                        'page_heading_1' => APP_NAME,
-                        'page_heading_2' => 'Virtual Learning Environment',
-                        'logout_page' => LOGOUT_PAGE,
-                        'name' => $name
 
-                    ]);
-                break;
-            default:
-                $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
-                return $response
-                    ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
-                    ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
-                    ->withHeader("Pragma:", "no-cache")
-                    ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
-                    ->withRedirect(LANDING_PAGE);
-                exit;
-        }
-    }
+                    ]);}
     else {
         $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
 

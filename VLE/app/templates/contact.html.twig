@@ -3,20 +3,23 @@
 <div class="container">
     {% include 'navigation.html.twig' %}
 
-
-    {% include 'userNav.html.twig' %}
-
-
+    {% if rank == 1 %}
+        {% include 'userNav.html.twig' %}
+    {% elseif rank == 2 %}
+        {% include 'teacherNav.html.twig' %}
+    {% else %}
+        {% include 'adminNav.html.twig' %}
+    {% endif %}
     <!-- Page Content Holder -->
     <div id="content">
 
         <ul class="breadcrumb">
             <li>
-                <a href="{{ studentDashboard }}">Home</a>
+                <a href="{{ home }}">Home</a>
                 <i class="icon-angle-right"></i>
             </li>
             <li>
-            <a href="{{ contact }}">contact</a>
+            <a href="{{ contact }}">Contact</a>
             <i class="icon-angle-right"></i>
             </li>
         </ul>

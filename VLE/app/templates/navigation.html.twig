@@ -17,6 +17,26 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ profile }}"><span class="glyphicon glyphicon-user"></span> {{ name }}</a></li>
         </ul>
+
+        {% if rank == 1 %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="">Student</a></li>
+            </ul>
+            {% elseif rank == 2 %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="">Teacher</a></li>
+                </ul>
+                {% elseif rank == 3 %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="">Administrator</a></li>
+                    </ul>
+                    {% elseif rank == 4 %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="">Super Administrator</a></li>
+                        </ul>
+                        {% else %}
+                            {#Nothing#}
+                            {% endif %}
     </div>
 </nav>
 

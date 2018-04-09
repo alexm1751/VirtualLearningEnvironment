@@ -14,6 +14,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/', function(Request $request, Response $response)
 {
 
+
 if($_SESSION['activity'] == 1){
     $_SESSION['activity'] = 0;
     header("Refresh:0");

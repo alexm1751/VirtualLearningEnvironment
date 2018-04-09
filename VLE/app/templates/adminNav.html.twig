@@ -1,58 +1,79 @@
-{% block adminNav %}
-<div class="wrapper">
+{#{% extends'layout.html.twig' %}#}
+{% block content %}
+
+    <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
             <h3>Welcome: {{ name }}!</h3>
-            <strong>BS</strong>
+
         </div>
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-home"></i>
-                    Course
+                <a href="{{ home }}">
+                    <i class="glyphicon glyphicon-signal"></i>Dashboard</a>
+            </li>
+
+            <li>
+                <a href="{{ course_edit }}">
+                    <i class="glyphicon glyphicon-education"></i>
+                    Course Edit
                 </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="#">Home 1</a></li>
-                    <li><a href="#">Home 2</a></li>
-                    <li><a href="#">Home 3</a></li>
+            </li>
+            <li >
+                <a href="{{ module_edit }}">
+                    <i class="glyphicon glyphicon-list"></i>
+                    Module Edit
+                </a>
+            </li>
+            <li>
+                <a href="{{ user_edit }}">
+                    <i class="glyphicon glyphicon-user"></i>
+                    User Edit
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
                 </ul>
             </li>
             <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-briefcase"></i>
-                    Modules
+                <a href="{{ class_schedule }}">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    Class Scheduling
                 </a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-duplicate"></i>
-                    Attendance
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ timetables }}">
+                    <i class="glyphicon glyphicon-th-list"></i>
+                    Timetables
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                </ul>
+            </li>
+            <li>
+                <a href="{{ profile }}">
                     <i class="glyphicon glyphicon-user"></i>
                     Profile
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-paperclip"></i>
-                    FAQ
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="{{ contact }}">
                     <i class="glyphicon glyphicon-send"></i>
                     Contact
                 </a>
             </li>
+            {% if rank == 4 %}
+
+            <li>
+                <a href="{{ admin_edit }}">
+                    <i class="glyphicon glyphicon-erase"></i>
+                    Admin Edit
+                </a>
+            </li>
+            {% endif %}
         </ul>
 
     </nav>
+
 {% endblock %}

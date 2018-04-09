@@ -1,0 +1,39 @@
+{% block content %}
+
+    <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>{{ module }}</h3>
+
+        </div>
+
+        <ul class="list-unstyled components">
+            <li>
+                <a href="{{ set_coursework}}?module={{ module }}">
+                    <i class="glyphicon glyphicon-list-alt"></i>Coursework</a>
+            </li>
+            <li >
+                <a href="{{ set_practical }}?module={{ module }}">
+                    <i class="glyphicon glyphicon-paperclip"></i>
+                    Course Practical
+                </a>
+            </li>
+            <li>
+                <a href="{{ set_theory }}?module={{ module }}">
+                    <i class="glyphicon glyphicon-book"></i>
+                    Course Theory
+                </a>
+            </li>
+            <li>
+                <a href="{{ assignments }}?module={{ module }}">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    Assignments
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+    {% include 'navigation.html.twig' %}
+
+    {% include 'adminNav.html.twig' %}
+    <!-- Page Content Holder -->
+    <div id="content">
+        <ul class="breadcrumb">
+            <li>
+                <a href="{{ home }}">Home</a>
+                <i class="icon-angle-right"></i>
+            </li>
+            <li>
+                <a href="{{ user_edit }}">User Edit</a>
+                <i class="icon-angle-right"></i>
+            </li>
+
+        </ul>
+
+
+    </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+{% endblock %}

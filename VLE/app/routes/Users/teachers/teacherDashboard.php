@@ -60,7 +60,7 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
     $home = teacherDashboard;
 
     return $this->view->render($response,
-        'teacher.html.twig',
+        'te_teacher.html.twig',
         [
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,

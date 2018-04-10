@@ -56,7 +56,7 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
     //
     $home = teacherDashboard;
     return $this->view->render($response,
-        'setTheoryContent.html.twig',
+        'te_setTheoryContent.html.twig',
         [
 
             'page_title' => APP_NAME,

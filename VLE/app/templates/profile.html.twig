@@ -4,11 +4,11 @@
         {% include 'navigation.html.twig' %}
 
 {% if rank == 1 %}
-        {% include 'userNav.html.twig' %}
+        {% include 'st_userNav.html.twig' %}
 {% elseif rank == 2 %}
-        {% include 'teacherNav.html.twig' %}
+        {% include 'te_teacherNav.html.twig' %}
 {% else %}
-        {% include 'adminNav.html.twig' %}
+        {% include 'ad_adminNav.html.twig' %}
 {% endif %}
         <!-- Page Content Holder -->
         <div id="content">

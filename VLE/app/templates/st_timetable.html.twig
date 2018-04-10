@@ -1,30 +1,28 @@
 
-{% block content %}
+{% block page %}
     <div class="container">
         {% include 'navigation.html.twig' %}
 
-        {% include 'courseContentNav.html.twig' %}
+
+        {% include 'st_userNav.html.twig' %}
+
 
         <!-- Page Content Holder -->
         <div id="content">
+
             <ul class="breadcrumb">
                 <li>
-                    <i class="icon-home"></i>
                     <a href="{{ home }}">Home</a>
                     <i class="icon-angle-right"></i>
                 </li>
                 <li>
-                    <a href="{{ module_content }}?module={{ module }}">{{ module }}</a>
+                    <a href="{{ timetable }}">Timetable</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li>
-                    <a href="{{ practical }}?module={{ module }}">Practical Work</a>
-
-                </li>
             </ul>
+            <h2>Timetable Information:</h2>
+            {#Page Padder incase of large content#}
 
-            <h2>Set Practical Content</h2>
-            <div class="line"></div>
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -33,8 +31,12 @@
                 deserunt mollit anim id est laborum.</p></div>
 
     </div>
-    </div>
 
     {% include 'footer.html.twig' %}
     </div>
+
 {% endblock %}
+
+
+
+

@@ -52,7 +52,7 @@ $app->get('/timetable', function(Request $request, Response $response)
     $home = studentDashboard;
 
     return $this->view->render($response,
-        'timetable.html.twig',
+        'st_timetable.html.twig',
         [
             'method' => 'post',
             'action' => 'user_update',

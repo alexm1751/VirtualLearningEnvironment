@@ -55,7 +55,7 @@ $app->map(['GET', 'POST'],'/modules', function(Request $request, Response $respo
     //
     $home = studentDashboard;
     return $this->view->render($response,
-        'module.html.twig',
+        'st_module.html.twig',
         [
 
             'page_title' => APP_NAME,

@@ -3,7 +3,7 @@
     <div class="container">
         {% include 'navigation.html.twig' %}
 
-        {% include 'courseContentNav.html.twig' %}
+        {% include 'st_moduleNav.html.twig' %}
 
         <!-- Page Content Holder -->
         <div id="content">
@@ -14,17 +14,17 @@
                     <i class="icon-angle-right"></i>
                 </li>
                 <li>
-                    <a href="{{ module_content }}?module={{ module }}">{{ module }}</a>
+                    <a href="{{ module_page }}?module={{ module }}">{{ module }}</a>
                     <i class="icon-angle-right"></i>
                 </li>
                 <li>
-                    <a href="{{ set_coursework }}?module={{ module }}">Coursework</a>
+                    <a href="{{ module_assessment }}?module={{ module }}">Assessment</a>
 
                 </li>
             </ul>
 
-            <h2>Current Coursework</h2>
-            <p>Update Coursework</p>
+            <h2>Assessment</h2>
+            <p>CourseWork:</p>
             <div class="line"></div>
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -33,7 +33,7 @@
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
                 deserunt mollit anim id est laborum.</p></div>
 
-    </div>
+        </div>
     </div>
 
     {% include 'footer.html.twig' %}

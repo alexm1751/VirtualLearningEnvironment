@@ -56,7 +56,7 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
     //
     $home = teacherDashboard;
     return $this->view->render($response,
-        'setPracticalContent.html.twig',
+        'te_setPracticalContent.html.twig',
         [
 
             'page_title' => APP_NAME,

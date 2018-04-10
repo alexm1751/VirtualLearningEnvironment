@@ -52,7 +52,7 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $name= $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
     return $this->view->render($response,
-        'student.html.twig',
+        'st_student.html.twig',
         [
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,

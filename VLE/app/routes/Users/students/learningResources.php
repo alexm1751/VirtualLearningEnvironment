@@ -55,7 +55,7 @@ $app->map(['GET', 'POST'],'/learningResources', function(Request $request, Respo
     //
     $home = studentDashboard;
     return $this->view->render($response,
-        'learningResources.html.twig',
+        'st_learningResources.html.twig',
         [
 
             'page_title' => APP_NAME,

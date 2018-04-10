@@ -55,7 +55,7 @@ $app->map(['GET', 'POST'],'/assessment', function(Request $request, Response $re
     //
     $home = teacherDashboard;
     return $this->view->render($response,
-        'assessment.html.twig',
+        'st_assessment.html.twig',
         [
 
             'page_title' => APP_NAME,

@@ -55,7 +55,7 @@ $app->map(['GET', 'POST'],'/staffinfo', function(Request $request, Response $res
     //
     $home = studentDashboard;
     return $this->view->render($response,
-        'staffinfo.html.twig',
+        'st_staffinfo.html.twig',
         [
             'method' => 'post',
             'action' => '/FinalYearProject/VLE_Public/loggedOut',

@@ -52,7 +52,7 @@ $app->get('/attendanceDashboard', function(Request $request, Response $response)
     //
     $home = studentDashboard;
     return $this->view->render($response,
-        'attendance.html.twig',
+        'st_attendance.html.twig',
         [
 
             'page_title' => APP_NAME,

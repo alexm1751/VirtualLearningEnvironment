@@ -57,7 +57,7 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
     if ($_SESSION['logged_in'] == true){
 
                 return $this->view->render($response,
-                    'admin.html.twig',
+                    'ad_admin.html.twig',
                     [
                         'page_title' => APP_NAME,
                         'page_heading_1' => APP_NAME,

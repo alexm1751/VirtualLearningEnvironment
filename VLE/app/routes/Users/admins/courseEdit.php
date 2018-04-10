@@ -45,7 +45,7 @@ $app->get('/courseEdit', function(Request $request, Response $response) {
 
 
     return $this->view->render($response,
-        'courseEdit.html.twig',
+        'ad_courseEdit.html.twig',
         [
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,

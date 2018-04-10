@@ -53,7 +53,7 @@ $app->get('/setAttendance', function(Request $request, Response $response) {
     $home = teacherDashboard;
 
     return $this->view->render($response,
-        'attendanceForm.html.twig',
+        'te_attendanceForm.html.twig',
         [
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,

@@ -47,7 +47,7 @@ dbNumber BIGINT(15) NOT NULL,
 dbGender VARCHAR(10) NOT NULL,
 dbRank INT(1) NOT NULL,
 dbRecover_Hash VARCHAR(70),
-dbregistration_date TIMESTAMP,
+dbregistration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (dbUniqueID)
 );
 
@@ -206,7 +206,7 @@ dbAnnouncementTitle VARCHAR(50),
 dbCourseID INT(5),
 dbModuleID INT(5),
 dbDescription VARCHAR(500),
-dbDate DATE,
+dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (dbAnnouncementID)
 );
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
@@ -252,7 +252,7 @@ PRIMARY KEY (dbModuleID,dbCourseID)
 CREATE TABLE vle_classes(
 dbClassID INT(5)  AUTO_INCREMENT,
 dbModuleID INT(5),
-dbDate DATE,
+dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 dbDescAndWeek VARCHAR(50),
 PRIMARY KEY (dbClassID)
 );
@@ -360,8 +360,8 @@ VALUES (24, 1031, 1);
 CREATE TABLE vle_coursework(
 dbCourseWorkID INT(5)  AUTO_INCREMENT,
 dbDescription VARCHAR(200),
-dbPostDate datetime,
-dbDeadline datetime,
+dbPostDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+dbDeadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 dbbrief VARCHAR(200),
 dbModuleID INT(5),
 PRIMARY KEY (dbCourseWorkID)
@@ -380,7 +380,7 @@ VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/Applicati
 CREATE TABLE vle_submissions(
 dbSubmissionID INT(5),
 dbFeedback VARCHAR(500),
-dbDate datetime,
+dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 dbSubPdf VARCHAR(200),
 dbMarked BOOLEAN,
 dbUniqueID INT(9),
@@ -406,7 +406,7 @@ dbTheory BOOLEAN,
 dbLearningTitle VARCHAR(50),
 dbDescription VARCHAR(200),
 dbPDF VARCHAR(200),
-dbDate date,
+dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 dbModuleID INT(5),
 PRIMARY KEY (dbResID)
 );
@@ -427,20 +427,20 @@ VALUES (1004, 1, 0, 'Matlab Content', 'Carrying on from last week. use the conte
 
 
 /* FOREIGN KEYS*/
-ALTER TABLE vle_modules ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID);
-ALTER TABLE vle_allocation ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID);
-ALTER TABLE vle_allocation ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID);
-ALTER TABLE vle_allocation ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID);
-ALTER TABLE vle_timetables ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID);
-ALTER TABLE vle_coursework ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID);
-ALTER TABLE vle_submissions ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID);
-ALTER TABLE vle_submissions ADD FOREIGN KEY (dbCourseWorkID) REFERENCES vle_coursework(dbCourseWorkID);
-ALTER TABLE vle_classes ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID);
-ALTER TABLE vle_announcements ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID);
-ALTER TABLE vle_announcements ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID);
-ALTER TABLE vle_attendance ADD FOREIGN KEY (dbClassID) REFERENCES vle_classes(dbClassID);
-ALTER TABLE vle_attendance ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID);
-ALTER TABLE vle_learning ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID);
+ALTER TABLE vle_modules ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID)  ON DELETE CASCADE;
+ALTER TABLE vle_allocation ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID)  ON DELETE CASCADE;
+ALTER TABLE vle_allocation ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID)  ON DELETE CASCADE;
+ALTER TABLE vle_allocation ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
+ALTER TABLE vle_timetables ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID)  ON DELETE CASCADE;
+ALTER TABLE vle_coursework ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
+ALTER TABLE vle_submissions ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID)  ON DELETE CASCADE;
+ALTER TABLE vle_submissions ADD FOREIGN KEY (dbCourseWorkID) REFERENCES vle_coursework(dbCourseWorkID)  ON DELETE CASCADE;
+ALTER TABLE vle_classes ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
+ALTER TABLE vle_announcements ADD FOREIGN KEY (dbCourseID) REFERENCES vle_courses(dbCourseID)  ON DELETE CASCADE;
+ALTER TABLE vle_announcements ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
+ALTER TABLE vle_attendance ADD FOREIGN KEY (dbClassID) REFERENCES vle_classes(dbClassID)  ON DELETE CASCADE;
+ALTER TABLE vle_attendance ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID)  ON DELETE CASCADE;
+ALTER TABLE vle_learning ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
 
 
 /*Join QUERIES*/
@@ -465,4 +465,9 @@ FROM vle_allocation z, vle_users a , vle_courses c
 WHERE z.dbUniqueID = a.dbUniqueID 
 AND z.dbCourseID = c.dbCourseID AND a.dbEmail='ben@mail.com';
 
+
+
+SELECT dbFullName, dbEmail, dbAddress, dbNumber
+FROM vle_users
+WHERE dbEmail = 'alex@mail.com';
 

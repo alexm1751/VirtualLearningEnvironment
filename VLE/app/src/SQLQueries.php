@@ -322,7 +322,7 @@ class SQLQueries
          FROM vle_submissions a , vle_coursework b ,vle_modules c
          WHERE a.dbCourseWorkID = b.dbCourseWorkID
          AND b.dbModuleID = c.dbModuleID
-         AND dbModuleTitle = $module
+         AND dbModuleTitle = '$module'
          AND dbMarked = 0";
 
         return $m_sql_query_string;
@@ -343,5 +343,165 @@ class SQLQueries
 
     /*Admin Queries*/
 
+
+    public static function admin_get_courses(){
+        $m_sql_query_string  =
+            "SELECT dbCourseID, dbCourseName, dbCourseDescription,dbCredits,dbYears,dbDegreeType
+            FROM vle_courses";
+        return $m_sql_query_string;
+    }
+    public static function admin_set_courses($courseName,$courseDescription,$credits,$years,$degree){
+        $m_sql_query_string  =
+            "INSERT INTO vle_courses(dbCourseName, dbCourseDescription,dbCredits,dbYears,dbDegreeType)
+            VALUES ('$courseName','$courseDescription','$credits','$years','$degree')";
+        return $m_sql_query_string;
+    }
+    public static function admin_update_courses($courseName,$courseDescription,$credits,$years,$degree,$courseID){
+        $m_sql_query_string  =
+            "Update vle_courses
+            SET dbCourseName='$courseName', dbCourseDescription= '$courseDescription', dbCredits='$credits', dbYears='$years', dbDegreeType='$degree'
+            WHERE dbCourseID ='$courseID'";
+        return $m_sql_query_string;
+    }
+    public static function admin_remove_courses($courseID){
+        $m_sql_query_string  =
+            "DELETE FROM vle_courses
+            WHERE dbCourseID='$courseID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_modules(){
+        $m_sql_query_string  =
+            "SELECT dbModuleID,dbModuleName, dbModuleDescription,dbCredits,dbCourseID
+            FROM vle_modules";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_set_modules($moduleName,$moduleDescription,$credits,$courseID){
+        $m_sql_query_string  =
+            "INSERT INTO vle_modules(dbModuleName, dbModuleDescription,dbCredits,dbCourseID)
+            VALUES ('$moduleName','$moduleDescription','$credits','$courseID')";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_update_modules($moduleName,$moduleDescription,$credits,$courseID, $moduleID){
+    $m_sql_query_string  =
+        "UPDATE vle_modules
+        SET dbModuleName='$moduleName', dbModuleDescription= '$moduleDescription', dbCredits='$credits', dbCourseID='$courseID'
+        WHERE dbModuleID ='$moduleID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_remove_modules($moduleID){
+        $m_sql_query_string  =
+            "DELETE FROM vle_modules
+                WHERE dbModuleID='$moduleID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_users(){
+        $m_sql_query_string  =
+            "SELECT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber, dbRank
+            FROM vle_users
+            WHERE dbRank = 1 OR dbRank = 2";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_set_users($password,$email,$name,$address,$number,$rank,$gender){
+        $m_sql_query_string  =
+            "INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
+                VALUES ('$password','$email', '$name','$address','$number', '$rank', '$gender','', DEFAULT)";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_update_users($password,$email,$name,$address,$number,$rank,$gender,$uniqueID){
+    $m_sql_query_string  = "UPDATE vle_users
+    SET dbpass='$password', dbEmail= '$email', dbFullName='$name', dbAddress='$address', dbNumber='$number',dbRank='$rank',dbGender='$gender'
+    WHERE dbUniqueID ='$uniqueID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_remove_users($uniqueID){
+        $m_sql_query_string  ="DELETE FROM vle_users
+        WHERE dbUniqueID = '$uniqueID'";
+
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_classes(){
+        $m_sql_query_string  =
+            "SELECT dbClassID, dbModuleID, dbDate, dbDescAndWeek
+            FROM vle_classes";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_set_classes($moduleID, $date, $description){
+        $m_sql_query_string  =
+            "INSERT INTO vle_classes(dbModuleID,dbDate,dbDescAndWeek)
+            VALUES ('$moduleID', '$date', '$description')";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_update_classes($classID,$moduleID,$date,$descAndWeek){
+        $m_sql_query_string  =
+            "UPDATE vle_classes
+            SET dbModuleID='$moduleID', dbDate= '$date', dbDescAndWeek='$descAndWeek'
+            WHERE dbClassID ='$classID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_remove_classes($classID){
+        $m_sql_query_string  =
+            "DELETE FROM vle_classes
+                WHERE dbClassID = '$classID'";
+
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_timetables(){
+        $m_sql_query_string  =
+            "SELECT dbTimeTableID, dbtablepdf, dbCourseID
+            FROM vle_timetables";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_set_timetables($pdf,$courseID){
+        $m_sql_query_string  =
+            "INSERT INTO vle_timetables(dbtablepdf,dbCourseID)
+            VALUES('$pdf','$courseID')";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_update_timetables($timetableID,$pdf,$CourseID){
+        $m_sql_query_string  =
+            "UPDATE vle_timetables
+            SET dbtablepdf='$pdf', dbCourseID='$CourseID'
+            WHERE dbTimeTableID = '$timetableID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_remove_timetables($timetableID){
+        $m_sql_query_string  =
+            "DELETE FROM vle_timetables
+WHERE dbTimeTableID = '$timetableID'";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_admins(){
+        $m_sql_query_string  =
+            "SELECT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber
+            FROM vle_users
+            WHERE dbRank = 3 OR dbRank = 4";
+
+
+        return $m_sql_query_string;
+    }
+    public static function admin_set_admins($password,$email,$name,$address,$number,$rank,$gender){
+        $m_sql_query_string  =
+            "INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
+            VALUES ('$password','$email', '$name','$address','$number', '$rank', '$gender','', DEFAULT)";
+
+        return $m_sql_query_string;
+    }
 
 }

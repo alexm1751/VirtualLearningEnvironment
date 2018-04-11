@@ -22,10 +22,10 @@ class studentModel
         $p_wrapper_mysql->safe_query($query_name);
 /*        $modules = $p_wrapper_mysql->safe_fetch_array();*/
             while($row = $p_wrapper_mysql->safe_fetch_array()){
-                $json[] = $row;
+                $array[] = $row;
             }
 
-        return ($json);
+        return ($array);
          }catch(Exception $e){
             throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
             return false;
@@ -39,8 +39,11 @@ class studentModel
             $query_name = $p_sql_queries->get_attendance($email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -54,8 +57,11 @@ class studentModel
             $query_name = $p_sql_queries->get_timetable($email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -68,8 +74,11 @@ class studentModel
             $query_name = $p_sql_queries->get_module_announcements($module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -82,8 +91,11 @@ class studentModel
             $query_name = $p_sql_queries->get_course_announcements($email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -96,8 +108,11 @@ class studentModel
             $query_name = $p_sql_queries->get_deadlines($email, $module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -111,8 +126,11 @@ class studentModel
             $query_name = $p_sql_queries->get_staff_info($module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -126,8 +144,11 @@ class studentModel
             $query_name = $p_sql_queries->get_practical_content($email,$module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -141,8 +162,11 @@ class studentModel
             $query_name = $p_sql_queries->get_theory_content($email,$module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -158,8 +182,11 @@ class studentModel
             $query_name = $p_sql_queries->get_assessments($email,$module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;
@@ -188,8 +215,11 @@ class studentModel
             $query_name = $p_sql_queries->get_feedback($email,$module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            $arr_values = $p_wrapper_mysql->safe_fetch_array();
-            return $arr_values;
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
         } catch (Exception $e){
             var_dump($e);
             return false;

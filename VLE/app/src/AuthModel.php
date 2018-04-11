@@ -170,5 +170,42 @@ class authModel{
             return $_SESSION['name']= $usersName ;
         }
     }
+    public function get_profile_details($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email)
+    {
+
+        try {
+            $modules = array();
+            $query_name = $p_sql_queries->get_profileDetails($email);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            /*        $modules = $p_wrapper_mysql->safe_fetch_array();*/
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        }catch(Exception $e){
+            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            return false;
+        }
+    }
+    public function update_profile_details($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $name,$address,$number,$email)
+    {
+
+        try {
+            $modules = array();
+            $query_name = $p_sql_queries->update_profileDetails($name,$address,$number,$email);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            /*        $modules = $p_wrapper_mysql->safe_fetch_array();*/
+            $p_wrapper_mysql->safe_fetch_array();
+
+            return true;
+
+        }catch(Exception $e){
+            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            return false;
+        }
+    }
 
 }

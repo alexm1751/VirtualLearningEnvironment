@@ -54,32 +54,57 @@ class teacherModel
         }
     }
     /*Course Announcements*/
-    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name){
         try{
+            $query_name = $p_sql_queries->get_course_announcement($name);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function setCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function setAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name,$courseID,$moduleID,$description){
         try{
+            $query_name = $p_sql_queries->set_announcement($name,$courseID,$moduleID,$description);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function removeCourseAnnouncement($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function removeCourseAnnouncement($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$annID){
         try{
+            $query_name = $p_sql_queries->remove_announcement($annID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function updateCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function updateAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$title,$courseID,$moduleID,$description,$date,$annID){
         try{
+            $query_name = $p_sql_queries->update_announcement($title,$courseID,$moduleID,$description,$date,$annID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -88,43 +113,38 @@ class teacherModel
     }
 
     /*Module Announcements*/
-    public function getModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name){
         try{
+            $query_name = $p_sql_queries->get_module_announcement($name);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function setModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
 
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
-    public function removeModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
-
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
-    public function updateModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
-
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
 
     /*Attendance Control*/
 
-    public function getAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID){
         try{
+            $query_name = $p_sql_queries->get_student_attendance($classID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -132,16 +152,28 @@ class teacherModel
         }
     }
 
-    public function setAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function setAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID,$uniqueID,$bool){
         try{
+            $query_name = $p_sql_queries->set_student_attendance($classID,$uniqueID,$bool);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function updateAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function updateAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID,$uniqueID,$bool){
         try{
+            $query_name = $p_sql_queries->update_student_attendance($classID,$uniqueID,$bool);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -151,16 +183,31 @@ class teacherModel
 
     /*Coursework Control*/
 
-    public function getCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
+            $query_name = $p_sql_queries->get_coursework($module);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function setCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function setCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$description,$date,$location){
         try{
+            $query_name = $p_sql_queries->set_coursework($moduleID,$description,$date,$location);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -168,8 +215,14 @@ class teacherModel
         }
     }
 
-    public function removeCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function removeCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$courseworkID){
         try{
+            $query_name = $p_sql_queries->remove_coursework($courseworkID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -177,8 +230,14 @@ class teacherModel
         }
     }
 
-    public function updateCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function updateCoursework($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$courseworkID,$description,$date,$brief){
         try{
+            $query_name = $p_sql_queries->update_coursework($courseworkID,$description,$date,$brief);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -188,32 +247,59 @@ class teacherModel
 
     /*Course Content Control*/
 
-    public function getPractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getPractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
+            $query_name = $p_sql_queries->get_practical($module);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function setPractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function setPractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$title,$description,$pdf){
         try{
+            $query_name = $p_sql_queries->set_practical($moduleID,$title,$description,$pdf);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function updatePractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function updateLearning($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$title,$description,$pdf,$resID){
         try{
+            $query_name = $p_sql_queries->update_learning($moduleID,$title,$description,$pdf,$resID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function removePractical($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function removeLearning($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$resID){
         try{
+            $query_name = $p_sql_queries->remove_learning($resID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -221,39 +307,52 @@ class teacherModel
         }
     }
 
-    public function getTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
+            $query_name = $p_sql_queries->get_theory($module);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function setTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function setTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$date,$pdf,$description,$title){
         try{
+            $query_name = $p_sql_queries->set_theory($moduleID,$date,$pdf,$description,$title);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
 
         } catch (Exception $e){
             var_dump($e);
             return false;
         }
     }
-    public function updateTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
 
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
-    public function removeTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-
-    }
 
 
     /*Assignment Marking*/
 
-    public function getSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function getSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
+            $query_name = $p_sql_queries->get_submissions($module);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
 
         } catch (Exception $e){
             var_dump($e);
@@ -261,8 +360,26 @@ class teacherModel
         }
     }
 
-    public function updateSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+    public function updateSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$feedback){
         try{
+            $query_name = $p_sql_queries->update_submissions($feedback);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
+
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function removeSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$subID){
+        try{
+            $query_name = $p_sql_queries->remove_submissions($subID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+
+            return true;
 
         } catch (Exception $e){
             var_dump($e);

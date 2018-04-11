@@ -96,6 +96,12 @@ class SQLQueries
         $m_sql_query_string .= "WHERE dbEmail = '$email'";
         return $m_sql_query_string;
     }
+    public static function update_profileDetails($name,$address,$number,$email){
+        $m_sql_query_string  = "UPDATE vle_users ";
+        $m_sql_query_string .= "SET   dbFullName='$name', dbAddress='$address', dbNumber='$number' ";
+        $m_sql_query_string .= "WHERE dbEmail = '$email'";
+        return $m_sql_query_string;
+    }
 
     /*STUDENT Queries*/
 
@@ -192,6 +198,150 @@ class SQLQueries
         AND b.dbMarked = 1";
         return $m_sql_query_string;
     }
+
+    /*Teacher Queries*/
+
+    public static function get_course_announcement($name){
+        $m_sql_query_string  = "SELECT a.dbAnnouncementID,a.dbAnnouncementTitle,a.dbCourseID,a.dbDescription,a.dbDate 
+        FROM vle_announcements a, vle_courses b
+        WHERE a.dbModuleID IS NULL
+        AND b.dbCourseName = '$name'";
+        return $m_sql_query_string;
+    }
+    public static function set_announcement($name,$courseID,$moduleID,$description){
+        $m_sql_query_string  = "INSERT INTO vle_announcements(dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
+        VALUES ('$name', $courseID, $moduleID, '$description', default)";
+        return $m_sql_query_string;
+    }
+    public static function remove_announcement($annID){
+        $m_sql_query_string  = "DELETE FROM vle_announcements
+        WHERE dbAnnouncementID = '$annID'";
+        return $m_sql_query_string;
+    }
+    public static function update_announcement($title,$courseID,$moduleID,$description,$date,$annID){
+        $m_sql_query_string  = "UPDATE vle_announcements
+	SET dbAnnouncementTitle = '$title',dbCourseID = '$courseID', dbModuleID = '$moduleID', dbDescription = '$description', dbDate = '$date'
+	WHERE dbAnnouncementID = '$annID'";
+        return $m_sql_query_string;
+    }
+    public static function get_module_announcement($name){
+        $m_sql_query_string  = "SELECT a.dbAnnouncementID,a.dbAnnouncementTitle,a.dbModuleID,a.dbDescription,a.dbDate 
+        FROM vle_announcements a, vle_modules b
+        WHERE b.dbModuleName = '$name'";
+        return $m_sql_query_string;
+    }
+    public static function get_student_attendance($classID){
+        $m_sql_query_string  = "SELECT c.dbDescAndWeek, b.dbFullName, a.dbAttended
+        FROM vle_attendance a, vle_users b, vle_classes c  
+        WHERE a.dbUniqueID = b.dbUniqueID
+        AND a.dbClassID = c.dbClassID
+        AND a.dbClassID = '$classID'";
+        return $m_sql_query_string;
+    }
+
+    public static function set_student_attendance($classID,$uniqueID,$bool){
+        $m_sql_query_string  = "INSERT INTO vle_attendance(dbClassID, dbUniqueID, dbAttended)
+        VALUES($classID,$uniqueID,$bool)";
+        return $m_sql_query_string;
+    }
+    public static function update_student_attendance($classID,$uniqueID,$bool){
+        $m_sql_query_string  = "UPDATE vle_attendance
+        SET dbAttended = $bool
+        WHERE dbUniqueID = $uniqueID
+        AND dbClassID = $classID";
+        return $m_sql_query_string;
+    }
+    public static function get_coursework($module){
+        $m_sql_query_string  = "SELECT a.dbDescription,a.dbPostDate, a.dbDeadline, a.dbbrief
+        FROM vle_coursework a, vle_allocation b
+        WHERE a.dbModuleID = b.dbModuleID
+        AND b.dbUniqueID = c.dbUniqueID 
+        AND a.dbModuleTitle = '$module'";
+        return $m_sql_query_string;
+    }
+    public static function set_coursework($moduleID,$description,$date,$location){
+        $m_sql_query_string  = "INSERT INTO vle_coursework(dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
+        VALUES ('$description', default, '$date','$location', '$moduleID')";
+        return $m_sql_query_string;
+    }
+    public static function remove_coursework($courseworkID){
+        $m_sql_query_string  = "DELETE FROM vle_coursework
+        WHERE dbCourseWorkID = '$courseworkID'";
+        return $m_sql_query_string;
+    }
+    public static function update_coursework($courseworkID,$description,$date,$brief){
+        $m_sql_query_string  = "UPDATE vle_coursework
+        SET dbDescription='$description', dbDeadline='$date', dbbrief='$brief'
+        WHERE dbCourseWorkID = '$courseworkID'";
+        return $m_sql_query_string;
+    }
+    public static function get_practical($module){
+        $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
+        FROM vle_learning a, vle_modules b
+        WHERE a.dbModuleID = b.dbModuleID
+        AND a.dbPractical = 1
+        AND b.dbModuleTitle = '$module'";
+        return $m_sql_query_string;
+    }
+    public static function set_practical($moduleID,$title,$description,$pdf){
+        $m_sql_query_string  = "INSERT INTO vle_learning(dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
+        VALUES ( 1, 0, '$title', '$description','$pdf', default, $moduleID)";
+
+        return $m_sql_query_string;
+    }
+    public static function update_learning($moduleID,$title,$description,$pdf,$resID){
+        $m_sql_query_string  = "UPDATE vle_coursework
+        SET dbLearningTitle='$title',dbDescription='$description',dbPDF='$pdf',dbModuleID='$moduleID'
+        WHERE dbResID = '$resID'";
+
+        return $m_sql_query_string;
+    }
+    public static function get_theory($module){
+        $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
+        FROM vle_learning a, vle_modules b
+        WHERE a.dbModuleID = b.dbModuleID
+        AND a.dbTheory = 1
+        AND b.dbModuleTitle = '$module'";
+
+        return $m_sql_query_string;
+    }
+    public static function set_theory($moduleID,$date,$pdf,$description,$title){
+        $m_sql_query_string  = "INSERT INTO vle_learning(dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
+        VALUES ( 0, 1, '$title', '$description','$pdf', '$date', $moduleID)";
+
+        return $m_sql_query_string;
+    }
+    public static function remove_learning($resID){
+        $m_sql_query_string  = "DELETE FROM vle_learning
+        WHERE dbResID = $resID";
+
+        return $m_sql_query_string;
+    }
+    public static function get_submissions($module){
+        $m_sql_query_string  = "SELECT b.dbDescription, a.dbSubPdf, a.dbDate, b.dbDeadline
+         FROM vle_submissions a , vle_coursework b ,vle_modules c
+         WHERE a.dbCourseWorkID = b.dbCourseWorkID
+         AND b.dbModuleID = c.dbModuleID
+         AND dbModuleTitle = $module
+         AND dbMarked = 0";
+
+        return $m_sql_query_string;
+    }
+
+    public static function update_submissions($feedback){
+        $m_sql_query_string  = " UPDATE vle_submissions
+         SET dbFeedback='$feedback', dbMarked=1";
+
+        return $m_sql_query_string;
+    }
+    public static function remove_submissions($subID){
+        $m_sql_query_string  =  "DELETE FROM vle_submissions
+          WHERE dbSumissionID='$subID'";
+
+        return $m_sql_query_string;
+    }
+
+    /*Admin Queries*/
 
 
 }

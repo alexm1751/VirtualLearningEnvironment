@@ -6,7 +6,7 @@
  * Time: 12:40
  */
 
-ini_set('display_errors', 'On');
+ini_set('display_errors', 'on');
 ini_set('html_errors', 'On');
 
 

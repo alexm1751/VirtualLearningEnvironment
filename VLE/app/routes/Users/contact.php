@@ -92,7 +92,7 @@ $app->get('/contact', function(Request $request, Response $response)
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
             'logout_page' => LOGOUT_PAGE,
-            'courses' =>  $_SESSION['courses'],
+
             'course_edit' => course_edit,
             'module_edit' => module_edit,
             'user_edit' => user_edit,

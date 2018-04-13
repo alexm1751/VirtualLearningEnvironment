@@ -46,7 +46,8 @@ $app->get('/attendanceDashboard', function(Request $request, Response $response)
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
     $modules = $studentModel->getModules($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
-
+    $absences = $studentModel->getAttendance($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+var_dump($absences);
     //Get Module Data
     //Announcements
     //
@@ -62,6 +63,8 @@ $app->get('/attendanceDashboard', function(Request $request, Response $response)
             'rank' => $_SESSION['rank'],
             'studentDashboard' => studentDashboard,
             'contact' => contact,
+            'absences' => $absences,
+            'timetable' => timetable,
             'attendance' => attendance,
             'profile' => profile,
             'home' => $home,

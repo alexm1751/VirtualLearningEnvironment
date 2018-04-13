@@ -45,9 +45,16 @@ $app->get('/timetable', function(Request $request, Response $response)
             ->withRedirect(LANDING_PAGE);
         exit;
     }
+
+    $path = $studentModel->getTimetable($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
+
+    $path = $path[0]['dbtablepdf'];
+    var_dump($path);
+
     //Get Module Data
     //Announcements
     //
+
 
     $home = studentDashboard;
 
@@ -64,6 +71,7 @@ $app->get('/timetable', function(Request $request, Response $response)
             'page_heading_2' => 'Virtual Learning Environment',
             'module_page' => module_page,
             'home' => $home,
+            'path' => $path,
             'contact' => contact,
             'attendance' => attendance,
             'profile' => profile,

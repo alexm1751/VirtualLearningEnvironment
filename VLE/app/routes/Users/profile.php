@@ -56,7 +56,7 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
 
     }
     $userModel = $this->get('user_model');
-    $studentModel = $this->get('student_model');
+
 
     $db_handle = $this->get('dbase');
 
@@ -64,6 +64,7 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
+    $details= $userModel->get_profile_details($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
 
 
     return $this->view->render($response,
@@ -78,6 +79,7 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
             'page_heading_2' => 'Virtual Learning Environment',
             'module_page' => module_page,
             'home' => $home,
+            'details' => $details,
             'rank' => $_SESSION['rank'],
             'contact' => contact,
             'attendance' => attendance,
@@ -85,7 +87,6 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
             'timetable' => timetable,
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
-            'courses' =>  $_SESSION['courses'],
             'logout_page' => LOGOUT_PAGE,
             'course_edit' => course_edit,
             'module_edit' => module_edit,

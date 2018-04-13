@@ -106,11 +106,13 @@ class SQLQueries
     /*STUDENT Queries*/
 
     public static function get_attendance($email){
-        $m_sql_query_string  = "SELECT a.dbClassID, a.dbAttended ";
-        $m_sql_query_string .= "FROM vle_attendance a, vle_users b ";
-        $m_sql_query_string .= "WHERE a.dbUniqueID = b.dbUniqueID ";
-        $m_sql_query_string .= "AND a.dbAttended= 0 ";
-        $m_sql_query_string .= "AND b.dbEmail = '$email'";
+        $m_sql_query_string  = "SELECT a.dbClassID, d.dbModuleTitle , c.dbDescAndWeek, c.dbDate, a.dbAttended
+        FROM vle_attendance a ,vle_users b, vle_classes c , vle_modules d
+        WHERE a.dbUniqueID = b.dbUniqueID
+        AND a.dbClassID = c.dbClassID
+        AND c.dbModuleID = d.dbModuleID
+        AND a.dbAttended= 0
+        AND b.dbEmail= '$email'";
         return $m_sql_query_string;
     }
     public static function get_timetable($email){
@@ -130,7 +132,12 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_course_announcements($email){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementTitle, bEmail = '$email' AND a.dbModuleID IS NULL ";
+        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementTitle, a.dbDescription, a.dbDate
+        FROM vle_announcements a, vle_allocation b, vle_users c
+        WHERE a.dbCourseID = b.dbCourseID
+        AND b.dbUniqueID = c.dbUniqueID
+        AND c.dbEmail = '$email' 
+        AND a.dbModuleID IS NULL ";
         return $m_sql_query_string;
     }
     public static function get_deadlines($email, $module){
@@ -501,6 +508,15 @@ WHERE dbTimeTableID = '$timetableID'";
             "INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
             VALUES ('$password','$email', '$name','$address','$number', '$rank', '$gender','', DEFAULT)";
 
+        return $m_sql_query_string;
+    }
+
+    public static function getCourse($email){
+        $m_sql_query_string = "SELECT DISTINCT a.dbCourseName , a.dbCourseDescription
+        FROM vle_courses a , vle_allocation b, vle_users c
+        WHERE a.dbCourseID = b.dbCourseID
+        AND b.dbUniqueID = c.dbUniqueID
+        AND c.dbEmail = '$email'";
         return $m_sql_query_string;
     }
 

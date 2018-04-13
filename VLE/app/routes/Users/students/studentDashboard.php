@@ -49,6 +49,13 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $modules = $studentModel->getModules($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
     $_SESSION['modules'] = $modules;
 
+    $course = $studentModel->getCourse($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+    $announcements = $studentModel->getCourseAnnouncemnts($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+var_dump($announcements);
+    /*    //var_dump($course);
+    var_dump($course['0']['dbCourseName']);
+    var_dump($course['0']['dbCourseDescription']);*/
+
     $name= $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
     return $this->view->render($response,
@@ -63,6 +70,8 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
             'module_page' => module_page,
+            'course' => $course,
+            'announcements' => $announcements,
             'home' => $home,
             'contact' => contact,
             'attendance' => attendance,

@@ -49,7 +49,7 @@ $app->get('/timetable', function(Request $request, Response $response)
     $path = $studentModel->getTimetable($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
 
     $path = $path[0]['dbtablepdf'];
-    var_dump($path);
+
 
     //Get Module Data
     //Announcements

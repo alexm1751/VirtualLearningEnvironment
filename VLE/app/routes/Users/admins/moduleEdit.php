@@ -34,6 +34,7 @@ $app->get('/moduleEdit', function(Request $request, Response $response) {
     $SQLQueries = $this->get('SQLQueries');
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
+    $modules = $adminModel->getModules($db_handle,$SQLQueries,$wrapper_mysql);
 
 
     //if Rank 4 super admin, delete or add new admins!! :D
@@ -53,6 +54,7 @@ $app->get('/moduleEdit', function(Request $request, Response $response) {
             'logout_page' => LOGOUT_PAGE,
             'name' => $_SESSION['name'],
             'rank' => $_SESSION['rank'],
+            'modules' => $modules,
             'home' => $home,
             'course_edit' => course_edit,
             'module_edit' => module_edit,

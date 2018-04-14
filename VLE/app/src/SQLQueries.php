@@ -106,13 +106,21 @@ class SQLQueries
     /*STUDENT Queries*/
 
     public static function get_attendance($email){
-        $m_sql_query_string  = "SELECT a.dbClassID, d.dbModuleTitle , c.dbDescAndWeek, c.dbDate, a.dbAttended
+        $m_sql_query_string  = "SELECT a.dbClassID, d.dbModuleTitle , c.dbDescAndWeek, date(c.dbDate) as date, a.dbAttended
         FROM vle_attendance a ,vle_users b, vle_classes c , vle_modules d
         WHERE a.dbUniqueID = b.dbUniqueID
         AND a.dbClassID = c.dbClassID
         AND c.dbModuleID = d.dbModuleID
         AND a.dbAttended= 0
         AND b.dbEmail= '$email'";
+        return $m_sql_query_string;
+    }
+
+    public static function get_percent($email){
+        $m_sql_query_string  = "SELECT CAST( SUM(a.dbAttended) / COUNT(a.dbAttended)*100 AS UNSIGNED) as percent
+        FROM vle_attendance a, vle_users b
+        WHERE a.dbUniqueID = b.dbUniqueID
+        AND b.dbEmail = '$email'";
         return $m_sql_query_string;
     }
     public static function get_timetable($email){
@@ -124,11 +132,11 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_module_announcements($module){
-        $m_sql_query_string  = "SELECT a.dbAnnouncementTitle, a.dbDescription, a.dbDate ";
-        $m_sql_query_string .= "FROM vle_announcements a, vle_allocation b, vle_users c ";
+        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementTitle, a.dbDescription, a.dbDate ";
+        $m_sql_query_string .= "FROM vle_announcements a, vle_allocation b, vle_modules c ";
         $m_sql_query_string .= "WHERE a.dbModuleID = b.dbModuleID ";
-        $m_sql_query_string .= "AND b.dbUniqueID = c.dbUniqueID  ";
-        $m_sql_query_string .= "AND b.dbModuleTitle = '$module'";
+        $m_sql_query_string .= "AND b.dbModuleID = c.dbModuleID  ";
+        $m_sql_query_string .= "AND c.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
     public static function get_course_announcements($email){
@@ -142,50 +150,55 @@ class SQLQueries
     }
     public static function get_deadlines($email, $module){
         $m_sql_query_string  = "SELECT a.dbDescription, a.dbDeadline
-        FROM vle_coursework a, vle_allocation b, vle_users c
+        FROM vle_coursework a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID 
+        AND b.dbModuleID=d.dbModuleID
         AND c.dbEmail = '$email'
-        AND a.dbModuleTitle = '$module'";
+        AND d.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
     public static function get_staff_info($module){
         $m_sql_query_string  = "SELECT a.dbFullName, a.dbEmail
-        FROM vle_users a, vle_allocation b
+        FROM vle_users a, vle_allocation b, vle_modules c
         WHERE a.dbUniqueID = b.dbUniqueID
+        AND b.dbModuleID=c.dbModuleID
         AND b.dbTeaches = 1
-        AND b.dbModuleTitle = '$module'";
+        AND c.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
     public static function get_theory_content($email,$module){
-        $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
-        FROM vle_learning a, vle_allocation b, vle_users c
+        $m_sql_query_string  = "SELECT DISTINCT a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
+        FROM vle_learning a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID
+        AND a.dbModuleID = d.dbModuleID
         AND a.dbTheory = 1
         AND a.dbPractical = 0
-        AND a.dbModuleTitle = '$module'
+        AND d.dbModuleTitle = '$module'
         AND c.dbEmail = '$email'";
         return $m_sql_query_string;
     }    
     public static function get_practical_content($email,$module){
-    $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
-    FROM vle_learning a, vle_allocation b, vle_users c
-    WHERE a.dbModuleID = b.dbModuleID
-    AND b.dbUniqueID = c.dbUniqueID
-    AND a.dbTheory = 0
-    AND a.dbPractical = 1
-    AND a.dbModuleTitle = '$module'
-    AND c.dbEmail = '$email'";
+    $m_sql_query_string  = "SELECT DISTINCT a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
+        FROM vle_learning a, vle_allocation b, vle_users c, vle_modules d
+        WHERE a.dbModuleID = b.dbModuleID
+        AND b.dbUniqueID = c.dbUniqueID
+        AND a.dbModuleID = d.dbModuleID
+        AND a.dbTheory = 0
+        AND a.dbPractical = 1
+        AND d.dbModuleTitle = '$module'
+        AND c.dbEmail = '$email'";
     return $m_sql_query_string;
     }
     public static function get_assessments($email,$module){
-        $m_sql_query_string  = "SELECT a.dbDescription,a.dbPostDate, a.dbDeadline, a.dbbrief
-        FROM vle_coursework a, vle_allocation b, vle_users c
+        $m_sql_query_string  = "SELECT a.dbDescription, a.dbPostDate, a.dbDeadline, a.dbbrief
+        FROM vle_coursework a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID 
+        AND b.dbModuleID = d.dbModuleID
         AND c.dbEmail = '$email'
-        AND a.dbModuleTitle = '$module'";
+        AND d.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
     public static function submit_assessments($courseworkID,$uniqueID){
@@ -196,13 +209,14 @@ class SQLQueries
     }
     public static function get_feedback($email,$module){
         $m_sql_query_string  = "SELECT a.dbDescription, b.dbFeedback, b.dbMarked
-        FROM vle_coursework a, vle_submissions b, vle_allocation c, vle_users d
-        WHERE a.dbCourseWorkID = b.dbCourseWorkID
-        AND b.dbUniqueID = c.dbUniqueID
-        AND c.dbUniqueID = d.dbUniqueID
-        AND c.dbModuleTitle = '$module'
-        AND b.dbEmail = '$email'
-        AND b.dbMarked = 1";
+                FROM vle_coursework a, vle_submissions b, vle_allocation c, vle_users d, vle_modules e
+                WHERE a.dbCourseWorkID = b.dbCourseWorkID
+                AND b.dbUniqueID = c.dbUniqueID
+                AND c.dbUniqueID = d.dbUniqueID
+                AND c.dbModuleID = e.dbModuleID
+                AND e.dbModuleTitle = '$module'
+                AND d.dbEmail = '$email'
+                AND b.dbMarked = 1";
         return $m_sql_query_string;
     }
 
@@ -379,7 +393,7 @@ class SQLQueries
     }
     public static function admin_get_modules(){
         $m_sql_query_string  =
-            "SELECT dbModuleID,dbModuleName, dbModuleDescription,dbCredits,dbCourseID
+            "SELECT dbModuleID,dbModuleTitle, dbModuleDescription,dbCredits,dbCourseID
             FROM vle_modules";
 
         return $m_sql_query_string;
@@ -408,8 +422,8 @@ class SQLQueries
     }
     public static function admin_get_users(){
         $m_sql_query_string  =
-            "SELECT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber, dbRank
-            FROM vle_users
+            "SELECT DISTINCT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber, dbGender,dbRank
+            FROM vle_users a 
             WHERE dbRank = 1 OR dbRank = 2";
 
         return $m_sql_query_string;
@@ -467,8 +481,10 @@ class SQLQueries
     }
     public static function admin_get_timetables(){
         $m_sql_query_string  =
-            "SELECT dbTimeTableID, dbtablepdf, dbCourseID
-            FROM vle_timetables";
+            "SELECT a.dbTimeTableID, a.dbtablepdf, a.dbCourseID, b.dbCourseName
+            
+            FROM vle_timetables a, vle_courses b
+            WHERE a.dbCourseID = b.dbCourseID";
 
         return $m_sql_query_string;
     }
@@ -496,7 +512,7 @@ WHERE dbTimeTableID = '$timetableID'";
     }
     public static function admin_get_admins(){
         $m_sql_query_string  =
-            "SELECT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber
+            "SELECT dbUniqueID,dbEmail, dbFullName,dbAddress,dbNumber,dbGender, dbRank
             FROM vle_users
             WHERE dbRank = 3 OR dbRank = 4";
 

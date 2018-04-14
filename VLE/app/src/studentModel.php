@@ -50,7 +50,22 @@ class studentModel
         }
 
     }
+    public function getPercent($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+        try{
+            $query_name = $p_sql_queries->get_percent($email);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
 
+            return ($array);
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+
+    }
     public function getTimetable($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
 
         try{
@@ -69,7 +84,7 @@ class studentModel
 
     }
 
-    public function getModuleAnnouncemnts($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
+    public function getModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
             $query_name = $p_sql_queries->get_module_announcements($module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
@@ -103,7 +118,7 @@ class studentModel
 
     }
 
-    public function getCourseAnnouncemnts($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
         try{
             $query_name = $p_sql_queries->get_course_announcements($email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
@@ -120,7 +135,7 @@ class studentModel
 
     }
 
-    public function getDeadlines($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module,$email){
+    public function getDeadlines($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email,$module){
         try{
             $query_name = $p_sql_queries->get_deadlines($email, $module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);

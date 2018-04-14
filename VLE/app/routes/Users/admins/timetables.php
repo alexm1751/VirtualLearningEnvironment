@@ -35,7 +35,8 @@ $app->get('/timetables', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-
+    $timetables = $adminModel->getTimeTables($db_handle,$SQLQueries,$wrapper_mysql);
+var_dump($timetables);
     //if Rank 4 super admin, delete or add new admins!! :D
     $home = adminDashboard;
 
@@ -53,6 +54,7 @@ $app->get('/timetables', function(Request $request, Response $response) {
             'logout_page' => LOGOUT_PAGE,
             'name' => $_SESSION['name'],
             'rank' => $_SESSION['rank'],
+            'course_timetables' => $timetables,
             'home' => $home,
             'course_edit' => course_edit,
             'module_edit' => module_edit,

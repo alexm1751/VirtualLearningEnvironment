@@ -33,6 +33,7 @@ $app->get('/classSchedule', function(Request $request, Response $response) {
     $SQLQueries = $this->get('SQLQueries');
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
+    $classes = $adminModel->getClasses($db_handle,$SQLQueries,$wrapper_mysql);
 
 
     //if Rank 4 super admin, delete or add new admins!! :D
@@ -53,6 +54,7 @@ $app->get('/classSchedule', function(Request $request, Response $response) {
             'name' => $_SESSION['name'],
             'rank' => $_SESSION['rank'],
             'home' => $home,
+            'classes' => $classes,
             'course_edit' => course_edit,
             'module_edit' => module_edit,
             'user_edit' => user_edit,

@@ -50,6 +50,8 @@ $app->map(['GET', 'POST'],'/staffinfo', function(Request $request, Response $res
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    $staff = $studentModel->getStaffInfo($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+
     //Get Module Data
     //Announcements
     //
@@ -63,6 +65,7 @@ $app->map(['GET', 'POST'],'/staffinfo', function(Request $request, Response $res
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
             'module' => $moduleTitle,
+            'staff' => $staff,
             'home' => $home,
             'timetable' => timetable,
             'name' => $_SESSION['name'],

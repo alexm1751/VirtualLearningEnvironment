@@ -16,17 +16,6 @@ DROP TABLE IF EXISTS vle_modules;
 DROP TABLE IF EXISTS vle_courses;
 DROP TABLE IF EXISTS vle_users;
 
-
-
-
-
-
-
-
-
-
-
-
 /*subject/teacher table?
 */
 
@@ -52,6 +41,7 @@ PRIMARY KEY (dbUniqueID)
 );
 
 ALTER TABLE vle_users ADD UNIQUE (dbEmail);
+
 ALTER TABLE vle_users AUTO_INCREMENT=1025;
 
 /*Dummy entries*/
@@ -71,17 +61,18 @@ INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGe
 VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','sarah@mail.com', 'Sarah Cooper',"Leicester",012345678901, 1, 'Female','', DEFAULT);
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
 VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','atty@mail.com', 'Herodes Atticus ',"Leicester",012345678901, 1, 'Male','', DEFAULT);
-INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
+
 
 /*Teacher*/
-VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','ben@mail.com','Ben Palmer',"Leicester",012345678901, 2,'Male', '', DEFAULT);
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
+VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','ben@mail.co.uk','Ben Palmer',"Leicester",012345678901, 2,'Male', '', DEFAULT);
 
 /*Admin*/
-VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','andrew@mail.com', 'Andrew Sterling',"Leicester",012345678901, 3, 'Male','', DEFAULT);
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
+VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','andrew@mail.pl', 'Andrew Sterling',"Leicester",012345678901, 3, 'Male','', DEFAULT);
 
 /*Super Admin*/
+INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
 VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','dolly@mail.com', 'Dolly Sachdev',"Leicester",012345678901, 4,'Female', '', DEFAULT);
 
 
@@ -123,7 +114,6 @@ INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,
 VALUES (2095,'Web Development and Design', 'This Module focuses on the the fundamentals of Web development such as HTML5, CSS3 and basic JavaScript. Along side learning about information architecure and how people interact with websites.', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
 VALUES (2100,'Database Systems', 'Introduction to SQL, involving practical experience and understanding of relational algebra.', 30, 1050);
-
 /*0, 1 or Many relationship */
 
 /*Timetable TABLE*/
@@ -196,7 +186,7 @@ dbCourseID INT(5) NOT NULL,
 PRIMARY KEY (dbTimeTableID)	
 );
 INSERT INTO vle_timetables(dbTimeTableID, dbtablepdf,dbCourseID)
-VALUES (300,'/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/vle_timetable.pdf',1050);
+VALUES (300,'/FinalYearProject/VLE_Public/media/vle_timetable.pdf',1050);
 
 
 /*Announcement TABLE*/
@@ -368,13 +358,13 @@ PRIMARY KEY (dbCourseWorkID)
 );
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Brief1.pdf', 2080);
+VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief.pdf', 2080);
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (111, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Brief2.pdf', 2090);
+VALUES (111, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief2.pdf', 2090);
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Brief3.pdf', 2095);
+VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief3.pdf', 2095);
 
 /*Submissions TABLE*/
 CREATE TABLE vle_submissions(
@@ -389,13 +379,13 @@ PRIMARY KEY (dbSubmissionID)
 );
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (701, '', default, '/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Assignment1.pdf', 0,1027, 110);
+VALUES (701, '', default, '/FinalYearProject/VLE_Public/media/Assignment1.pdf', 0,1027, 110);
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (703, '', default, '/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 111);
+VALUES (703, '', default, '/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 111);
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (704, '', default, '/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 112);
+VALUES (704, '', default, '/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 112);
 
 
 
@@ -414,16 +404,16 @@ PRIMARY KEY (dbResID)
 
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recoomended. Please udnerstand the core conecpts before moving on.','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/LearningMaterial1.pdf', default, 2100);
+VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recoomended. Please udnerstand the core conecpts before moving on.','/FinalYearProject/VLE_Public/media/LearningMaterial1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1002, 0, 1, 'Data Structures Knowldgede', 'Key information on how data is stored in a data structure.','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/LearningMaterial2.pdf', default, 2080);
+VALUES (1002, 0, 1, 'Data Structures Knowldgede', 'Key information on how data is stored in a data structure.','/FinalYearProject/VLE_Public/media/LearningMaterial2.pdf', default, 2080);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1003, 1, 0, 'Creating Tables in MySQL', 'Basic Setup and query on a small database.','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/PracticalWork1.pdf', default, 2100);
+VALUES (1003, 1, 0, 'Creating Tables in MySQL', 'Basic Setup and query on a small database.','/FinalYearProject/VLE_Public/media/PracticalWork1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1004, 1, 0, 'Matlab Content', 'Carrying on from last week. use the content to help you through this week','/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/PracticalWork2.pdf', default, 2090);
+VALUES (1004, 1, 0, 'Matlab Content', 'Carrying on from last week. use the content to help you through this week','/FinalYearProject/VLE_Public/media/PracticalWork2.pdf', default, 2090);
 
 
 /* FOREIGN KEYS*/
@@ -471,3 +461,26 @@ SELECT dbFullName, dbEmail, dbAddress, dbNumber
 FROM vle_users
 WHERE dbEmail = 'alex@mail.com';
 
+
+SELECT DISTINCT a.dbAnnouncementTitle, a.dbDescription
+FROM vle_announcements a, vle_allocation b, vle_users c
+WHERE a.dbCourseID = b.dbCourseID
+AND b.dbUniqueID = c.dbUniqueID
+AND c.dbEmail = '$email' 
+AND a.dbModuleID IS NULL; ""
+
+"SELECT a.dbClassID, d.dbModuleTitle , c.dbDescAndWeek, date(c.dbDate) as date, a.dbAttended
+FROM vle_attendance a ,vle_users b, vle_classes c , vle_modules d
+WHERE a.dbUniqueID = b.dbUniqueID
+AND a.dbClassID = c.dbClassID
+AND c.dbModuleID = d.dbModuleID
+AND a.dbAttended= 0
+AND b.dbEmail= 'alex@mail.com'"
+
+SELECT SUM(dbAttended)/ COUNT(1) * dbAttended FROM vle_attendance;
+SELECT SUM(dbAttended)/ COUNT(dbAttended)*100 AS percent FROM vle_attendance WHERE dbEmail = '$email';
+SELECT SUM(a.dbAttended)/ COUNT(a.dbAttended)*100 AS percent 
+FROM vle_attendance a, vle_users b
+WHERE a.dbUniqueID = b.dbUniqueID
+AND b.dbEmail = '$email';
+SELECT * FROM vle_attendance WHERE dbUniqueID = 1027;

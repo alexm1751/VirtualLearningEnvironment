@@ -92,9 +92,11 @@ $app->get('/contact', function(Request $request, Response $response)
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
             'logout_page' => LOGOUT_PAGE,
-
             'course_edit' => course_edit,
             'module_edit' => module_edit,
+            'module_content' => module_content,
+            'course_announcement' => course_announcement,
+            'module_announcement' => module_announcement,
             'user_edit' => user_edit,
             'class_schedule' => class_schedule,
             'timetables' => timetables,

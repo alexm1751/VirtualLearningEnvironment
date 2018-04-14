@@ -23,8 +23,69 @@
                 </li>
             </ul>
 
-            <h2>Assessment</h2>
-            <p>CourseWork:</p>
+            <h2>Assessments:</h2>
+            <div class="line"></div>
+            {% if assignments is null %}
+                <p>No Content Available at this time. Please check back soon.</p>
+                <div class="line"></div>
+            {% else %}
+            {% for assignment in assignments %}
+                <h4>{{ assignment.dbDescription }}</h4>
+
+
+                <p>Posted on:{{ assignment.dbPostDate }}</p>
+                <p>Deadline: {{ assignment.dbDeadline }}</p>
+
+                <a href="" data-target="#upModal" data-toggle="modal">
+                    <label>View</label>
+                </a>
+                <a href="" data-target="#upModal2" data-toggle="modal">
+                    <label style="padding-left: 5px;">Submit</label>
+                </a>
+                <div id="upModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
+                    <iframe src="{{ assignment.dbbrief }}#zoom=50" width="100%" height="80%"></iframe>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="upModal2" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <div class="panel-heading">Upload your Assignment</div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="text-center">
+                                                <div class="panel-body">
+                                                    <form action="{{ action }}" method="{{ method }}">
+                                                        <div class="form-group" style="text-align: left;">
+                                                            <input type="file" name="upload" accept="application/pdf"/>
+                                                        </div>
+                                                        <input class="btn btn-lg btn-primary btn-default" value="Submit Your Assignment" type="submit">
+                                                        {{ csrf.field| raw }}
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-md-12">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
             <div class="line"></div>
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

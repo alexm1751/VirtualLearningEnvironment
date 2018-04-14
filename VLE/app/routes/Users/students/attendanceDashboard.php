@@ -47,7 +47,9 @@ $app->get('/attendanceDashboard', function(Request $request, Response $response)
 
     $modules = $studentModel->getModules($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
     $absences = $studentModel->getAttendance($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
-var_dump($absences);
+    $percent = $studentModel->getPercent($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+    $percent = $percent[0]['percent'];
+//var_dump($absences);
     //Get Module Data
     //Announcements
     //
@@ -61,10 +63,13 @@ var_dump($absences);
             'page_heading_2' => 'Virtual Learning Environment',
             'module_page' => module_page,
             'rank' => $_SESSION['rank'],
+
+            'name' => $_SESSION['name'],
             'studentDashboard' => studentDashboard,
             'contact' => contact,
             'absences' => $absences,
             'timetable' => timetable,
+            'percent' => $percent,
             'attendance' => attendance,
             'profile' => profile,
             'home' => $home,

@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'tableLayout.html.twig' %}
 {% block content %}
 
     {% include 'navigation.html.twig' %}
@@ -17,10 +17,73 @@
             </li>
 
         </ul>
+        {% if admins is null %}
+            <p>There is no admin data to display at this time.</p>
+        {% else %}
+        <div class="table-responsive" style="width: 100%">
+        <table id="admins" class="display" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>UserID</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Number</th>
+                    <th>Gender</th>
+                    <th>Rank</th>
+                    <th>View/Edit/Delete</th>
 
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserID</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Address</th>
+                    <th>Number</th>
+                    <th>Gender</th>
+                    <th>Rank</th>
+                    <th>View/Edit/Delete</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for admin in admins %}
+                <tr>
+
+                    <td>{{ admin.dbUniqueID }}</td>
+                    <td>{{ admin.dbEmail }}</td>
+                    <td>{{ admin.dbFullName }}</td>
+                    <td>{{ admin.dbAddress }}</td>
+                    <td>{{ admin.dbNumber }}</td>
+                    <td>{{ admin.dbGender }}</td>
+                    <td>{{ admin.dbRank }}</td>
+                    <td>
+                        <div class='btn-group' role='group' aria-label='...'>
+                            <a href="#view<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+                            <a href="#edit<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></a>
+                            <a href="#delete<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
+                        </div>
+                    </td>
+                </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        </div>
+            <form>
+
+                <br>
+                <br>
+                <div class="form-group">
+                    <a href="#edit<?php echo $id;?>" data-toggle="modal">Create New Admin: <button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
+                </div>
+            </form>
+        {% endif %}
+    </div>
 
     </div>
-</div>
 
     {% include 'footer.html.twig' %}
+    </div>
+
 {% endblock %}

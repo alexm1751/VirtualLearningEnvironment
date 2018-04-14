@@ -13,25 +13,25 @@
 
 
 
-        <input type="hidden" id="refreshed" value="no">
-       {# safari code#}
-        <script type="text/javascript">
-            var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-            if (is_safari){window.addEventListener( "pageshow", function ( event ) {
-                var historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
-                if (historyTraversal) {
-                    // Handle page restore.
-                    window.location.reload();
-                }
-            });
+    <input type="hidden" id="refreshed" value="no">
+    {# safari code#}
+    <script type="text/javascript">
+        var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (is_safari){window.addEventListener( "pageshow", function ( event ) {
+            var historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
+            if (historyTraversal) {
+                // Handle page restore.
+                window.location.reload();
             }
-            </script>
-        <meta http-equiv="refresh" content="900" >
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta Http-Equiv="Cache-Control" Content="no-cache">
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
-        <title>{% block title %}{% endblock %}</title>
+        });
+        }
+    </script>
+    <meta http-equiv="refresh" content="900" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta Http-Equiv="Cache-Control" Content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <div class="container">
@@ -53,12 +53,32 @@
 <script src="//getbootstrap.com/2.3.2/assets/js/bootstrap-modal.js"></script>
 {#<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
 {#<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>#}
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+{#<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>#}
 <!-- Bootstrap Js CDN -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-    $('.dropdown-toggle').dropdown()
+    $(document).ready(function(){
+        $('#userTable').DataTable();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#admins').DataTable();
+
+    });</script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#courses').DataTable();
+
+        });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#timetable').DataTable();
+
+    });
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -66,7 +86,7 @@
             $('#sidebar').toggleClass('active');
         });
     });
-        </script>
+</script>
 
 
 {#<input id="alwaysFetch" type="hidden" />#}

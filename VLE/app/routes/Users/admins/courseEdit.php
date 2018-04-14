@@ -35,6 +35,7 @@ $app->get('/courseEdit', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
+    $courses = $adminModel->getCourses($db_handle,$SQLQueries,$wrapper_mysql);
 
     //if Rank 4 super admin, delete or add new admins!! :D
     $home = adminDashboard;
@@ -54,6 +55,7 @@ $app->get('/courseEdit', function(Request $request, Response $response) {
             'name' => $_SESSION['name'],
             'rank' => $_SESSION['rank'],
             'home' => $home,
+            'courses' => $courses,
             'course_edit' => course_edit,
             'module_edit' => module_edit,
             'user_edit' => user_edit,

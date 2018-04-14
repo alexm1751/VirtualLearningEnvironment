@@ -27,6 +27,17 @@
             <p>Assignment Marks</p>
             <div class="line"></div>
 
+            {% if feedback is null %}
+                <p>No Feedback Available at this time. Please check back soon.</p>
+                <div class="line"></div>
+            {% else %}
+                {% for row in feedback %}
+                    <p>{{ row.dbDescription }}</p>
+                    <p>{{ row.dbFeedback }}</p>
+                    {% endfor %}
+
+            {% endif %}
+
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

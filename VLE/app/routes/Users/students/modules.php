@@ -38,7 +38,7 @@ $app->map(['GET', 'POST'],'/modules', function(Request $request, Response $respo
             ->withRedirect(LANDING_PAGE);
         exit;
     }
-    $userModel = $this->get('user_model');
+
     $studentModel = $this->get('student_model');
 
     $db_handle = $this->get('dbase');
@@ -50,6 +50,9 @@ $app->map(['GET', 'POST'],'/modules', function(Request $request, Response $respo
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    $deadlines = $studentModel->getDeadlines($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user'], $moduleTitle);
+    $announcements = $studentModel->getModuleAnnouncements($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+
     //Get Module Data
     //Announcements
     //
@@ -67,7 +70,9 @@ $app->map(['GET', 'POST'],'/modules', function(Request $request, Response $respo
             'rank' => $_SESSION['rank'],
             'timetable' => timetable,
             'name' => $_SESSION['name'],
+            'announcements' => $announcements,
             'logout_page' => LOGOUT_PAGE,
+            'deadlines' => $deadlines,
             'module_page' => module_page,
             'profile' => profile,
             'module_feedback' => feedback,

@@ -50,9 +50,8 @@ $app->map(['GET', 'POST'],'/learningResources', function(Request $request, Respo
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
-    //Get Module Data
-    //Announcements
-    //
+    $practical = $studentModel->getLearningPractical($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
+    $theory = $studentModel->getLearningTheory($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
     $home = studentDashboard;
     return $this->view->render($response,
         'st_learningResources.html.twig',
@@ -66,6 +65,8 @@ $app->map(['GET', 'POST'],'/learningResources', function(Request $request, Respo
             'timetable' => timetable,
             'rank' => $_SESSION['rank'],
             'name' => $_SESSION['name'],
+            'practical' => $practical,
+            'theory' => $theory,
             'logout_page' => LOGOUT_PAGE,
             'profile' => profile,
             'module_feedback' => feedback,

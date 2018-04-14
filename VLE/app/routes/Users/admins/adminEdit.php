@@ -49,6 +49,8 @@ $app->get('/adminEdit', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
+    $admins = $adminModel->getAdmins($db_handle,$SQLQueries,$wrapper_mysql);
+
 
     //if Rank 4 super admin, delete or add new admins!! :D
     $home = adminDashboard;
@@ -68,6 +70,7 @@ $app->get('/adminEdit', function(Request $request, Response $response) {
                 'name' => $_SESSION['name'],
                 'rank' => $_SESSION['rank'],
                 'home' => $home,
+                'admins' => $admins,
                 'course_edit' => course_edit,
                 'module_edit' => module_edit,
                 'user_edit' => user_edit,

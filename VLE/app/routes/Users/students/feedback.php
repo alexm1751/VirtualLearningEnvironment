@@ -50,6 +50,7 @@ $app->map(['GET', 'POST'],'/feedback', function(Request $request, Response $resp
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    $feedback = $studentModel->getFeedback($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
     //Get Module Data
     //Announcements
     //
@@ -65,6 +66,7 @@ $app->map(['GET', 'POST'],'/feedback', function(Request $request, Response $resp
             'rank' => $_SESSION['rank'],
             'home' => $home,
             'timetable' => timetable,
+            'feedback' => $feedback,
             'name' => $_SESSION['name'],
             'logout_page' => LOGOUT_PAGE,
             'profile' => profile,

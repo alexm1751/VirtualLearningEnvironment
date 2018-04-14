@@ -24,8 +24,14 @@
             </ul>
 
             <h2>Staff Information</h2>
-            <p>Teacher etc..</p>
             <div class="line"></div>
+            {% for staff in staff %}
+                <h4>Lecturer: </h4>
+                <h4>{{ staff.dbFullName }}</h4>
+                <p>{{ staff.dbEmail }}</p>
+                <div class="line"></div>
+            {% endfor %}
+
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

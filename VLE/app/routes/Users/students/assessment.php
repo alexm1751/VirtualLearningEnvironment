@@ -50,10 +50,12 @@ $app->map(['GET', 'POST'],'/assessment', function(Request $request, Response $re
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    $assignments = $studentModel->getAssessments($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
+
     //Get Module Data
     //Announcements
     //
-    $home = teacherDashboard;
+    $home = studentDashboard;
     return $this->view->render($response,
         'st_assessment.html.twig',
         [
@@ -64,6 +66,7 @@ $app->map(['GET', 'POST'],'/assessment', function(Request $request, Response $re
             'module' => $moduleTitle,
             'home' => $home,
             'timetable' => timetable,
+            'assignments' => $assignments,
             'name' => $_SESSION['name'],
             'rank' => $_SESSION['rank'],
             'logout_page' => LOGOUT_PAGE,

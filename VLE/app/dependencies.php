@@ -95,6 +95,8 @@ $container['flash'] = function () {
 
 
 
+
+
 $container['dbase'] = function ($container) {
 
     $db_conf = $container['settings']['pdo'];

@@ -57,6 +57,8 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
    $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
 
+    $_SESSION['form_flag'] = 0;
+
     $home = teacherDashboard;
 
     return $this->view->render($response,

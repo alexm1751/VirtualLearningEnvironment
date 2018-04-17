@@ -10,7 +10,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Respect\Validation\Validator as v;
 
-$app->get('/delete', function(Request $request, Response $response) {
+$app->map(['GET', 'POST'],'/delete', function(Request $request, Response $response) use($app){
     if (!$id = $request->getParam('id')){
         $_SESSION = array();
         $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Would you mind logging again?.");

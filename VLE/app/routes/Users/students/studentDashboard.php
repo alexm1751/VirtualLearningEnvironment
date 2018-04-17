@@ -52,6 +52,8 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $course = $studentModel->getCourse($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
     $announcements = $studentModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
 
+    $_SESSION['form_flag'] = 0;
+
     /*    //var_dump($course);
     var_dump($course['0']['dbCourseName']);
     var_dump($course['0']['dbCourseDescription']);*/

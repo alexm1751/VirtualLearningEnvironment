@@ -192,7 +192,7 @@ class SQLQueries
     return $m_sql_query_string;
     }
     public static function get_assessments($email,$module){
-        $m_sql_query_string  = "SELECT a.dbDescription, a.dbPostDate, a.dbDeadline, a.dbbrief
+        $m_sql_query_string  = "SELECT a.dbDescription, a.dbPostDate, a.dbDeadline, a.dbbrief, c.dbUniqueID, a.dbCourseWorkID
         FROM vle_coursework a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID 
@@ -201,9 +201,16 @@ class SQLQueries
         AND d.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
-    public static function submit_assessments($courseworkID,$uniqueID){
-        $m_sql_query_string  = "INSERT INTO vle_submissions(dbDate,dbSubPdf, dbCourseWorkID,dbUniqueID)
-        VALUES (DEFAULT ,'/Applications/MAMP/htdocs/FinalYearProject/VLE_Public/media/Assignment1.pdf', '$courseworkID', '$uniqueID')";
+    public static function check_submission($userID,$courseID){
+        $m_sql_query_string  = "SELECT dbSubmissionID, dbUniqueID, dbCourseWorkID
+        FROM vle_submissions
+        WHERE dbUniqueID = '$userID'
+        AND dbCourseWorkID = '$courseID'";
+        return $m_sql_query_string;
+    }
+    public static function submit_assessments($courseworkID,$uniqueID,$filename){
+        $m_sql_query_string  = "INSERT INTO vle_submissions(dbDate,dbFeedback,dbSubPdf,dbMarked, dbCourseWorkID,dbUniqueID)
+        VALUES (DEFAULT ,'','$filename',0, $courseworkID, $uniqueID)";
 
         return $m_sql_query_string;
     }

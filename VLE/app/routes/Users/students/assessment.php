@@ -48,8 +48,16 @@ $app->map(['GET', 'POST'],'/assessment', function(Request $request, Response $re
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
     $moduleTitle = '';
+
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    if($moduleTitle){
+        $_SESSION['module_title']= $moduleTitle;
+    }
+    if(!$moduleTitle){
+         $moduleTitle =  $_SESSION['module_title'] ;
+    }
+
     $assignments = $studentModel->getAssessments($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
 
     //Get Module Data
@@ -65,6 +73,7 @@ $app->map(['GET', 'POST'],'/assessment', function(Request $request, Response $re
             'page_heading_2' => 'Virtual Learning Environment',
             'module' => $moduleTitle,
             'home' => $home,
+            'action' => insert,
             'timetable' => timetable,
             'assignments' => $assignments,
             'name' => $_SESSION['name'],

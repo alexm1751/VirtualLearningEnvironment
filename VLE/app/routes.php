@@ -22,6 +22,8 @@ require 'routes/Users/contact.php';
 require 'routes/Users/profile.php';
 require 'routes/Users/students/attendanceDashboard.php';
 require 'routes/sql_forms/update.php';
+require 'routes/sql_forms/insert.php';
+require 'routes/sql_forms/delete.php';
 require 'routes/Users/students/timetable.php';
 require 'routes/Users/students/assessment.php';
 require 'routes/Users/students/staffinfo.php';

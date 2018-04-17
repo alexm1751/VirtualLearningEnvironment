@@ -189,16 +189,15 @@ class authModel{
             return false;
         }
     }
-    public function update_profile_details($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $name,$address,$number,$email)
+    public function update_profile_details($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $name,$address,$number, $email)
     {
 
         try {
-            $modules = array();
-            $query_name = $p_sql_queries->update_profileDetails($name,$address,$number,$email);
+
+            $query_name = $p_sql_queries->update_profileDetails($name,$address,$number, $email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-            /*        $modules = $p_wrapper_mysql->safe_fetch_array();*/
-            $p_wrapper_mysql->safe_fetch_array();
+
 
             return true;
 

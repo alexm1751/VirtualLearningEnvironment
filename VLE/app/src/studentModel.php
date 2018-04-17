@@ -226,9 +226,29 @@ class studentModel
 
 
     }
-    public function submitAssessments($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$courseworkID,$uniqueID){
+
+    public function check_submission($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$user,$courseworkID){
         try{
-            $query_name = $p_sql_queries->submit_assessments($courseworkID,$uniqueID);
+            $query_name = $p_sql_queries->check_submission($user,$courseworkID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            $rows = $p_wrapper_mysql->count_rows();
+            if ($rows <= 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+
+
+    }
+    public function submitAssessments($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$uniqueID,$courseworkID,$filename){
+        try{
+            $query_name = $p_sql_queries->submit_assessments($courseworkID,$uniqueID,$filename);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             return true;

@@ -22,6 +22,7 @@
 
                 </li>
             </ul>
+            {% include 'messages.html.twig' %}
 
             <h2>Assessments:</h2>
             <div class="line"></div>
@@ -63,9 +64,9 @@
                                         <div class="panel-body">
                                             <div class="text-center">
                                                 <div class="panel-body">
-                                                    <form action="{{ action }}" method="{{ method }}">
+                                                    <form action="{{ action }}?id=2&user={{ assignment.dbUniqueID }}&cwID={{ assignment.dbCourseWorkID }}" enctype="multipart/form-data" method="POST">
                                                         <div class="form-group" style="text-align: left;">
-                                                            <input type="file" name="upload" accept="application/pdf"/>
+                                                            <input type="file" name="file" accept="application/pdf"/>
                                                         </div>
                                                         <input class="btn btn-lg btn-primary btn-default" value="Submit Your Assignment" type="submit">
                                                         {{ csrf.field| raw }}

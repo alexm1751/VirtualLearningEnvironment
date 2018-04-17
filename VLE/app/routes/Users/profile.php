@@ -86,6 +86,7 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
             'profile' => profile,
             'timetable' => timetable,
             'name' => $_SESSION['name'],
+            'flag' => $_SESSION['form_flag'],
             'modules' =>  $_SESSION['modules'],
             'logout_page' => LOGOUT_PAGE,
             'course_edit' => course_edit,

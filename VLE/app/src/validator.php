@@ -32,4 +32,5 @@ class validator
         return !empty($this->errors);
     }
 
+
 }

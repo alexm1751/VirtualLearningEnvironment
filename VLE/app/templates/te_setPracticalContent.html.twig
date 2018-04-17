@@ -25,6 +25,66 @@
 
             <h2>Set Practical Content</h2>
             <div class="line"></div>
+            <form>
+                <div class="form-group">
+                    <a href="#edit<?php echo $id;?>" data-toggle="modal">Set New Practical Work: <button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
+                </div>
+            </form>
+            <div class="line"></div>
+            {% if practical is null %}
+                <p>No Content Available at this time. Please check back soon.</p>
+                <div class="line"></div>
+            {% else %}
+                {% for practice in practical %}
+                    <h4>{{ practice.dbLearningTitle }}</h4>
+                    <p>{{ practice.dbDescription }}</p>
+
+
+                    <a href="" data-target="#upModal" data-toggle="modal">
+                        <label>Edit</label>
+                    </a>
+                    <a href="" data-target="#upModal2" data-toggle="modal">
+                        <label style="padding-left: 5px;">Delete</label>
+                    </a>
+                    <div class="line"></div>
+                    <div id="upModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
+                    </div>
+                    <div id="upModal2" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Upload your Assignment</div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="text-center">
+                                                    <div class="panel-body">
+                                                        <form action="{{ action }}" method="{{ method }}">
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <input type="file" name="upload" accept="application/pdf"/>
+                                                            </div>
+                                                            <input class="btn btn-lg btn-primary btn-default" value="Submit Your Assignment" type="submit">
+                                                            {{ csrf.field| raw }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

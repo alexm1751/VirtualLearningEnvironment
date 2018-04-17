@@ -21,16 +21,24 @@
         <div class="line"></div>
 
         <h3>Upcoming Deadlines: </h3>
+        {% if deadlines is null %}
+            <p>No Deadlines have been set. Check back soon.</p>
+        <div class="line"></div>
+        {% else %}
         {% for deadline in deadlines | slice(0,3) %}
             <p>{{ deadline.dbDescription }}</p>
             <p>{{ deadline.dbDeadline }}</p>
             <div class="line"></div>
+
         {% endfor %}
+        {% endif %}
 
         <h2>Announcements:</h2>
 
         <div class="line"></div>
-
+        {% if announcements is null %}
+            <p>No Announcements have been set yet. Check back soon</p>
+        {% else %}
 
         {% for announcement in announcements %}
             <h3>{{ announcement.dbAnnouncementTitle }}</h3>
@@ -39,7 +47,9 @@
             <p>{{ announcement.dbDate }}</p>
 
             <div class="line"></div>
+
         {% endfor %}
+        {% endif %}
         </div>
     </div>
 

@@ -54,7 +54,8 @@ $app->get('/courseAnnouncements', function(Request $request, Response $response)
     $courseName = filter_var($courseName, FILTER_SANITIZE_STRING);
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
-
+    $announcements = $teacherModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user']);
+    var_dump($announcements);
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -70,6 +71,7 @@ $app->get('/courseAnnouncements', function(Request $request, Response $response)
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
             'module'=> $moduleTitle,
+            'announcements' => $announcements,
             'course'=> $courseName,
             'contact' => contact,
             'profile' => profile,

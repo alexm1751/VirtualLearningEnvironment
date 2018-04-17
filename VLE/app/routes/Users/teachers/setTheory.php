@@ -40,7 +40,7 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
         exit;
     }
     $userModel = $this->get('user_model');
-    $teacher = $this->get('student_model');
+    $teacherModel = $this->get('teacher_model');
 
     $db_handle = $this->get('dbase');
 
@@ -51,6 +51,9 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+
+    $theory = $teacherModel->getTheory($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    var_dump($theory);
     //Get Module Data
     //Announcements
     //
@@ -70,6 +73,7 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
             'name' => $_SESSION['name'],
             'logout_page' => LOGOUT_PAGE,
             'module_page' => module_page,
+            'theory' => $theory,
             'module_content' => module_content,
             'profile' => profile,
             'set_theory' => setTheory,

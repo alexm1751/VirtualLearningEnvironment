@@ -65,11 +65,11 @@ VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','atty@mai
 
 /*Teacher*/
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
-VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','ben@mail.co.uk','Ben Palmer',"Leicester",012345678901, 2,'Male', '', DEFAULT);
+VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','ben@mail.com','Ben Palmer',"Leicester",012345678901, 2,'Male', '', DEFAULT);
 
 /*Admin*/
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
-VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','andrew@mail.pl', 'Andrew Sterling',"Leicester",012345678901, 3, 'Male','', DEFAULT);
+VALUES ('$2a$12$iqaGmuRer0trjLfa8Y1Ye.k32fAwS7qG13FXqCUXQIJGV4CT1Z.my','andrew@mail.com', 'Andrew Sterling',"Leicester",012345678901, 3, 'Male','', DEFAULT);
 
 /*Super Admin*/
 INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
@@ -88,13 +88,13 @@ PRIMARY KEY (dbCourseID)
 );
 
 INSERT INTO vle_courses (dbCourseID,dbCourseName,dbCourseDescription, dbCredits , dbYears, dbDegreeType)
-VALUES (1050,'Computer Science', 'The Study of Computer Science, this course provides the fundemental knowledge of computing. List of subject areas: Coding, Web Development, Databases, Computer Architecture, Data Structures, Ethics and many more.', 120, 3, 'Graduate');
+VALUES (1050,'Computer Science', 'The Study of Computer Science, this course provides the fundamental knowledge of computing. List of subject areas: Coding, Web Development, Databases, Computer Architecture, Data Structures, Ethics and many more.', 120, 3, 'Graduate');
 INSERT INTO vle_courses (dbCourseID,dbCourseName,dbCourseDescription, dbCredits , dbYears, dbDegreeType)
-VALUES (1051,'Computer Security', 'The Study of Computer Security, this course provides the fundemental knowledge of computing security. List of subject areas: Secure Applications, Vulnerabilities, Exploits, PenTesting, Ethics and many more.', 120, 3, "Graduate");
+VALUES (1051,'Computer Security', 'The Study of Computer Security, this course provides the fundamental knowledge of computing security. List of subject areas: Secure Applications, Vulnerabilities, Exploits, PenTesting, Ethics and many more.', 120, 3, "Graduate");
 INSERT INTO vle_courses (dbCourseID,dbCourseName,dbCourseDescription, dbCredits , dbYears, dbDegreeType)
-VALUES (2050,'Bio-Medical Science', 'The Study of Bio-Medical Science, this course provides the fundemental knowledge of Medicine. List of subject areas: Human Anatomy, Cellular Biology, Medicines, Ethics and many more.', 120, 3, "Graduate");
+VALUES (2050,'Bio-Medical Science', 'The Study of Bio-Medical Science, this course provides the fundamental knowledge of Medicine. List of subject areas: Human Anatomy, Cellular Biology, Medicines, Ethics and many more.', 120, 3, "Graduate");
 INSERT INTO vle_courses (dbCourseID,dbCourseName,dbCourseDescription, dbCredits , dbYears, dbDegreeType)
-VALUES (2052,'Chemistry', 'The Study of Chemistry, this course provides the fundemental knowledge of Chemistry. List of subject areas: Atoms, Molecules and many more.', 120, 3, "Graduate");
+VALUES (2052,'Chemistry', 'The Study of Chemistry, this course provides the fundamental knowledge of Chemistry. List of subject areas: Atoms, Molecules and many more.', 120, 3, "Graduate");
 
 
 /*Modules TABLE*/
@@ -107,11 +107,11 @@ dbCourseID INT(5),
 PRIMARY KEY (dbModuleID)
 );
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
-VALUES (2080,'Functional programming', 'The functional programming module focuses on practical problem solving methods with the use of functions and how it can be intergrated into Object Oriented Programming', 30, 1050);
+VALUES (2080,'Functional programming', 'The functional programming module focuses on practical problem solving methods with the use of functions and how it can be integrated into Object Oriented Programming', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
-VALUES (2090,'Artificial Inteligence', 'This module introduces foundational concepts of AI and knowledge based systems', 30, 1050);
+VALUES (2090,'Artificial Intelligence', 'This module introduces foundational concepts of AI and knowledge based systems', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
-VALUES (2095,'Web Development and Design', 'This Module focuses on the the fundamentals of Web development such as HTML5, CSS3 and basic JavaScript. Along side learning about information architecure and how people interact with websites.', 30, 1050);
+VALUES (2095,'Web Development and Design', 'This Module focuses on the the fundamentals of Web development such as HTML5, CSS3 and basic JavaScript. Along side learning about information architecture and how people interact with websites.', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
 VALUES (2100,'Database Systems', 'Introduction to SQL, involving practical experience and understanding of relational algebra.', 30, 1050);
 /*0, 1 or Many relationship */
@@ -202,31 +202,31 @@ PRIMARY KEY (dbAnnouncementID)
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (105,'Deadline Extensions!', 1050, 2080, 'We will not be permitting any extensions for the up and coming deadline for the Heap Application. For legitimate reasons we are willing to help. Otherwise the deadline remains the same. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (106,'Guest Speakers!', 1050, 2080, 'There will be guest lectures for Functional Programming in April during Easter. I employ you to make sure you are available during this time. The speakers present have a lot of real world experience and there have been employment oportunities in the past. See you there. ~Ben', default);
+VALUES (106,'Guest Speakers!', 1050, 2080, 'There will be guest lectures for Functional Programming in April during Easter. I employ you to make sure you are available during this time. The speakers present have a lot of real world experience and there have been employment opportunities in the past. See you there. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (107,'Coursework Marks Now Up', 1050, 2080, 'I have now uploaded all marks for the christmas coursework, beware these marks are unmoderated and are subject to change. If you would like some more detailed feedback please email me or vist my office.  ~Ben', default);
+VALUES (107,'Coursework Marks Now Up', 1050, 2080, 'I have now uploaded all marks for the Christmas coursework, beware these marks are unmoderated and are subject to change. If you would like some more detailed feedback please email me or visit my office.  ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (108,'Employer Talks', 1050, NULL, 'There will be several Computer Science Talks being held this week from big Employers for placements. Please come a long and try and talk to the teams. This is essential to secure a placement.  ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (109,'Security Access', 1050, NULL, 'All Computer Science students must report to security to have access granted to their cards for the new computer labs on floors 10 and 11 of the main computer building. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (110,'Databse Assignemnt Questions', 1050, 2100, 'I have had an influx of emails regarding the Database Assignment, because of this I will be using next weeks lecture to answer all questions as there are too many people asking the same questions. ~Ben', default);
+VALUES (110,'Database Assignemnt Questions', 1050, 2100, 'I have had an influx of emails regarding the Database Assignment, because of this I will be using next weeks lecture to answer all questions as there are too many people asking the same questions. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (111,'Web Development Resources', 1050, 2095, 'Get ahead and enhance your Web Development skills, the university has free online resources for HTML5, CSS3 and JavaScript courses. ~Ben', default);
+VALUES (111,'Web Development Resources', 1050, 2095, 'Get ahead and enhance your Web Development skills, the university has free on-line resources for HTML5, CSS3 and JavaScript courses. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (112,'IBM A.I talk', 1050, 2090, 'IBM will be doing a talk on A.I this weekend in the main Computer Science building please dont miss it. This is an ideal time to enquire about placemetns. ~Ben', default);
+VALUES (112,'IBM A.I talk', 1050, 2090, 'IBM will be doing a talk on A.I this weekend in the main Computer Science building please don\'t miss it. This is an ideal time to talk about placements. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (113,'Robotics Labs', 1050, 2090, 'There are now more robotics labs on floors 4 and 5. I am hoping we have these till the end of the semester but please use them whilst we have them. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (114,'Project Ideas Now Up!', 1050, 2090, 'Project Ideas have now been published. These are on a first come first serve basis and I advise you to present your own project idea if you do not like the look of any that have been uplaoded. ~Ben', default);
+VALUES (114,'Project Ideas Now Up!', 1050, 2090, 'Project Ideas have now been published. These are on a first come first serve basis and I advise you to present your own project idea if you do not like the look of any that have been uploaded. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (115,'Ilness in Staff', 1050, 2095, 'Due to illness in some practical staff, labs next week will not be mandatory but I suggest that you still make use of the free labs with the up and comming assignments. I will be making an effort to be present in my office and near those class rooms for support if needed. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (116,'Third Party Software', 1050, 2095, 'I have had more questions about using third party software such as Adobe Muse and DreamWeaver to create the sites for your projects. This is not acceptable and doing so will result in a failure. The bried clearly states to hand code all assignment material. ~Ben', default);
+VALUES (116,'Third Party Software', 1050, 2095, 'I have had more questions about using third party software such as Adobe Muse and DreamWeaver to create the sites for your projects. This is not acceptable and doing so will result in a failure. The brief clearly states to hand code all assignment material. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (117,'NoSQL Module final year students', 1050, 2100, 'There will soon be a survey for those who are interested in a NoSQL module next semester. If I receive enough feedback for this I will consider rolling the program and intergrating this for final year students. ~Ben', default);
+VALUES (117,'NoSQL Module final year students', 1050, 2100, 'There will soon be a survey for those who are interested in a NoSQL module next semester. If I receive enough feedback for this I will consider rolling the program and integrating this for final year students. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
-VALUES (118,'Course Trip', 1050, NULL, 'For any students interested in a course related trip there will be a Jet setter chance to go to germany and work with BMW\'s development team. From pervious years experience this has lead to possible placement and post grad success. ~Ben', default);
+VALUES (118,'Course Trip', 1050, NULL, 'For any students interested in a course related trip there will be a Jet setter chance to go to Germany and work with BMW\'s development team. From previous years experience this has lead to possible placement and post grad success. ~Ben', default);
 
 
 /*Modules TABLE*/
@@ -358,7 +358,7 @@ PRIMARY KEY (dbCourseWorkID)
 );
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief.pdf', 2080);
+VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief1.pdf', 2080);
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
 VALUES (111, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief2.pdf', 2090);
@@ -370,7 +370,7 @@ VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYear
 CREATE TABLE vle_submissions(
 dbSubmissionID INT(5),
 dbFeedback VARCHAR(500),
-dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+dbDate TIMESTAMP,
 dbSubPdf VARCHAR(200),
 dbMarked BOOLEAN,
 dbUniqueID INT(9),
@@ -404,16 +404,16 @@ PRIMARY KEY (dbResID)
 
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recoomended. Please udnerstand the core conecpts before moving on.','/FinalYearProject/VLE_Public/media/LearningMaterial1.pdf', default, 2100);
+VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recommended. Please understand the core conecpts before moving on.','/FinalYearProject/VLE_Public/media/LearningMaterial1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1002, 0, 1, 'Data Structures Knowldgede', 'Key information on how data is stored in a data structure.','/FinalYearProject/VLE_Public/media/LearningMaterial2.pdf', default, 2080);
+VALUES (1002, 0, 1, 'Data Structures Knowledge', 'Key information on how data is stored in a data structure.','/FinalYearProject/VLE_Public/media/LearningMaterial2.pdf', default, 2080);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
 VALUES (1003, 1, 0, 'Creating Tables in MySQL', 'Basic Setup and query on a small database.','/FinalYearProject/VLE_Public/media/PracticalWork1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1004, 1, 0, 'Matlab Content', 'Carrying on from last week. use the content to help you through this week','/FinalYearProject/VLE_Public/media/PracticalWork2.pdf', default, 2090);
+VALUES (1004, 1, 0, 'Mat lab Content', 'Carrying on from last week. use the content to help you through this week','/FinalYearProject/VLE_Public/media/PracticalWork2.pdf', default, 2090);
 
 
 /* FOREIGN KEYS*/
@@ -431,56 +431,3 @@ ALTER TABLE vle_announcements ADD FOREIGN KEY (dbModuleID) REFERENCES vle_module
 ALTER TABLE vle_attendance ADD FOREIGN KEY (dbClassID) REFERENCES vle_classes(dbClassID)  ON DELETE CASCADE;
 ALTER TABLE vle_attendance ADD FOREIGN KEY (dbUniqueID) REFERENCES vle_users(dbUniqueID)  ON DELETE CASCADE;
 ALTER TABLE vle_learning ADD FOREIGN KEY (dbModuleID) REFERENCES vle_modules(dbModuleID)  ON DELETE CASCADE;
-
-
-/*Join QUERIES*/
-
-/*Course Module User Master Query*/
-
-SELECT z.dbUniqueID, a.dbFullName, z.dbCourseID, b.dbCourseName, z.dbModuleID,z.dbTeaches, c.dbModuleTitle
-FROM vle_allocation z, vle_users a, vle_courses b , vle_modules c
-WHERE z.dbUniqueID = a.dbUniqueID 
-AND z.dbCourseID = b.dbCourseID 
-AND z.dbModuleID = c.dbModuleID;
-
-
-
-SELECT DISTINCT c.dbModuleTitle
-FROM vle_allocation z, vle_users a , vle_modules c
-WHERE z.dbUniqueID = a.dbUniqueID 
-AND z.dbModuleID = c.dbModuleID AND a.dbEmail='ben@mail.com';
-
-SELECT DISTINCT c.dbCourseName
-FROM vle_allocation z, vle_users a , vle_courses c
-WHERE z.dbUniqueID = a.dbUniqueID 
-AND z.dbCourseID = c.dbCourseID AND a.dbEmail='ben@mail.com';
-
-
-
-SELECT dbFullName, dbEmail, dbAddress, dbNumber
-FROM vle_users
-WHERE dbEmail = 'alex@mail.com';
-
-
-SELECT DISTINCT a.dbAnnouncementTitle, a.dbDescription
-FROM vle_announcements a, vle_allocation b, vle_users c
-WHERE a.dbCourseID = b.dbCourseID
-AND b.dbUniqueID = c.dbUniqueID
-AND c.dbEmail = '$email' 
-AND a.dbModuleID IS NULL; ""
-
-"SELECT a.dbClassID, d.dbModuleTitle , c.dbDescAndWeek, date(c.dbDate) as date, a.dbAttended
-FROM vle_attendance a ,vle_users b, vle_classes c , vle_modules d
-WHERE a.dbUniqueID = b.dbUniqueID
-AND a.dbClassID = c.dbClassID
-AND c.dbModuleID = d.dbModuleID
-AND a.dbAttended= 0
-AND b.dbEmail= 'alex@mail.com'"
-
-SELECT SUM(dbAttended)/ COUNT(1) * dbAttended FROM vle_attendance;
-SELECT SUM(dbAttended)/ COUNT(dbAttended)*100 AS percent FROM vle_attendance WHERE dbEmail = '$email';
-SELECT SUM(a.dbAttended)/ COUNT(a.dbAttended)*100 AS percent 
-FROM vle_attendance a, vle_users b
-WHERE a.dbUniqueID = b.dbUniqueID
-AND b.dbEmail = '$email';
-SELECT * FROM vle_attendance WHERE dbUniqueID = 1027;

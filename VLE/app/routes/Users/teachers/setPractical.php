@@ -40,7 +40,7 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
         exit;
     }
     $userModel = $this->get('user_model');
-    $teacher = $this->get('student_model');
+    $teacherModel = $this->get('teacher_model');
 
     $db_handle = $this->get('dbase');
 
@@ -51,6 +51,8 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    $practical = $teacherModel->getPractical($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    var_dump($practical);
     //Get Module Data
     //Announcements
     //
@@ -68,6 +70,7 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
             'rank' => $_SESSION['rank'],
             'timetable' => timetable,
             'name' => $_SESSION['name'],
+            'practical' => $practical,
             'logout_page' => LOGOUT_PAGE,
             'module_page' => module_page,
             'module_content' => module_content,

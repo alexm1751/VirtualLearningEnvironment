@@ -54,9 +54,9 @@ class teacherModel
         }
     }
     /*Course Announcements*/
-    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name){
+    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
         try{
-            $query_name = $p_sql_queries->get_course_announcement($name);
+            $query_name = $p_sql_queries->get_course_announcement($email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){
@@ -113,9 +113,9 @@ class teacherModel
     }
 
     /*Module Announcements*/
-    public function getModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name){
+    public function getModuleAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$name, $email){
         try{
-            $query_name = $p_sql_queries->get_module_announcement($name);
+            $query_name = $p_sql_queries->get_module_announcement($name, $email);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){
@@ -133,7 +133,23 @@ class teacherModel
 
 
     /*Attendance Control*/
+    public function getClasses($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+        try{
+            $query_name = $p_sql_queries->get_classes($email);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
 
+            return ($array);
+
+
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
     public function getAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID){
         try{
             $query_name = $p_sql_queries->get_student_attendance($classID);
@@ -345,6 +361,23 @@ class teacherModel
     public function getSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
         try{
             $query_name = $p_sql_queries->get_submissions($module);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
+
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function getMarkedSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$module){
+        try{
+            $query_name = $p_sql_queries->get_marked_submissions($module);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){

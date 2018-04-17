@@ -49,7 +49,8 @@ $app->get('/setAttendance', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-
+    $classes = $teacherModel->getClasses($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+    var_dump($classes);
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -64,6 +65,7 @@ $app->get('/setAttendance', function(Request $request, Response $response) {
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
+            'classes' => $classes,
             'contact' => contact,
             'profile' => profile,
             'attendance_form' => setAttendance,

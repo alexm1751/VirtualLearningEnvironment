@@ -53,7 +53,8 @@ $app->get('/setCoursework', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-
+    $coursework = $teacherModel->getCoursework($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    var_dump($coursework);
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -68,6 +69,7 @@ $app->get('/setCoursework', function(Request $request, Response $response) {
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
+            'coursework' => $coursework,
             'contact' => contact,
             'profile' => profile,
             'module_content' => module_content,

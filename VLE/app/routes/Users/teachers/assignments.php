@@ -43,6 +43,7 @@ $app->get('/assignments', function(Request $request, Response $response) {
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
 
+
     $validator = $this->get('validator');
 
     $userModel = $this->get('user_model');
@@ -53,8 +54,9 @@ $app->get('/assignments', function(Request $request, Response $response) {
     $SQLQueries = $this->get('SQLQueries');
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
+    $submissions = $teacherModel->getSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
 
-
+    $m_submissions = $teacherModel->getMarkedSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -72,6 +74,8 @@ $app->get('/assignments', function(Request $request, Response $response) {
             'contact' => contact,
             'profile' => profile,
             'module_content' => module_content,
+            'submissions' => $submissions,
+            'm_submissions' => $m_submissions,
             'module'=> $moduleTitle,
             'course'=> $courseName,
             'assignments'=> assignments,

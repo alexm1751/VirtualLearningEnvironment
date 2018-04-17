@@ -1,4 +1,4 @@
-
+{% extends 'tableLayout.html.twig' %}
 {% block content %}
     <div class="container">
         {% include 'navigation.html.twig' %}
@@ -25,6 +25,109 @@
 
             <h2>Assignments:</h2>
             <div class="line"></div>
+            <h4>To be Marked:</h4>
+
+            {% if submissions is null %}
+                <p>There is no admin data to display at this time.</p>
+            {% else %}
+                <div class="table-responsive" style="width: 100%">
+                    <table id="admins" class="display" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Description</th>
+                            <th>Submission Date</th>
+                            <th>Deadline</th>
+                            <th>View/Mark/Delete</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Description</th>
+                            <th>Submission Date</th>
+                            <th>Deadline</th>
+                            <th>View/Mark/Delete</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for submission in submissions %}
+                            <tr>
+
+                                <td>{{ submission.dbUniqueID }}</td>
+                                <td>{{ submission.dbFullName }}</td>
+                                <td>{{ submission.dbDescription }}</td>
+                                <td>{{ submission.dbDate }}</td>
+                                <td>{{ submission.dbDeadline }}</td>
+                                <td>
+                                    <div class='btn-group' role='group' aria-label='...'>
+                                        <a href="#view<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+                                        <a href="#edit<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></a>
+                                        <a href="#delete<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% endif %}
+            <div class="line"></div>
+            <h4>Marked:</h4>
+
+            {% if m_submissions is null %}
+                <p>There are no marked assignments to display at this time.</p>
+            {% else %}
+                <div class="table-responsive" style="width: 100%">
+                    <table id="courses" class="display" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Description</th>
+                            <th>Submission Date</th>
+                            <th>Deadline</th>
+                            <th>View/Edit/Delete</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Description</th>
+                            <th>Submission Date</th>
+                            <th>Deadline</th>
+                            <th>View/Edit/Delete</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for m_submission in m_submissions %}
+                            <tr>
+
+                                <td>{{ m_submission.dbUniqueID }}</td>
+                                <td>{{ m_submission.dbFullName }}</td>
+                                <td>{{ m_submission.dbDescription }}</td>
+                                <td>{{ m_submission.dbDate }}</td>
+                                <td>{{ m_submission.dbDeadline }}</td>
+                                <td>
+                                    <div class='btn-group' role='group' aria-label='...'>
+                                        <a href="#view<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+                                        <a href="#edit<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></a>
+                                        <a href="#delete<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% endif %}
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

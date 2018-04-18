@@ -15,8 +15,8 @@
                 <a href="{{ module_edit }}">Module Edit</a>
                 <i class="icon-angle-right"></i>
             </li>
-
         </ul>
+        {% include 'messages.html.twig' %}
         {% if modules is null %}
             <p>There is no Module data to display at this time.</p>
         {% else %}
@@ -50,12 +50,150 @@
                         <td>{{ module.dbCourseID }}</td>
                         <td>
                             <div class='btn-group' role='group' aria-label='...'>
-                                <a href="#view<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
-                                <a href="#edit<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></a>
-                                <a href="#delete<?php echo $id;?>" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
+                                <a href="#view{{  module.dbModuleID }}" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+                                <a href="#edit{{  module.dbModuleID }}" data-toggle="modal"><button type='button' class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></a>
+                                <a href="#del{{  module.dbModuleID }}" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
                             </div>
                         </td>
                     </tr>
+                    <!--modal Delete Course-->
+                    <div id="del{{ module.dbModuleID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Delete Module:</div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="text-center">
+
+                                                    <div class="panel-body">
+                                                        <form action="{{ action4 }}" method="{{ method4 }}">
+                                                            <input type="hidden" name="id" value="4">
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <p>Are you sure you want to delete Module:</p>
+                                                                <p>{{  module.dbModuleID }} - {{ module.dbModuleTitle }}?</p>
+
+                                                            </div>
+                                                            <input class="btn btn-lg btn-danger " value="Delete" type="submit">
+                                                            {{ csrf.field| raw }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal edit Course-->
+                    <div id="edit{{ module.dbModuleID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Edit Module:</div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="text-center">
+
+                                                    <p>Please Enter Module Details Below.</p>
+                                                    <div class="panel-body">
+                                                        <form action="{{ action4 }}" method="{{ method4 }}">
+                                                            <input type="hidden" name="id" value="3">
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <label>Module Name:</label>
+                                                                <input class="form-control" placeholder="" name="module_title" value="{{ module.dbModuleTitle }}" type="text">
+                                                                {% if errors.module_title %}
+                                                                    <span class="help-block">{{ errors.module_title | first }}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <label>Module Description:</label>
+                                                                <input class="form-control" placeholder="" name="module_description" value="{{ module.dbModuleDescription }}" type="text">
+                                                                {% if errors.module_description %}
+                                                                    <span class="help-block">{{ errors.module_description | first }}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <label>Credits:</label>
+                                                                <input class="form-control" placeholder="" name="credits" value="{{ module.dbCredits }}" type="number">
+                                                                {% if errors.credits %}
+                                                                    <span class="help-block">{{ errors.credits | first }}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="form-group" style="text-align: left;">
+                                                                <label>Course ID:</label>
+                                                                <input class="form-control" placeholder="" name="course_id" value="{{ module.dbCourseID }}" type="number">
+                                                                {% if errors.course_id %}
+                                                                    <span class="help-block">{{ errors.course_id | first }}</span>
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <input class="btn btn-lg btn-primary" value="Edit Module" type="submit">
+                                                            {{ csrf.field| raw }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal view Course-->
+                    <div id="view{{ module.dbModuleID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Module Details:</div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="text-center">
+
+
+                                                    <div style="text-align: left;">
+                                                        <strong>Module ID:</strong><p>{{ module.dbModuleID }}</p>
+                                                        <strong>Module Name:</strong><p>{{ module.dbModuleTitle }}</p>
+                                                        <strong>Module Description:</strong><p>{{ module.dbModuleDescription }}</p>
+                                                        <strong>Module Credits:</strong><p>{{ module.dbCredits }}</p>
+                                                        <strong>Course ID:</strong><p>{{ module.dbCourseID }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
                 </tbody>
             </table>
@@ -64,10 +202,77 @@
                 <br>
                 <br>
                 <div class="form-group">
-                    <a href="#edit<?php echo $id;?>" data-toggle="modal">Create New Module: <button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
+                    <a href="#createModal" data-toggle="modal">Create New Module: <button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
                 </div>
             </form>
         {% endif %}
+
+        <!--modal Create Course-->
+        <div id="createModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <div class="panel-heading">Create New Module</div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="text-center">
+
+                                        <p>Please Enter Module Details Below.</p>
+                                        <div class="panel-body">
+                                            <form action="{{ action4 }}" method="{{ method4 }}">
+                                                <input type="hidden" name="id" value="3">
+                                                <div class="form-group" style="text-align: left;">
+                                                    <label>Module Name:</label>
+                                                    <input class="form-control" placeholder="Functional Programming" name="module_title" type="text">
+                                                    {% if errors.module_title %}
+                                                        <span class="help-block">{{ errors.module_title | first }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group" style="text-align: left;">
+                                                    <label>Module Description:</label>
+                                                    <textarea class="form-control" placeholder="Summary of the Module. . . " name="module_description" type="text" style="max-width: 100%; min-width: 100%;"></textarea>
+                                                    {% if errors.module_description %}
+                                                        <span class="help-block">{{ errors.module_description | first }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group" style="text-align: left;">
+                                                    <label>Credits:</label>
+                                                    <input class="form-control" placeholder="30" name="credits" type="number">
+                                                    {% if errors.credits %}
+                                                        <span class="help-block">{{ errors.credits | first }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group" style="text-align: left;">
+                                                    <label>Course ID:</label>
+                                                    <input class="form-control" placeholder="1050" name="course_id" type="number">
+                                                    {% if errors.course_id %}
+                                                        <span class="help-block">{{ errors.course_id | first }}</span>
+                                                    {% endif %}
+                                                </div>
+
+
+
+                                                <input class="btn btn-lg btn-primary" value="Create New Module" type="submit">
+                                                {{ csrf.field| raw }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

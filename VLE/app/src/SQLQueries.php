@@ -408,8 +408,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function admin_set_courses($courseName,$courseDescription,$credits,$years,$degree){
-        $m_sql_query_string  =
-            "INSERT INTO vle_courses(dbCourseName, dbCourseDescription,dbCredits,dbYears,dbDegreeType)
+        $m_sql_query_string  = "INSERT INTO vle_courses(dbCourseName, dbCourseDescription,dbCredits,dbYears,dbDegreeType)
             VALUES ('$courseName','$courseDescription','$credits','$years','$degree')";
         return $m_sql_query_string;
     }

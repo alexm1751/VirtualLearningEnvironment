@@ -35,6 +35,9 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
     $userModel = $this->get('user_model');
 
+    $bcryptwrapper = $this->get('BcryptWrapper');
+
+
     $db_handle = $this->get('dbase');
 
     $SQLQueries = $this->get('SQLQueries');
@@ -95,6 +98,44 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please Check Your Details");
                 $response->withRedirect(profile);
                 return $e;
+            }
+            break;
+        case "3":
+            try{
+                $pass = $request->getParam('password');
+
+                $validator->validate($request,[
+
+                    'old_password' => v::noWhitespace()->stringType()->notEmpty(),
+                    'password' => v::noWhitespace()->stringType()->notEmpty(),
+                    'password_confirm' => v:: noWhitespace()->notEmpty()->stringType()->equals($pass)
+
+                ]);
+
+                if ($validator->failed()){
+                    $_SESSION['form_flag'] = 2;
+                    return $response->withRedirect(profile);
+                }
+
+                $old_pass = $request->getParam('old_password');
+                $old_pass = filter_var($old_pass, FILTER_SANITIZE_STRING);
+                $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+
+
+                if($userModel->check_pass($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user'],$old_pass ) == true){
+                    $userModel->update_pass( $db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper,$_SESSION['user'],$pass);
+                    $this->flash->addMessage('success',"Your Password has been reset");
+                    $_SESSION['form_flag'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(profile);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error whilst updating your password please check your details.");
+                    return $response->withRedirect(profile);
+                }
+            } catch (Exception $e) {
+                $this->flash->addMessage('danger',"There was an issue resetting your password. Please try again.");
+                return $response->withRedirect(profile);
             }
 
     }

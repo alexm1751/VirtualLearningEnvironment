@@ -42,7 +42,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
     switch ($id){
         case "2":
-            if(!$_SESSION['rank']){
+            if($_SESSION['rank'] != 1){
                 $_SESSION = array();
                 $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Would you mind logging again?.");
                 return $response
@@ -91,10 +91,11 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                                     $filename = ($m_directory . DIRSEP . $filename);
                                     $studentModel->submitAssessments($db_handle,$SQLQueries,$wrapper_mysql,$user_id,$cw_id,$filename);
                                     $this->flash->addMessage('success', "You Successfully Submitted Your Assignment!");
-
+                                    session_regenerate_id();
                                     return $response->withRedirect(assessment);
                                 }catch (Exception $e){
-                                    var_dump($filename);
+                                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                    return $response->withRedirect(assessment);
                                 }
 
 

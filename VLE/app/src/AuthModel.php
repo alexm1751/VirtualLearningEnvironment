@@ -65,6 +65,25 @@ class authModel{
 
 
     }
+    public function check_pass($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email, $pass){
+
+        $query_name = $p_sql_queries->check_password($email);
+        $p_wrapper_mysql->set_db_handle($p_db_handle);
+        $p_wrapper_mysql->safe_query($query_name);
+        $stored_pass = $p_wrapper_mysql->safe_fetch_array();
+        $stored_pass = $stored_pass['dbpass'];
+        if(password_verify($pass, $stored_pass) != true){
+            throw new Exception('Failed Password Try');
+            return false;
+
+        }
+        else{
+            return true;
+        }
+
+
+
+    }
     public function update_Recover_Hash($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$p_bcryptwrapper, $email, $string_to_hash){
         $hash = $p_bcryptwrapper->create_hashed_string($string_to_hash);
         $query_name = $p_sql_queries->update_user_hash($email,$hash);

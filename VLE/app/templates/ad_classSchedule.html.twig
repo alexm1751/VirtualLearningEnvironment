@@ -215,7 +215,9 @@
 
                                         <p>Please Enter Class Details Below.</p>
                                         <div class="panel-body">
-                                            <form action="{{ action3 }}?id=7" method="POST">
+                                            <form action="{{ action3 }}" method="POST">
+                                                <input type="hidden" name="id" value="7">
+
                                                 <div class="form-group" style="text-align: left;">
                                                     <label>Module ID:</label>
                                                     <input class="form-control" placeholder="2100" name="module_id" type="number">

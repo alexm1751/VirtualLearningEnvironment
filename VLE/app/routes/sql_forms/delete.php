@@ -70,6 +70,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
                 $teacherModel->deleteAttendance($db_handle, $SQLQueries, $wrapper_mysql, $checkID);
                 $this->flash->addMessage('success', "Attendance Cleared for " .$checkID);
+                session_regenerate_id();
                 return $response->withRedirect(setAttendance);
             }
             else{

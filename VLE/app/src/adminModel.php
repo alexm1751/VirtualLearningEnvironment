@@ -150,7 +150,7 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+            throw new Exception('$e');
             return false;
         }
     }
@@ -182,6 +182,61 @@ class adminModel
     public function getAllocation($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
         try{
             $query_name = $p_sql_queries->admin_get_allocation();
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function check_user_allocation($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $unique_id){
+        try{
+            $query_name = $p_sql_queries->admin_check_user_allocation($unique_id);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            $rows = $p_wrapper_mysql->count_rows();
+            if ($rows <= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function get_rank_id($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$unique_id){
+        try{
+            $query_name = $p_sql_queries->check_rank_id($unique_id);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            $rank = $p_wrapper_mysql->safe_fetch_array();
+            $rank = $rank['dbRank'];
+            return ($rank);
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function setAllocation($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$rank,$user_id,$course_id,$module_id){
+        try{
+            $query_name = $p_sql_queries->admin_set_allocation($rank,$user_id,$course_id,$module_id);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            return true;
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function getCourseModules($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$course_id){
+        try{
+            $query_name = $p_sql_queries->get_course_modules($course_id);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){
@@ -279,14 +334,19 @@ class adminModel
             return false;
         }
     }
-    public function updateTimetables($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$timetableID,$pdf,$CourseID){
-        try{
-            $query_name = $p_sql_queries->admin_update_timetables($timetableID,$pdf,$CourseID);
+    public function check_timetable($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$course_id)
+    {
+        try {
+            $query_name = $p_sql_queries->check_timetable($course_id);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
-
-            return true;
-        } catch (Exception $e){
+            $rows = $p_wrapper_mysql->count_rows();
+            if ($rows <= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
             var_dump($e);
             return false;
         }

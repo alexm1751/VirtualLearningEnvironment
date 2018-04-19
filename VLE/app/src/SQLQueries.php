@@ -28,10 +28,6 @@ class SQLQueries
 
     }
 
-    /**Builds an SQL string to get a password for a given phone number from the user table
-     * @param $number Phone number to check
-     * @return string string SQL select statement
-     */
     public static function check_password($email){
         $m_sql_query_string  = "SELECT dbpass ";
         $m_sql_query_string .= "FROM vle_users ";
@@ -39,14 +35,17 @@ class SQLQueries
         return $m_sql_query_string;
     }
 
-    /**Builds an SQL string to get a users name from the user table with a given phone number
-     * @param $number Phone number to check
-     * @return string string SQL select statement
-     */
+
     public static function check_rank($email){
         $m_sql_query_string  = "SELECT dbRank ";
         $m_sql_query_string .= "FROM vle_users ";
         $m_sql_query_string .= "WHERE dbEmail =  '$email'";
+        return $m_sql_query_string;
+    }
+    public static function check_rank_id($user_id){
+        $m_sql_query_string  = "SELECT dbRank ";
+        $m_sql_query_string .= "FROM vle_users ";
+        $m_sql_query_string .= "WHERE dbUniqueID =  '$user_id'";
         return $m_sql_query_string;
     }
 
@@ -79,6 +78,12 @@ class SQLQueries
         $m_sql_query_string .= "FROM vle_allocation z, vle_users a , vle_modules c ";
         $m_sql_query_string .= "WHERE z.dbUniqueID = a.dbUniqueID  ";
         $m_sql_query_string .= "AND z.dbModuleID = c.dbModuleID AND a.dbEmail=  '$email' ";
+        return $m_sql_query_string;
+    }
+    public static function get_course_modules($course_id){
+        $m_sql_query_string  = "SELECT DISTINCT dbModuleID
+                                FROM vle_modules
+                                WHERE dbCourseID=  '$course_id'";
         return $m_sql_query_string;
     }
 
@@ -439,17 +444,17 @@ class SQLQueries
 
         return $m_sql_query_string;
     }
-    public static function admin_set_modules($moduleName,$moduleDescription,$credits,$courseID){
+    public static function admin_set_modules($moduleTitle,$moduleDescription,$credits,$courseID){
         $m_sql_query_string  =
-            "INSERT INTO vle_modules(dbModuleName, dbModuleDescription,dbCredits,dbCourseID)
-            VALUES ('$moduleName','$moduleDescription','$credits','$courseID')";
+            "INSERT INTO vle_modules(dbModuleTitle, dbModuleDescription,dbCredits,dbCourseID)
+            VALUES ('$moduleTitle','$moduleDescription','$credits','$courseID')";
 
         return $m_sql_query_string;
     }
-    public static function admin_update_modules($moduleName,$moduleDescription,$credits,$courseID, $moduleID){
+    public static function admin_update_modules($moduleTitle,$moduleDescription,$credits,$courseID, $moduleID){
     $m_sql_query_string  =
         "UPDATE vle_modules
-        SET dbModuleName='$moduleName', dbModuleDescription= '$moduleDescription', dbCredits='$credits', dbCourseID='$courseID'
+        SET dbModuleTitle='$moduleTitle', dbModuleDescription= '$moduleDescription', dbCredits='$credits', dbCourseID='$courseID'
         WHERE dbModuleID ='$moduleID'";
 
         return $m_sql_query_string;
@@ -536,12 +541,10 @@ class SQLQueries
 
         return $m_sql_query_string;
     }
-    public static function admin_update_timetables($timetableID,$pdf,$CourseID){
-        $m_sql_query_string  =
-            "UPDATE vle_timetables
-            SET dbtablepdf='$pdf', dbCourseID='$CourseID'
-            WHERE dbTimeTableID = '$timetableID'";
-
+    public static function check_timetable($course_id){
+        $m_sql_query_string  = "SELECT dbCourseID
+        FROM vle_timetables
+        WHERE dbCourseID = '$course_id'";
         return $m_sql_query_string;
     }
     public static function admin_remove_timetables($timetableID){
@@ -574,9 +577,17 @@ WHERE dbTimeTableID = '$timetableID'";
         AND b.dbCourseID = c.dbCourseID";
         return $m_sql_query_string;
 }
-    public static function admin_set_allocation($user_id,$course_id,$module_id,$rank){
-        $m_sql_query_string  = "INSERT INTO vle_allocation(dbTeacher, dbUniqueID, dbCourseID, dbModuleID)
-        VALUES($rank,$user_id,$course_id,$module_id)";
+    public static function admin_check_user_allocation($unique_id){
+        $m_sql_query_string= "SELECT DISTINCT b.dbUniqueID,a.dbFullName,a.dbRank, b.dbCourseID, c.dbCourseName, b.dbTeaches
+        FROM vle_users a, vle_allocation b, vle_courses c
+        WHERE a.dbUniqueID = b.dbUniqueID
+        AND b.dbCourseID = c.dbCourseID
+        AND b.dbUniqueID = '$unique_id'";
+        return $m_sql_query_string;
+    }
+    public static function admin_set_allocation($rank,$user_id,$course_id,$module_id){
+        $m_sql_query_string  = "INSERT INTO vle_allocation(dbTeaches, dbUniqueID, dbCourseID, dbModuleID)
+        VALUES('$rank','$user_id','$course_id','$module_id')";
 
         return $m_sql_query_string;
     }

@@ -47,6 +47,7 @@ $app->get('/classSchedule', function(Request $request, Response $response) {
     return $this->view->render($response,
         'ad_classSchedule.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
             'action' => update,
             'action2' => delete,
             'action3' => insert,

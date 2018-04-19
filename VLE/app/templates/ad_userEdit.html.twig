@@ -253,7 +253,7 @@
                                             <form action="{{ action3 }}" method="POST">
                                                 <input type="hidden" name="id" value="5">
                                                 <div class="form-group" style="text-align: left;">
-                                                    <label>Name:</label>
+                                                    <label>Full Name:</label>
                                                     <input class="form-control" placeholder="John Smith" name="name" type="text">
                                                     {% if errors.name %}
                                                         <span class="help-block">{{ errors.name | first }}</span>
@@ -292,6 +292,13 @@
                                                     <input class="form-control" placeholder="1/2" name="rank" type="number">
                                                     {% if errors.rank %}
                                                         <span class="help-block">{{ errors.rank | first }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group" style="text-align: left;">
+                                                    <label>Temp Password:</label>
+                                                    <input class="form-control" placeholder="" name="password" type="password">
+                                                    {% if errors.password %}
+                                                        <span class="help-block">{{ errors.password | first }}</span>
                                                     {% endif %}
                                                 </div>
 
@@ -425,7 +432,7 @@
                                             <form action="{{ action3 }}" method="POST">
                                                 <input type="hidden" name="id" value="6">
                                                 <div class="form-group" style="text-align: left;">
-                                                    <label>Module ID:</label>
+                                                    <label>User ID:</label>
                                                     <input class="form-control" placeholder="1027" name="user_id" type="number">
                                                     {% if errors.user_id %}
                                                         <span class="help-block">{{ errors.user_id | first }}</span>
@@ -433,7 +440,7 @@
                                                 </div>
                                                 <div class="form-group" style="text-align: left;">
                                                     <label>Course ID:</label>
-                                                    <input class="form-control" placeholder="" name="course_id" type="datetime-local" >
+                                                    <input class="form-control" placeholder="" name="course_id" type="number" >
                                                     {% if errors.course_id %}
                                                         <span class="help-block">{{ errors.course_id | first }}</span>
                                                     {% endif %}

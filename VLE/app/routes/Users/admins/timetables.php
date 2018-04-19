@@ -48,6 +48,7 @@ var_dump($timetables);
     return $this->view->render($response,
         'ad_timetables.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
             'action' => update,
             'action2' => delete,
             'action3' => insert,

@@ -63,6 +63,7 @@ $app->get('/adminEdit', function(Request $request, Response $response) {
         return $this->view->render($response,
             'ad_adminEdit.html.twig',
             [
+                'flag' => $_SESSION['form_flag'],
                 'action' => update,
                 'action2' => delete,
                 'action3' => insert,

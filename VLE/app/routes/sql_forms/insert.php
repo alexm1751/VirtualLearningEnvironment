@@ -29,8 +29,12 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
     $validator = $this->get('validator');
 
+    $userModel = $this->get('user_model');
+
     $studentModel = $this->get('student_model');
     $teacherModel = $this->get('teacher_model');
+    $adminModel = $this->get('admin_model');
+    $bcryptwrapper = $this->get('BcryptWrapper');
 
 
     $db_handle = $this->get('dbase');
@@ -130,35 +134,389 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
         }
         break;
         case "3":
-            $this->flash->addMessage('success',"New Course Success!");
-            return $response->withRedirect(course_edit);
-        case "4":
-            $this->flash->addMessage('success',"New Module Success!");
-            return $response->withRedirect(module_edit);
-        case "5":
-            $this->flash->addMessage('success',"New User Success!");
-            return $response->withRedirect(user_edit);
-        case "6":
-            $this->flash->addMessage('success',"New allocation Success!");
-            return $response->withRedirect(user_edit);
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
 
+            $validator->validate($request,[
+                'course_name' => v::stringType()->notEmpty(),
+                "course_description"=> v::stringType()->notEmpty(),
+                "credits"=> v::digit()->notEmpty(),
+                "years"=> v::digit()->notEmpty(),
+                "degree"=> v::stringType()->notEmpty()
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(course_edit);
+            }
+            try{
+                $course_name = filter_var($array['course_name'], FILTER_SANITIZE_STRING);
+                $course_description = filter_var($array['course_description'], FILTER_SANITIZE_STRING);
+                $credits = filter_var($array['credits'], FILTER_SANITIZE_NUMBER_INT);
+                $years = filter_var($array['years'], FILTER_SANITIZE_NUMBER_INT);
+                $degree = filter_var($array['degree'], FILTER_SANITIZE_STRING);
+
+                $adminModel->setCourses($db_handle,$SQLQueries,$wrapper_mysql,$course_name,$course_description,$credits,$years,$degree);
+                $this->flash->addMessage('success',"New Course Created!");
+                $_SESSION['form_flag'] = 0;
+                session_regenerate_id();
+                return $response->withRedirect(course_edit);
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating a new Course.");
+                return $response->withRedirect(course_edit);
+
+            }
+            break;
+        case "4":
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'module_title' => v::stringType()->notEmpty(),
+                "module_description"=> v::stringType()->notEmpty(),
+                "credits"=> v::digit()->notEmpty(),
+                "course_id"=> v::digit()->noWhitespace()->notEmpty()
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(module_edit);
+            }
+            try{
+                $module_title = filter_var($array['module_title'], FILTER_SANITIZE_STRING);
+                $module_description = filter_var($array['module_description'], FILTER_SANITIZE_STRING);
+                $credits = filter_var($array['credits'], FILTER_SANITIZE_NUMBER_INT);
+                $course_id = filter_var($array['course_id'], FILTER_SANITIZE_NUMBER_INT);
+
+                try{
+                    $adminModel->setModules($db_handle,$SQLQueries,$wrapper_mysql, $module_title,$module_description,$credits,$course_id);
+
+                } catch (Exception $e){
+                    $this->flash->addMessage('danger',"There was an error creating a new Module.");
+                    return $response->withRedirect(module_edit);
+                }
+
+                $this->flash->addMessage('success',"New Module Created!");
+                $_SESSION['form_flag'] = 0;
+                session_regenerate_id();
+                return $response->withRedirect(module_edit);
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating a new Module.");
+                return $response->withRedirect(module_edit);
+
+            }
+            break;
+        case "5":
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'name' => v::stringType()->notEmpty(),
+                "email"=> v::email()->notEmpty()->noWhitespace(),
+                "address"=> v::stringType()->notEmpty(),
+                "number"=> v::digit()->notEmpty(),
+                "gender"=> v::stringType()->notEmpty(),
+                "rank"=> v::digit()->notEmpty()->noWhitespace()->intVal()->between(1, 2, true),
+                "password"=> v::notEmpty()->noWhitespace()->stringType(),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(user_edit);
+            }
+            try{
+                $name = filter_var($array['name'], FILTER_SANITIZE_STRING);
+                $email = filter_var($array['email'], FILTER_SANITIZE_EMAIL);
+                $address = filter_var($array['address'], FILTER_SANITIZE_STRING);
+                $number = filter_var($array['number'], FILTER_SANITIZE_NUMBER_INT);
+                $gender = filter_var($array['gender'], FILTER_SANITIZE_STRING);
+                $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
+                $password = filter_var($array['password'], FILTER_SANITIZE_STRING);
+                $password = $bcryptwrapper->create_hashed_string($password);
+                $check = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
+                try{
+                    if($rank > 2){
+                        $this->flash->addMessage('danger',"Users do not have access to this rank. Please use 1(Student) or 2(Teacher)");
+                        return $response->withRedirect(user_edit);
+                     }
+                    elseif($check == false){
+                        $adminModel->setUsers($db_handle,$SQLQueries,$wrapper_mysql, $password,$email,$name,$address,$number,$rank,$gender);
+                        $this->flash->addMessage('success',"New User Created!");
+                        $_SESSION['form_flag'] = 0;
+                        session_regenerate_id();
+                        return $response->withRedirect(user_edit);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"The Email is already being used. Please check your details");
+                        return $response->withRedirect(user_edit);
+                    }
+
+                } catch (Exception $e){
+                    $this->flash->addMessage('danger',"There was an error creating a new User.");
+                    return $response->withRedirect(user_edit);
+                }
+
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating a new User.");
+                return $response->withRedirect(user_edit);
+
+            }
+            break;
+        case "6":
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'user_id' => v::digit()->notEmpty()->noWhitespace(),
+                "course_id"=> v::digit()->notEmpty()->noWhitespace(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 4;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(user_edit);
+            }
+            try{
+                $user_id = filter_var($array['user_id'], FILTER_SANITIZE_STRING);
+                $course_id = filter_var($array['course_id'], FILTER_SANITIZE_STRING);
+                $rank= $adminModel->get_rank_id($db_handle,$SQLQueries,$wrapper_mysql, $user_id);
+
+
+                if($rank == 1){
+                    if($adminModel->check_user_allocation($db_handle,$SQLQueries,$wrapper_mysql, $user_id)) {
+                        //Add Allocation
+                        $teacher = 0;
+                        $modules = $adminModel->getCourseModules($db_handle, $SQLQueries, $wrapper_mysql, $course_id);
+                        foreach ($modules as $module) {
+                            $adminModel->setAllocation($db_handle, $SQLQueries, $wrapper_mysql,$teacher,$user_id,$course_id,$module['dbModuleID']);
+
+                        }
+                        $this->flash->addMessage('success',"New User Allocation Created!");
+                        $_SESSION['form_flag'] = 0;
+                        session_regenerate_id();
+                        return $response->withRedirect(user_edit);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"Students can only have one Course Allocation");
+                        return $response->withRedirect(user_edit);
+                    }
+
+                }
+                elseif($rank == 2){
+                    $teacher = 1;
+                    $modules= $adminModel->getCourseModules($db_handle,$SQLQueries,$wrapper_mysql, $course_id);
+                    foreach ($modules as $module) {
+                        $adminModel->setAllocation($db_handle, $SQLQueries, $wrapper_mysql,$teacher,$user_id,$course_id,$module['dbModuleID']);
+                    }
+                    $this->flash->addMessage('success',"New User Allocation Created!");
+                    $_SESSION['form_flag'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(user_edit);
+
+                }
+                else{
+                    $this->flash->addMessage('danger',"This User is not eligible for course Allocation" . $rank);
+                    return $response->withRedirect(user_edit);
+                }
+
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating Allocation.");
+                return $response->withRedirect(user_edit);
+
+            }
+            break;
         case "7":
-            $this->flash->addMessage('success',"New Class Success!");
-            return $response->withRedirect(class_schedule);
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'module_id' => v::digit()->notEmpty()->noWhitespace(),
+                "date"=> v::notEmpty()->stringType(),
+                "description" => v::stringType()->notEmpty(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(class_schedule);
+            }
+            try{
+                $module_id = filter_var($array['module_id'], FILTER_SANITIZE_NUMBER_INT);
+                $date = filter_var($array['date'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+                $date = date("Y-m-d H:i:s",strtotime($date));
+                $check = $adminModel->setClasses($db_handle, $SQLQueries, $wrapper_mysql,$module_id,$date,$description);
+
+                if($check == true){
+                    $this->flash->addMessage('success',"New Class Created!");
+                    $_SESSION['form_flag'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(class_schedule);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error creating the Class.");
+                    return $response->withRedirect(class_schedule);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating the Class.");
+                return $response->withRedirect(class_schedule);
+
+            }
+            break;
 
         case "8":
-            $this->flash->addMessage('success',"New Timetable Success!");
-            return $response->withRedirect(timetables);
+            $_SESSION['form_flag'] = 0;
+            $uploadedFiles = $request->getUploadedFiles();
+            var_dump($uploadedFiles);
+            $course_id = $request->getParam('course_id');
+            var_dump($course_id);
+
+            $validator->validate($request,[
+                'course_id' => v::digit()->notEmpty()->noWhitespace(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(timetables);
+            }
+
+                $course_id = filter_var($course_id, FILTER_SANITIZE_NUMBER_INT);
+
+
+            $exists = $adminModel->check_timetable($db_handle,$SQLQueries,$wrapper_mysql, $course_id);
+
+
+            if($exists != true){
+                $this->flash->addMessage('danger', "Timetable already exists for this Course $course_id");
+                return $response->withRedirect(timetables);
+            }
+            else {
+                try {
+                $directory = directory;
+                $m_directory = m_directory;
+                if (!empty($uploadedFile = $uploadedFiles['file'])) {
+                    $fileSize = $uploadedFile->getSize();
+                    $fileName = $uploadedFile->getClientFilename();
+
+
+                    $fileExt = explode('.', $fileName);
+                    $fileActualExt = strtolower(end($fileExt));
+
+                    $allowed = array('pdf');
+
+                    if (in_array($fileActualExt, $allowed)) {
+                        if ($fileSize < 500000) {
+
+                            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                                $filename = moveUploadedFile($directory, $uploadedFile);
+                                try{
+                                    $filename = ($m_directory . DIRSEP . $filename);
+                                    $adminModel->setTimetables($db_handle,$SQLQueries,$wrapper_mysql,$filename, $course_id);
+                                    $this->flash->addMessage('success', "You Successfully Submitted a Timetable!");
+                                    session_regenerate_id();
+                                    return $response->withRedirect(timetables);
+                                }catch (Exception $e){
+                                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                    return $response->withRedirect(timetables);
+                                }
+
+
+                            } else {
+                                $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                return $response->withRedirect(timetables);
+                            }
+                        } else {
+
+                            $this->flash->addMessage('danger', "Invalid File Size!");
+                            return $response->withRedirect(timetables);
+                        }
+                    } else {
+
+                        $this->flash->addMessage('danger', "Invalid File Type Uploaded!");
+                        return $response->withRedirect(timetables);
+
+                    }
+
+                } else {
+                    $this->flash->addMessage('danger', "Empty File Detected");
+                    return $response->withRedirect(timetables);
+                }
+                // handle single input with single file upload
+            } catch (Exception $e) {
+                var_dump($e);
+
+            }
+            }
+            break;
 
         case "9":
-            $this->flash->addMessage('success',"New Admin Success!");
-            return $response->withRedirect(admin_edit);
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'name' => v::stringType()->notEmpty(),
+                "email"=> v::email()->notEmpty()->noWhitespace(),
+                "address"=> v::stringType()->notEmpty(),
+                "number"=> v::digit()->notEmpty(),
+                "gender"=> v::stringType()->notEmpty(),
+                "rank"=> v::digit()->notEmpty()->noWhitespace()->intVal()->between(3, 4, true),
+                "password"=> v::notEmpty()->noWhitespace()->stringType(),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(admin_edit);
+            }
+            try{
+                $name = filter_var($array['name'], FILTER_SANITIZE_STRING);
+                $email = filter_var($array['email'], FILTER_SANITIZE_EMAIL);
+                $address = filter_var($array['address'], FILTER_SANITIZE_STRING);
+                $number = filter_var($array['number'], FILTER_SANITIZE_NUMBER_INT);
+                $gender = filter_var($array['gender'], FILTER_SANITIZE_STRING);
+                $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
+                $password = filter_var($array['password'], FILTER_SANITIZE_STRING);
+                $password = $bcryptwrapper->create_hashed_string($password);
+                $check = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
+                try{
+                    if($rank > 4 || $rank < 3){
+                        $this->flash->addMessage('danger',"Users do not have access to this rank. Please use 3(Admin) or 4(Super Admin)");
+                        return $response->withRedirect(admin_edit);
+                    }
+                    elseif($check == false){
+                        $adminModel->setAdmins($db_handle,$SQLQueries,$wrapper_mysql, $password,$email,$name,$address,$number,$rank,$gender);
+                        $this->flash->addMessage('success',"New Admin Created!");
+                        $_SESSION['form_flag'] = 0;
+                        session_regenerate_id();
+                        return $response->withRedirect(admin_edit);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"The Email is already being used. Please check your details");
+                        return $response->withRedirect(admin_edit);
+                    }
+
+                } catch (Exception $e){
+                    $this->flash->addMessage('danger',"There was an error creating a new Admin.");
+                    return $response->withRedirect(admin_edit);
+                }
+
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating a new Admin.");
+                return $response->withRedirect(admin_edit);
+
+            }
+            break;
+
         case "10":
             $checkID= $request->getParam('class_id');
             $checkID = $checkID[0];
             $check = $teacherModel->check_attendance($db_handle, $SQLQueries, $wrapper_mysql, $checkID);
             if($check != true){
-                $this->flash->addMessage('warning', "Attendance for ". $checkID ." is already set please clear before resubmitting.");
+                $this->flash->addMessage('info', "Attendance for ClassID: ". $checkID ." is already set please clear before resubmitting.");
                 return $response->withRedirect(setAttendance);
             }
             else{
@@ -177,12 +535,14 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
                     }
                     $this->flash->addMessage('success',"Attendance Recorded!");
+                    session_regenerate_id();
                     return $response->withRedirect(setAttendance);
                 }catch (Exception $e){
                     $this->flash->addMessage('warning', "Oops There was an Error please try again.");
                     return $response->withRedirect(setAttendance);
                 }
             }
+            break;
 
 
 

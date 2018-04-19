@@ -48,6 +48,7 @@ $app->get('/userEdit', function(Request $request, Response $response) {
     return $this->view->render($response,
         'ad_userEdit.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
             'action' => update,
             'action2' => delete,
             'action3' => insert,

@@ -320,6 +320,70 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+        case "13":
+            try{
+                $array = $request->getParsedBody();
+
+                $filename = $array['delete_file'];
+                $table_id = $array['table_id'];
+                $base = base_url;
+                $filename = ($base . $filename);
+                if(file_exists($filename)){
+                    unlink($filename);
+                    $check= $teacherModel->removeLearning($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
+                    if ($check == true){
+                        $this->flash->addMessage('success'," Practical Work Delete Success!");
+                        session_regenerate_id();
+                        return $response->withRedirect(setPractical);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"There was an error Deleting the Practical Work.");
+                        return $response->withRedirect(setPractical);
+                    }
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Deleting the Practical Work.");
+                    return $response->withRedirect(setPractical);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Deleting the Practical Work.");
+                return $response->withRedirect(setPractical);
+
+            }
+            break;
+        case "14":
+            try{
+                $array = $request->getParsedBody();
+
+                $filename = $array['delete_file'];
+                $table_id = $array['table_id'];
+                $base = base_url;
+                $filename = ($base . $filename);
+                if(file_exists($filename)){
+                    unlink($filename);
+                    $check= $teacherModel->removeLearning($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
+                    if ($check == true){
+                        $this->flash->addMessage('success',"Theory Work Delete Success!");
+                        session_regenerate_id();
+                        return $response->withRedirect(setTheory);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"There was an error Deleting the Theory Work.");
+                        return $response->withRedirect(setTheory);
+                    }
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Deleting the Theory Work.");
+                    return $response->withRedirect(setTheory);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Deleting the Theory Work.");
+                return $response->withRedirect(setTheory);
+
+            }
+            break;
 
 
     }

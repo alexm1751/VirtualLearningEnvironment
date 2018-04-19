@@ -824,8 +824,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                                 $filename = moveUploadedFile($directory, $uploadedFile);
                                 try{
                                     $filename = ($m_directory . DIRSEP . $filename);
-var_dump($module_id .$title . $description . $filename);
-break;
+
                                     $teacherModel->setTheory($db_handle,$SQLQueries,$wrapper_mysql,$module_id,$title,$description,$filename);
                                     $this->flash->addMessage('success',"New Practical Work Created!");
                                     session_regenerate_id();

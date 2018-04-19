@@ -86,11 +86,10 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
             'set_coursework' => setCoursework,
             'assignments'=> assignments,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
             'module'=> $_SESSION['module_name'],
-            'module_id' => $_SESSION['module_id'],
+            'module_id' => $_SESSION['module_id']
 
 
 

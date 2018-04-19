@@ -17,13 +17,14 @@ $url_root = $_SERVER['SCRIPT_NAME'];
 $url_root = implode('/', explode('/', $url_root, -1));
 //$css_path = $url_root . '/css/style.css';
 
+$base = '/Applications/MAMP/htdocs';
 $upload_directory = __DIR__ . '/assets/PDF';
-$mysql_directory = ' /FinalYearProject/VLE/app/assets/PDF';
+$mysql_directory = '/FinalYearProject/VLE/app/assets/PDF';
 
 $script_filename = $_SERVER["SCRIPT_FILENAME"];
 $arr_script_filename = explode('/' , $script_filename, '-1');
 $script_path = implode('/', $arr_script_filename) . '/';
-
+define('base_url', $base);
 define('m_directory', $mysql_directory);
 define('directory', $upload_directory);
 /*define('CSS_PATH', $css_path);*/

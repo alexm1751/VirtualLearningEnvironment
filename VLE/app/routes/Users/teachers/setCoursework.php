@@ -41,6 +41,9 @@ $app->get('/setCoursework', function(Request $request, Response $response) {
     $courseName = filter_var($courseName, FILTER_SANITIZE_STRING);
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    if($moduleTitle != null){
+        $_SESSION['module_name']= $moduleTitle;
+    }
 
     $validator = $this->get('validator');
 
@@ -53,13 +56,15 @@ $app->get('/setCoursework', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-    $coursework = $teacherModel->getCoursework($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
-    var_dump($coursework);
+    $coursework = $teacherModel->getCoursework($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['module_name']);
+
     $home = teacherDashboard;
 
     return $this->view->render($response,
         'te_setCoursework.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
+            'value' => $_SESSION['value'],
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'home' => $home,
@@ -68,21 +73,21 @@ $app->get('/setCoursework', function(Request $request, Response $response) {
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
+            'module_id' => $_SESSION['module_id'],
             'rank' => $_SESSION['rank'],
             'coursework' => $coursework,
             'contact' => contact,
             'profile' => profile,
             'module_content' => module_content,
-            'module'=> $moduleTitle,
+            'module'=> $_SESSION['module_name'],
             'course'=> $courseName,
             'set_theory' => setTheory,
             'set_practical' => setPractical,
             'assignments'=> assignments,
             'set_coursework' => setCoursework,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
 
 
         ]);

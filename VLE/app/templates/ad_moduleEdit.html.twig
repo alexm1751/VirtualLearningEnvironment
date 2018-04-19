@@ -17,6 +17,8 @@
             </li>
         </ul>
         {% include 'messages.html.twig' %}
+        <h3>Modules:</h3>
+
         {% if modules is null %}
             <p>There is no Module data to display at this time.</p>
         {% else %}
@@ -73,6 +75,8 @@
                                                     <div class="panel-body">
                                                         <form action="{{ action2 }}" method="POST">
                                                             <input type="hidden" name="id" value="3">
+                                                            <input type="hidden" name="module_id" value="{{ module.dbModuleID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Module:</p>
                                                                 <p>{{  module.dbModuleID }} - {{ module.dbModuleTitle }}?</p>
@@ -109,10 +113,12 @@
                                             <div class="panel-body">
                                                 <div class="text-center">
 
-                                                    <p>Please Enter Module Details Below.</p>
+                                                    <p>Please Enter Module {{ module.dbModuleID }} Details Below.</p>
                                                     <div class="panel-body">
                                                         <form action="{{ action }}" method="POST">
                                                             <input type="hidden" name="id" value="5">
+                                                            <input type="hidden" name="value" value="{{ module.dbModuleID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Module Name:</label>
                                                                 <input class="form-control" placeholder="" name="module_title" value="{{ module.dbModuleTitle }}" type="text">

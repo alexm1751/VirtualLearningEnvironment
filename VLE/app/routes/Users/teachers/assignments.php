@@ -62,6 +62,8 @@ $app->get('/assignments', function(Request $request, Response $response) {
     return $this->view->render($response,
         'te_markAssignments.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
+            'value' => $_SESSION['value'],
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'home' => $home,

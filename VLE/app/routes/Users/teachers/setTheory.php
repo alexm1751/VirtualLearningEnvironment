@@ -51,8 +51,11 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    if($moduleTitle != null){
+        $_SESSION['module_name']= $moduleTitle;
+    }
 
-    $theory = $teacherModel->getTheory($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    $theory = $teacherModel->getTheory($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['module_name']);
     var_dump($theory);
     //Get Module Data
     //Announcements
@@ -61,11 +64,13 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
     return $this->view->render($response,
         'te_setTheoryContent.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
+
+            'value' => $_SESSION['value'],
 
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'module' => $moduleTitle,
             'modules' =>  $_SESSION['modules'],
             'home' => $home,
             'rank' => $_SESSION['rank'],
@@ -84,6 +89,9 @@ $app->map(['GET', 'POST'],'/setTheory', function(Request $request, Response $res
             'method' => 'post',
             'action2' => update,
             'method2' => 'post',
+            'module'=> $_SESSION['module_name'],
+            'module_id' => $_SESSION['module_id'],
+
 
 
         ]);

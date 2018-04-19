@@ -18,6 +18,8 @@
 
         </ul>
         {% include 'messages.html.twig' %}
+        <h3>Courses:</h3>
+
         {% if courses is null %}
             <p>There is no Course data to display at this time.</p>
         {% else %}
@@ -77,6 +79,8 @@
                                                     <div class="panel-body">
                                                         <form action="{{ action2 }}" method="POST">
                                                             <input type="hidden" name="id" value="2">
+                                                            <input type="hidden" name="course_id" value="{{  course.dbCourseID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Course:</p>
                                                                 <p>{{  course.dbCourseID }} - {{ course.dbCourseName }}?</p>
@@ -113,20 +117,22 @@
                                             <div class="panel-body">
                                                 <div class="text-center">
 
-                                                    <p>Please Enter Course Details Below.</p>
+                                                    <p>Please Enter Course {{ course.dbCourseID }} Details Below.</p>
                                                     <div class="panel-body">
                                                         <form action="{{ action }}" method="POST">
                                                             <input type="hidden" name="id" value="4">
+                                                            <input type="hidden" name="value" value="{{ course.dbCourseID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Course Name:</label>
-                                                                <input class="form-control" placeholder="Computer Science" name="course_name" value="{{ course.dbCourseID }}" type="text">
+                                                                <input class="form-control" placeholder="Computer Science" name="course_name" value="{{ course.dbCourseName }}" type="text">
                                                                 {% if errors.course_name %}
                                                                     <span class="help-block">{{ errors.course_name | first }}</span>
                                                                 {% endif %}
                                                             </div>
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Course Description:</label>
-                                                                <input class="form-control" placeholder="Summary of the Module. . . " name="module_description" type="text" value="{{ course.dbCourseDescription }}">
+                                                                <input class="form-control" placeholder="Summary of the Course. . . " name="course_description" type="text" value="{{ course.dbCourseDescription }}">
                                                                 {% if errors.course_description %}
                                                                     <span class="help-block">{{ errors.course_description | first }}</span>
                                                                 {% endif %}

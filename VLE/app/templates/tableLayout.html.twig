@@ -87,19 +87,33 @@
         });
     });
 </script>
-{% if flag ==3 %}
+{% if flag ==3 and errors != null %}
     <script type="text/javascript">
         $(window).load(function(){
             $('#createModal').modal('show');
         });
     </script>
 {% endif %}
-</script>
-{% if flag ==4 %}
+
+{% if flag ==4 and errors != null%}
 <script type="text/javascript">
     $(window).load(function(){
         $('#createAllo').modal('show');
     });
+    </script>
+{% endif %}
+{% if flag == 4 and errors != null%}
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#createAllo').modal('show');
+        });
+    </script>
+{% endif %}
+{% if flag == 5 and errors != null %}
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#edit{{ value }}').modal('show');
+        });
     </script>
 {% endif %}
 

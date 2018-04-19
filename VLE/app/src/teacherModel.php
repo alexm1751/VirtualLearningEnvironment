@@ -32,6 +32,26 @@ class teacherModel
             return false;
         }
     }
+    public function getModuleID($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $module_name)
+    {
+
+        try {
+
+            $query_name = $p_sql_queries->get_modules_id($module_name);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            /*        $modules = $p_wrapper_mysql->safe_fetch_array();*/
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+
+        }catch(Exception $e){
+            throw new Exception('Error Collecting Modules');
+            return false;
+        }
+    }
     public function getTeacherCourses($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email)
     {
 
@@ -54,9 +74,9 @@ class teacherModel
         }
     }
     /*Course Announcements*/
-    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email,$course_name){
         try{
-            $query_name = $p_sql_queries->get_course_announcement($email);
+            $query_name = $p_sql_queries->get_course_announcements($email,$course_name);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){
@@ -97,9 +117,9 @@ class teacherModel
             return false;
         }
     }
-    public function updateAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$title,$courseID,$moduleID,$description,$date,$annID){
+    public function updateAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$title,$description,$annID){
         try{
-            $query_name = $p_sql_queries->update_announcement($title,$courseID,$moduleID,$description,$date,$annID);
+            $query_name = $p_sql_queries->update_announcement($title,$description,$annID);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
 
@@ -358,9 +378,9 @@ class teacherModel
             return false;
         }
     }
-    public function setTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$date,$pdf,$description,$title){
+    public function setTheory($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleID,$title,$description,$pdf){
         try{
-            $query_name = $p_sql_queries->set_theory($moduleID,$date,$pdf,$description,$title);
+            $query_name = $p_sql_queries->set_theory($moduleID,$title,$description,$pdf);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
 

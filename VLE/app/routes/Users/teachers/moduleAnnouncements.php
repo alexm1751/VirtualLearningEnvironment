@@ -54,15 +54,19 @@ $app->get('/moduleAnnouncements', function(Request $request, Response $response)
     $courseName = $request->getParam('course');
     $courseName = filter_var($courseName, FILTER_SANITIZE_STRING);
     $moduleTitle = $request->getParam('module');
-    $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
 
-    $announcements = $teacherModel->getModuleAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$moduleTitle, $_SESSION['user']);
-    var_dump($announcements);
+    if($moduleTitle != null){
+        $_SESSION['module_name']= $moduleTitle;
+    }
+
+    $announcements = $teacherModel->getModuleAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['module_name'], $_SESSION['user']);
     $home = teacherDashboard;
 
     return $this->view->render($response,
         'te_mAnnouncement.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
+            'value' => $_SESSION['value'],
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'home' => $home,
@@ -72,8 +76,10 @@ $app->get('/moduleAnnouncements', function(Request $request, Response $response)
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
-            'module'=> $moduleTitle,
+            'module'=> $_SESSION['module_name'],
             'announcements' => $announcements,
+            'course_id' => $announcements[0]['dbCourseID'],
+            'module_id' => $announcements[0]['dbModuleID'],
             'course'=> $courseName,
             'contact' => contact,
             'profile' => profile,
@@ -83,10 +89,8 @@ $app->get('/moduleAnnouncements', function(Request $request, Response $response)
             'course_announcement' => course_announcement,
             'module_announcement' => module_announcement,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
-
+            'action2' => delete,
+            'action3' => insert,
 
         ]);
 

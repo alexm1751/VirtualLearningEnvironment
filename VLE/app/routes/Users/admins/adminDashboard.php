@@ -9,7 +9,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/adminDashboard', function(Request $request, Response $response) {
 
-/*    if($_SESSION['rank'] != 3 || $_SESSION['rank'] != 4){
+    if(($_SESSION['rank'] < 3)){
         session_destroy();
         session_start();
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
@@ -21,7 +21,7 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
             ->withHeader('Expires','0')
             ->withRedirect(LANDING_PAGE);
         exit;
-    }*/
+    }
     if((!$_SESSION['logged_in'])){
         session_destroy();
         session_start();
@@ -55,6 +55,7 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
 
     $_SESSION['form_flag'] = 0;
 
+    $_SESSION['value'] = 0;
 
     if ($_SESSION['logged_in'] == true){
 

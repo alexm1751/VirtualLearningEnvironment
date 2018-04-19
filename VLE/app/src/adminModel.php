@@ -154,9 +154,9 @@ class adminModel
             return false;
         }
     }
-    public function updateUsers($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$password,$email,$name,$address,$number,$rank,$gender,$uniqueID){
+    public function updateUsers($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email,$name,$address,$number,$rank,$gender,$uniqueID){
         try{
-            $query_name = $p_sql_queries->admin_update_users($password,$email,$name,$address,$number,$rank,$gender,$uniqueID);
+            $query_name = $p_sql_queries->admin_update_users($email,$name,$address,$number,$rank,$gender,$uniqueID);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
 
@@ -226,6 +226,17 @@ class adminModel
     public function setAllocation($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$rank,$user_id,$course_id,$module_id){
         try{
             $query_name = $p_sql_queries->admin_set_allocation($rank,$user_id,$course_id,$module_id);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            return true;
+        } catch (Exception $e){
+            var_dump($e);
+            return false;
+        }
+    }
+    public function removeAllocation($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$user_id,$course_id){
+        try{
+            $query_name = $p_sql_queries->admin_remove_allocation($user_id,$course_id);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             return true;
@@ -394,28 +405,5 @@ class adminModel
             return false;
         }
     }
-    public function updateAdmins($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
-            $query_name = $p_sql_queries->set_announcement($name,$courseID,$moduleID,$description);
-            $p_wrapper_mysql->set_db_handle($p_db_handle);
-            $p_wrapper_mysql->safe_query($query_name);
 
-            return true;
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
-    public function removeAdmins($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
-        try{
-            $query_name = $p_sql_queries->set_announcement($name,$courseID,$moduleID,$description);
-            $p_wrapper_mysql->set_db_handle($p_db_handle);
-            $p_wrapper_mysql->safe_query($query_name);
-
-            return true;
-        } catch (Exception $e){
-            var_dump($e);
-            return false;
-        }
-    }
 }

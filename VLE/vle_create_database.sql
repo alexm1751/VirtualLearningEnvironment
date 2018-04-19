@@ -107,7 +107,7 @@ dbCourseID INT(5),
 PRIMARY KEY (dbModuleID)
 );
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
-VALUES (2080,'Functional programming', 'The functional programming module focuses on practical problem solving methods with the use of functions and how it can be integrated into Object Oriented Programming', 30, 1050);
+VALUES (2080,'Functional Programming', 'The functional programming module focuses on practical problem solving methods with the use of functions and how it can be integrated into Object Oriented Programming', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
 VALUES (2090,'Artificial Intelligence', 'This module introduces foundational concepts of AI and knowledge based systems', 30, 1050);
 INSERT INTO vle_modules (dbModuleID,dbModuleTitle,dbModuleDescription,dbCredits,dbCourseID)
@@ -186,7 +186,7 @@ dbCourseID INT(5) NOT NULL,
 PRIMARY KEY (dbTimeTableID)	
 );
 INSERT INTO vle_timetables(dbTimeTableID, dbtablepdf,dbCourseID)
-VALUES (300,'/FinalYearProject/VLE_Public/media/vle_timetable.pdf',1050);
+VALUES (300,'/FinalYearProject/VLE/app/assets/PDF/vle_timetable.pdf',1050);
 
 
 /*Announcement TABLE*/
@@ -242,45 +242,45 @@ PRIMARY KEY (dbModuleID,dbCourseID)
 CREATE TABLE vle_classes(
 dbClassID INT(5)  AUTO_INCREMENT,
 dbModuleID INT(5),
-dbDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+dbDate datetime,
 dbDescAndWeek VARCHAR(50),
 PRIMARY KEY (dbClassID)
 );
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (20, 2100, 2017-11-15, 'Course Integration');
+VALUES (20, 2100, '2017-11-15', 'Course Integration');
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (21, 2100, 2017-11-20, 'DB Design pt1');
+VALUES (21, 2100, '2017-11-20', 'DB Design pt1');
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (22, 2100, 2017-11-22, 'NoSQL Databases');
+VALUES (22, 2100, '2017-11-22', 'NoSQL Databases');
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (23, 2100, 2017-11-30, 'Primary and Foreign Keys');
+VALUES (23, 2100, '2017-11-30', 'Primary and Foreign Keys');
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (24, 2100, 2017-12-5, 'Test');
+VALUES (24, 2100, '2017-12-5', 'Test');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (75, 2080, 2018-04-11, 'Functional Programing Practical Data Structures Part1');
+VALUES (75, 2080, '2018-04-11', 'Functional Programing Practical Data Structures Part1');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (76, 2080, 2018-04-12, 'Functional Programing Practical Data Structures Part2');
+VALUES (76, 2080, '2018-04-12', 'Functional Programing Practical Data Structures Part2');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (77, 2090, 2018-04-11, 'A.I Robots Section 40');
+VALUES (77, 2090, '2018-04-11', 'A.I Robots Section 40');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (78, 2090, 2018-04-13, 'A.I Robots Section 41');
+VALUES (78, 2090, '2018-04-13', 'A.I Robots Section 41');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (79, 2095, 2018-04-14, 'Web Development responsive design pt1 ');
+VALUES (79, 2095, '2018-04-14', 'Web Development responsive design pt1 ');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (80, 2095, 2018-04-15, 'Web Development responsive design pt2 ');
+VALUES (80, 2095, '2018-04-15', 'Web Development responsive design pt2 ');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (81, 2100, 2018-04-13, 'Database Design Section 5');
+VALUES (81, 2100, '2018-04-13', 'Database Design Section 5');
 
 INSERT INTO vle_classes(dbClassID,dbModuleID,dbDate,dbDescAndWeek)
-VALUES (82, 2100, 2018-04-14, 'Table types section 1');
+VALUES (82, 2100, '2018-04-14', 'Table types section 1');
 
 /*Attendance TABLE*/
 CREATE TABLE vle_attendance(
@@ -358,13 +358,13 @@ PRIMARY KEY (dbCourseWorkID)
 );
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief1.pdf', 2080);
+VALUES (110, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE/app/assets/PDF/Brief1.pdf', 2080);
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (111, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief2.pdf', 2090);
+VALUES (111, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE/app/assets/PDF/Brief2.pdf', 2090);
 
 INSERT INTO vle_coursework(dbCourseWorkID,dbDescription,dbPostDate,dbDeadline,dbbrief,dbModuleID)
-VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE_Public/media/Brief3.pdf', 2095);
+VALUES (112, 'Simple pdf Assignment', default, '2018-04-12 23:59:59','/FinalYearProject/VLE/app/assets/PDF/Brief3.pdf', 2095);
 
 /*Submissions TABLE*/
 CREATE TABLE vle_submissions(
@@ -379,13 +379,13 @@ PRIMARY KEY (dbSubmissionID)
 );
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (701, '', default, '/FinalYearProject/VLE_Public/media/Assignment1.pdf', 0,1027, 110);
+VALUES (701, '', default, '/FinalYearProject/VLE/app/assets/PDF/Assignment1.pdf', 0,1027, 110);
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (703, '', default, '/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 111);
+VALUES (703, '', default, '/FinalYearProject/VLE/app/assets/PDF/Assignment2.pdf', 0,1027, 111);
 
 INSERT INTO vle_submissions(dbSubmissionID,dbFeedback,dbDate,dbSubPdf,dbMarked, dbUniqueID,dbCourseWorkID)
-VALUES (704, '', default, '/FinalYearProject/VLE_Public/media/Assignment2.pdf', 0,1027, 112);
+VALUES (704, '', default, '/FinalYearProject/VLE/app/assets/PDF/Assignment2.pdf', 0,1027, 112);
 
 
 
@@ -404,16 +404,16 @@ PRIMARY KEY (dbResID)
 
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recommended. Please understand the core conecpts before moving on.','/FinalYearProject/VLE_Public/media/LearningMaterial1.pdf', default, 2100);
+VALUES (1001, 0, 1, 'Database Design Documents', 'Further reading is recommended. Please understand the core conecpts before moving on.','/FinalYearProject/VLE/app/assets/PDF/LearningMaterial1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1002, 0, 1, 'Data Structures Knowledge', 'Key information on how data is stored in a data structure.','/FinalYearProject/VLE_Public/media/LearningMaterial2.pdf', default, 2080);
+VALUES (1002, 0, 1, 'Data Structures Knowledge', 'Key information on how data is stored in a data structure.','/FinalYearProject/VLE/app/assets/PDF/LearningMaterial2.pdf', default, 2080);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1003, 1, 0, 'Creating Tables in MySQL', 'Basic Setup and query on a small database.','/FinalYearProject/VLE_Public/media/PracticalWork1.pdf', default, 2100);
+VALUES (1003, 1, 0, 'Creating Tables in MySQL', 'Basic Setup and query on a small database.','/FinalYearProject/VLE/app/assets/PDF/PracticalWork1.pdf', default, 2100);
 
 INSERT INTO vle_learning(dbResID,dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-VALUES (1004, 1, 0, 'Mat lab Content', 'Carrying on from last week. use the content to help you through this week','/FinalYearProject/VLE_Public/media/PracticalWork2.pdf', default, 2090);
+VALUES (1004, 1, 0, 'Mat lab Content', 'Carrying on from last week. use the content to help you through this week','/FinalYearProject/VLE/app/assets/PDF/PracticalWork2.pdf', default, 2090);
 
 
 /* FOREIGN KEYS*/

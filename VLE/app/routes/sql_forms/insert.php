@@ -370,9 +370,9 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
         case "8":
             $_SESSION['form_flag'] = 0;
             $uploadedFiles = $request->getUploadedFiles();
-            var_dump($uploadedFiles);
+
             $course_id = $request->getParam('course_id');
-            var_dump($course_id);
+
 
             $validator->validate($request,[
                 'course_id' => v::digit()->notEmpty()->noWhitespace(),
@@ -468,7 +468,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+//                $_SESSION['value'] = $value;
                 return $response->withRedirect(admin_edit);
             }
             try{
@@ -543,6 +543,326 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 }
             }
             break;
+        case "11":
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'announcement_title' => v::notEmpty()->stringType(),
+                "announcement_description"=> v::notEmpty()->stringType(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(course_announcement);
+            }
+            try{
+                $module_id = 'NULL';
+                $course_id = $array['course_id'];
+                $title = filter_var($array['announcement_title'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['announcement_description'], FILTER_SANITIZE_STRING);
+
+                $check = $teacherModel->setAnnouncements($db_handle, $SQLQueries, $wrapper_mysql,$title,$course_id,$module_id,$description);
+
+                if($check == true){
+                    $this->flash->addMessage('success',"New Announcement Created!");
+                    $_SESSION['form_flag'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(course_announcement);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error creating the Announcement.");
+                    return $response->withRedirect(course_announcement);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating the Announcement.");
+                return $response->withRedirect(course_announcement);
+
+            }
+            break;
+        case "12";
+            $_SESSION['form_flag'] = 0;
+            $array = $request->getParsedBody();
+
+            $validator->validate($request,[
+                'announcement_title' => v::notEmpty()->stringType(),
+                "announcement_description"=> v::notEmpty()->stringType(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(module_announcement);
+            }
+            try{
+                $module_id = filter_var($array['module_id'], FILTER_SANITIZE_NUMBER_INT);
+                $course_id = filter_var($array['course_id'],FILTER_SANITIZE_NUMBER_INT);
+                $title = filter_var($array['announcement_title'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['announcement_description'], FILTER_SANITIZE_STRING);
+
+                if($teacherModel->setAnnouncements($db_handle, $SQLQueries, $wrapper_mysql,$title,$course_id,$module_id,$description)){
+                    $this->flash->addMessage('success',"New Announcement Created!");
+                    $_SESSION['form_flag'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(module_announcement);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error creating the Announcement.");
+                    return $response->withRedirect(module_announcement);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error creating the Announcement.");
+                return $response->withRedirect(module_announcement);
+
+            }
+            break;
+        case "13":
+            $_SESSION['form_flag'] = 0;
+
+            $uploadedFiles = $request->getUploadedFiles();
+            $array = $request->getParsedBody();
+
+
+
+            $validator->validate($request,[
+                'module_id' => v::digit()->notEmpty()->noWhitespace(),
+                'description'=> v::notEmpty()->stringType(),
+                'deadline'=> v::notEmpty()->stringType(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(setCoursework);
+            }
+
+            $module_id = filter_var($array['module_id'], FILTER_SANITIZE_NUMBER_INT);
+            $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+            $date = date("Y-m-d H:i:s",strtotime($array['deadline']));
+
+                try {
+                    $directory = directory;
+                    $m_directory = m_directory;
+                    if (!empty($uploadedFile = $uploadedFiles['file'])) {
+                        $fileSize = $uploadedFile->getSize();
+                        $fileName = $uploadedFile->getClientFilename();
+
+
+                        $fileExt = explode('.', $fileName);
+                        $fileActualExt = strtolower(end($fileExt));
+
+                        $allowed = array('pdf');
+
+                        if (in_array($fileActualExt, $allowed)) {
+                            if ($fileSize < 500000) {
+
+                                if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                                    $filename = moveUploadedFile($directory, $uploadedFile);
+                                    try{
+                                        $filename = ($m_directory . DIRSEP . $filename);
+                                        $teacherModel->setCoursework($db_handle,$SQLQueries,$wrapper_mysql,$module_id,$description,$date,$filename);
+                                        $this->flash->addMessage('success',"New Coursework Created!");
+                                        session_regenerate_id();
+                                        return $response->withRedirect(setCoursework);
+                                    }catch (Exception $e){
+                                        $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                        return $response->withRedirect(setCoursework);
+                                    }
+
+
+                                } else {
+                                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                    return $response->withRedirect(setCoursework);
+                                }
+                            } else {
+
+                                $this->flash->addMessage('danger', "Invalid File Size!");
+                                return $response->withRedirect(setCoursework);
+                            }
+                        } else {
+
+                            $this->flash->addMessage('danger', "Invalid File Type Uploaded!");
+                            return $response->withRedirect(setCoursework);
+
+                        }
+
+                    } else {
+                        $this->flash->addMessage('danger', "Empty File Detected");
+                        return $response->withRedirect(setCoursework);
+                    }
+                    // handle single input with single file upload
+                } catch (Exception $e) {
+                    var_dump($e);
+
+                }
+            break;
+        case "14":
+            $_SESSION['form_flag'] = 0;
+
+            $uploadedFiles = $request->getUploadedFiles();
+            $array = $request->getParsedBody();
+
+
+            $validator->validate($request,[
+                'title'=> v::notEmpty()->stringType(),
+                'description'=> v::notEmpty()->stringType(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(setPractical);
+            }
+
+            $module_id = $array['module_id'];
+            $title = filter_var($array['title'], FILTER_SANITIZE_STRING);
+            $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+
+
+            try {
+                $directory = directory;
+                $m_directory = m_directory;
+                if (!empty($uploadedFile = $uploadedFiles['file'])) {
+                    $fileSize = $uploadedFile->getSize();
+                    $fileName = $uploadedFile->getClientFilename();
+
+
+                    $fileExt = explode('.', $fileName);
+                    $fileActualExt = strtolower(end($fileExt));
+
+                    $allowed = array('pdf');
+
+                    if (in_array($fileActualExt, $allowed)) {
+                        if ($fileSize < 500000) {
+
+                            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                                $filename = moveUploadedFile($directory, $uploadedFile);
+                                try{
+                                    $filename = ($m_directory . DIRSEP . $filename);
+
+                                    $teacherModel->setPractical($db_handle,$SQLQueries,$wrapper_mysql,$module_id,$title,$description,$filename);
+                                    $this->flash->addMessage('success',"New Practical Work Created!");
+                                    session_regenerate_id();
+                                    return $response->withRedirect(setPractical);
+                                }catch (Exception $e){
+                                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                    return $response->withRedirect(setPractical);
+                                }
+
+
+                            } else {
+                                $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                return $response->withRedirect(setPractical);
+                            }
+                        } else {
+
+                            $this->flash->addMessage('danger', "Invalid File Size!");
+                            return $response->withRedirect(setPractical);
+                        }
+                    } else {
+
+                        $this->flash->addMessage('danger', "Invalid File Type Uploaded!");
+                        return $response->withRedirect(setPractical);
+
+                    }
+
+                } else {
+                    $this->flash->addMessage('danger', "Empty File Detected");
+                    return $response->withRedirect(setPractical);
+                }
+                // handle single input with single file upload
+            } catch (Exception $e) {
+                var_dump($e);
+
+            }
+            break;
+
+
+        case "15":
+            $_SESSION['form_flag'] = 0;
+
+            $uploadedFiles = $request->getUploadedFiles();
+            $array = $request->getParsedBody();
+
+
+            $validator->validate($request,[
+                'title'=> v::notEmpty()->stringType(),
+                'description'=> v::notEmpty()->stringType(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 3;
+//                $_SESSION['form_id'] =
+                return $response->withRedirect(setTheory);
+            }
+
+            $module_id = $array['module_id'];
+            $title = filter_var($array['title'], FILTER_SANITIZE_STRING);
+            $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+
+
+            try {
+                $directory = directory;
+                $m_directory = m_directory;
+                if (!empty($uploadedFile = $uploadedFiles['file'])) {
+                    $fileSize = $uploadedFile->getSize();
+                    $fileName = $uploadedFile->getClientFilename();
+
+
+                    $fileExt = explode('.', $fileName);
+                    $fileActualExt = strtolower(end($fileExt));
+
+                    $allowed = array('pdf');
+
+                    if (in_array($fileActualExt, $allowed)) {
+                        if ($fileSize < 500000) {
+
+                            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                                $filename = moveUploadedFile($directory, $uploadedFile);
+                                try{
+                                    $filename = ($m_directory . DIRSEP . $filename);
+var_dump($module_id .$title . $description . $filename);
+break;
+                                    $teacherModel->setTheory($db_handle,$SQLQueries,$wrapper_mysql,$module_id,$title,$description,$filename);
+                                    $this->flash->addMessage('success',"New Practical Work Created!");
+                                    session_regenerate_id();
+                                    return $response->withRedirect(setTheory);
+                                }catch (Exception $e){
+                                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                    return $response->withRedirect(setTheory);
+                                }
+
+
+                            } else {
+                                $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                                return $response->withRedirect(setTheory);
+                            }
+                        } else {
+
+                            $this->flash->addMessage('danger', "Invalid File Size!");
+                            return $response->withRedirect(setTheory);
+                        }
+                    } else {
+
+                        $this->flash->addMessage('danger', "Invalid File Type Uploaded!");
+                        return $response->withRedirect(setTheory);
+
+                    }
+
+                } else {
+                    $this->flash->addMessage('danger', "Empty File Detected");
+                    return $response->withRedirect(setTheory);
+                }
+                // handle single input with single file upload
+            } catch (Exception $e) {
+                var_dump($e);
+
+            }
+            break;
+
 
 
 

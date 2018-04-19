@@ -144,11 +144,13 @@ class SQLQueries
         $m_sql_query_string .= "AND c.dbModuleTitle = '$module'";
         return $m_sql_query_string;
     }
-    public static function get_course_announcements($email){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementTitle, a.dbDescription, a.dbDate
-        FROM vle_announcements a, vle_allocation b, vle_users c
+    public static function get_course_announcements($email,$course_name){
+        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementID,a.dbAnnouncementTitle, a.dbDescription, a.dbDate, d.dbCourseID
+        FROM vle_announcements a, vle_allocation b, vle_users c , vle_courses d
         WHERE a.dbCourseID = b.dbCourseID
         AND b.dbUniqueID = c.dbUniqueID
+        AND a.dbCourseID =d.dbCourseID
+        AND d.dbCourseName = '$course_name'
         AND c.dbEmail = '$email' 
         AND a.dbModuleID IS NULL ";
         return $m_sql_query_string;
@@ -234,16 +236,8 @@ class SQLQueries
 
     /*Teacher Queries*/
 
-    public static function get_course_announcement($email){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementID,a.dbAnnouncementTitle,a.dbCourseID,a.dbDescription,a.dbDate, d.dbCourseName
-        FROM vle_announcements a, vle_allocation b, vle_users c, vle_courses d
-        WHERE a.dbCourseID = b.dbCourseID
-        AND b.dbUniqueID = c.dbUniqueID
-        AND a.dbCourseID = d.dbCourseID
-        AND a.dbModuleID is NULL
-        AND c.dbEmail = '$email'";
-        return $m_sql_query_string;
-    }
+
+
     public static function set_announcement($name,$courseID,$moduleID,$description){
         $m_sql_query_string  = "INSERT INTO vle_announcements(dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
         VALUES ('$name', $courseID, $moduleID, '$description', default)";
@@ -254,14 +248,14 @@ class SQLQueries
         WHERE dbAnnouncementID = '$annID'";
         return $m_sql_query_string;
     }
-    public static function update_announcement($title,$courseID,$moduleID,$description,$date,$annID){
-        $m_sql_query_string  = "UPDATE vle_announcements
-	SET dbAnnouncementTitle = '$title',dbCourseID = '$courseID', dbModuleID = '$moduleID', dbDescription = '$description', dbDate = '$date'
-	WHERE dbAnnouncementID = '$annID'";
+    public static function update_announcement($title,$description,$annID){
+        $m_sql_query_string  = " UPDATE vle_announcements
+        SET dbAnnouncementTitle = '$title', dbDescription = '$description', dbDate = CURRENT_TIMESTAMP
+        WHERE dbAnnouncementID = '$annID'";
         return $m_sql_query_string;
     }
     public static function get_module_announcement($name,$email){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementID,a.dbAnnouncementTitle,a.dbCourseID,a.dbDescription,a.dbDate , d.dbModuleTitle
+        $m_sql_query_string  = "SELECT DISTINCT a.dbAnnouncementID,a.dbAnnouncementTitle,a.dbCourseID,a.dbModuleID,a.dbDescription,a.dbDate , d.dbModuleTitle
         FROM vle_announcements a, vle_allocation b, vle_users c , vle_modules d
         WHERE a.dbCourseID = b.dbCourseID
         AND b.dbUniqueID = c.dbUniqueID
@@ -269,6 +263,11 @@ class SQLQueries
         AND a.dbModuleID is NOT NULL
         AND c.dbEmail = '$email'
         AND d.dbModuleTitle = '$name'";
+        return $m_sql_query_string;
+    }
+    public static function get_modules_id($module_name){
+        $m_sql_query_string = "SELECT dbModuleID FROM vle_modules WHERE dbModuleTitle = '$module_name'";
+
         return $m_sql_query_string;
     }
     public static function get_classes($email){
@@ -308,7 +307,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_coursework($module){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbDescription,a.dbPostDate, a.dbDeadline, a.dbbrief
+        $m_sql_query_string  = "SELECT DISTINCT a.dbCourseWorkID, a.dbDescription,a.dbPostDate, a.dbDeadline, a.dbbrief, a.dbModuleID
         FROM vle_coursework a, vle_allocation b, vle_modules c
         WHERE a.dbModuleID = b.dbModuleID
         AND a.dbModuleID = c.dbModuleID
@@ -332,7 +331,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_practical($module){
-        $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
+        $m_sql_query_string  = "SELECT DISTINCT a.dbResID,a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate,  a.dbModuleID
         FROM vle_learning a, vle_modules b
         WHERE a.dbModuleID = b.dbModuleID
         AND a.dbPractical = 1
@@ -353,7 +352,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_theory($module){
-        $m_sql_query_string  = "SELECT a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate
+        $m_sql_query_string  = "SELECT DISTINCT a.dbResID,a.dbLearningTitle, a.dbDescription, a.dbPDF, a.dbDate, a.dbModuleID
         FROM vle_learning a, vle_modules b
         WHERE a.dbModuleID = b.dbModuleID
         AND a.dbTheory = 1
@@ -361,9 +360,9 @@ class SQLQueries
 
         return $m_sql_query_string;
     }
-    public static function set_theory($moduleID,$date,$pdf,$description,$title){
+    public static function set_theory($moduleID,$title,$description,$pdf){
         $m_sql_query_string  = "INSERT INTO vle_learning(dbPractical,dbTheory,dbLearningTitle,dbDescription,dbPDF,dbDate,dbModuleID)
-        VALUES ( 0, 1, '$title', '$description','$pdf', '$date', $moduleID)";
+        VALUES ( 0, 1, '$title', '$description','$pdf', default, $moduleID)";
 
         return $m_sql_query_string;
     }
@@ -481,9 +480,9 @@ class SQLQueries
 
         return $m_sql_query_string;
     }
-    public static function admin_update_users($password,$email,$name,$address,$number,$rank,$gender,$uniqueID){
+    public static function admin_update_users($email,$name,$address,$number,$rank,$gender,$uniqueID){
     $m_sql_query_string  = "UPDATE vle_users
-    SET dbpass='$password', dbEmail= '$email', dbFullName='$name', dbAddress='$address', dbNumber='$number',dbRank='$rank',dbGender='$gender'
+    SET  dbEmail= '$email', dbFullName='$name', dbAddress='$address', dbNumber='$number',dbRank='$rank',dbGender='$gender'
     WHERE dbUniqueID ='$uniqueID'";
 
         return $m_sql_query_string;
@@ -600,5 +599,12 @@ WHERE dbTimeTableID = '$timetableID'";
         AND c.dbEmail = '$email'";
         return $m_sql_query_string;
     }
+    public static function admin_remove_allocation($user_id,$course_id){
+        $m_sql_query_string  =
+            "DELETE FROM vle_allocation
+            WHERE dbUniqueID = '$user_id'
+            AND dbCourseID = '$course_id'";
 
+        return $m_sql_query_string;
+    }
 }

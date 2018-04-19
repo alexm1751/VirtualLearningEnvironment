@@ -51,20 +51,21 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
     $moduleTitle = '';
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
-    $practical = $teacherModel->getPractical($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
-    var_dump($practical);
-    //Get Module Data
-    //Announcements
-    //
+    if($moduleTitle != null){
+        $_SESSION['module_name']= $moduleTitle;
+    }
+    $practical = $teacherModel->getPractical($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['module_name']);
+
     $home = teacherDashboard;
     return $this->view->render($response,
         'te_setPracticalContent.html.twig',
         [
+            'flag' => $_SESSION['form_flag'],
 
+            'value' => $_SESSION['value'],
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
-            'module' => $moduleTitle,
             'modules' =>  $_SESSION['modules'],
             'home' => $home,
             'rank' => $_SESSION['rank'],
@@ -80,9 +81,10 @@ $app->map(['GET', 'POST'],'/setPractical', function(Request $request, Response $
             'assignments'=> assignments,
             'set_coursework' => setCoursework,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
+            'module'=> $_SESSION['module_name'],
+            'module_id' => $_SESSION['module_id'],
 
 
         ]);

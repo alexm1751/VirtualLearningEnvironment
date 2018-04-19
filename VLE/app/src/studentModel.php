@@ -118,9 +118,9 @@ class studentModel
 
     }
 
-    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+    public function getCourseAnnouncements($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email,$course_name){
         try{
-            $query_name = $p_sql_queries->get_course_announcements($email);
+            $query_name = $p_sql_queries->get_course_announcements($email,$course_name);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
             while($row = $p_wrapper_mysql->safe_fetch_array()){

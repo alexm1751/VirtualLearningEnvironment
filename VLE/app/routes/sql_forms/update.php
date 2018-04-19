@@ -30,9 +30,10 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
     $userModel = $this->get('user_model');
 
+    $studentModel = $this->get('student_model');
+    $teacherModel = $this->get('teacher_model');
+    $adminModel = $this->get('admin_model');
     $bcryptwrapper = $this->get('BcryptWrapper');
-
-
     $db_handle = $this->get('dbase');
 
     $SQLQueries = $this->get('SQLQueries');
@@ -133,23 +134,314 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 return $response->withRedirect(profile);
             }
         case "4":
-            $this->flash->addMessage('success',"Course Edit Success!");
-            return $response->withRedirect(course_edit);
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'course_name' => v::stringType()->notEmpty(),
+                "course_description"=> v::stringType()->notEmpty(),
+                "credits"=> v::digit()->notEmpty(),
+                "years"=> v::digit()->notEmpty(),
+                "degree"=> v::stringType()->notEmpty()
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(course_edit);
+            }
+            try{
+                $course_name = filter_var($array['course_name'], FILTER_SANITIZE_STRING);
+                $course_description = filter_var($array['course_description'], FILTER_SANITIZE_STRING);
+                $credits = filter_var($array['credits'], FILTER_SANITIZE_NUMBER_INT);
+                $years = filter_var($array['years'], FILTER_SANITIZE_NUMBER_INT);
+                $degree = filter_var($array['degree'], FILTER_SANITIZE_STRING);
+
+              $check= $adminModel->updateCourses($db_handle,$SQLQueries,$wrapper_mysql,$course_name,$course_description,$credits,$years,$degree,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"Course Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(course_edit);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                    return $response->withRedirect(course_edit);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                return $response->withRedirect(course_edit);
+
+            }
+            break;
         case "5":
-            $this->flash->addMessage('success',"Module Edit Success!");
-            return $response->withRedirect(module_edit);
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'module_title' => v::stringType()->notEmpty(),
+                "module_description"=> v::stringType()->notEmpty(),
+                "credits"=> v::digit()->notEmpty(),
+                "course_id"=> v::digit()->noWhitespace()->notEmpty()
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(module_edit);
+            }
+            try{
+                $module_title = filter_var($array['module_title'], FILTER_SANITIZE_STRING);
+                $module_description = filter_var($array['module_description'], FILTER_SANITIZE_STRING);
+                $credits = filter_var($array['credits'], FILTER_SANITIZE_NUMBER_INT);
+                $course_id = filter_var($array['course_id'], FILTER_SANITIZE_NUMBER_INT);
+
+                $check= $adminModel->updateModules($db_handle,$SQLQueries,$wrapper_mysql, $module_title,$module_description,$credits,$course_id,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"Module Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(module_edit);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                    return $response->withRedirect(module_edit);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                return $response->withRedirect(module_edit);
+
+            }
+            break;
         case "6":
-            $this->flash->addMessage('success',"User Edit Success!");
-            return $response->withRedirect(user_edit);
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'name' => v::stringType()->notEmpty(),
+                "email"=> v::email()->notEmpty()->noWhitespace(),
+                "address"=> v::stringType()->notEmpty(),
+                "number"=> v::digit()->notEmpty(),
+                "gender"=> v::stringType()->notEmpty(),
+                "rank"=> v::digit()->notEmpty()->noWhitespace()->intVal()->between(1, 2, true),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(user_edit);
+            }
+            try{
+                $name = filter_var($array['name'], FILTER_SANITIZE_STRING);
+                $email = filter_var($array['email'], FILTER_SANITIZE_EMAIL);
+                $address = filter_var($array['address'], FILTER_SANITIZE_STRING);
+                $number = filter_var($array['number'], FILTER_SANITIZE_NUMBER_INT);
+                $gender = filter_var($array['gender'], FILTER_SANITIZE_STRING);
+                $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
+
+                $check= $adminModel->updateUsers($db_handle,$SQLQueries,$wrapper_mysql,$email,$name,$address,$number,$rank,$gender,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"User Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(user_edit);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                    return $response->withRedirect(user_edit);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Course.");
+                return $response->withRedirect(user_edit);
+
+            }
+            break;
         case "7":
-            $this->flash->addMessage('success',"Class Edit Success!");
-            return $response->withRedirect(class_schedule);
-        case "8":
-            $this->flash->addMessage('success',"Timetable Edit Success!");
-            return $response->withRedirect(timetables);
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'module_id' => v::digit()->notEmpty()->noWhitespace(),
+                "date"=> v::notEmpty()->stringType(),
+                "description" => v::stringType()->notEmpty(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(class_schedule);
+            }
+            try{
+                $module_id = filter_var($array['module_id'], FILTER_SANITIZE_NUMBER_INT);
+                $date = filter_var($array['date'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+                $date = date("Y-m-d H:i:s",strtotime($date));
+                $check = $adminModel->updateClasses($db_handle, $SQLQueries, $wrapper_mysql,$value,$module_id,$date,$description);
+
+
+                if ($check == true){
+                    $this->flash->addMessage('success',"Class Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(class_schedule);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Class.");
+                    return $response->withRedirect(class_schedule);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Class.");
+                return $response->withRedirect(class_schedule);
+
+            }
+            break;
         case "9":
-            $this->flash->addMessage('success',"Admin Edit Success!");
-            return $response->withRedirect(admin_edit);
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'name' => v::stringType()->notEmpty(),
+                "email"=> v::email()->notEmpty()->noWhitespace(),
+                "address"=> v::stringType()->notEmpty(),
+                "number"=> v::digit()->notEmpty(),
+                "gender"=> v::stringType()->notEmpty(),
+                "rank"=> v::digit()->notEmpty()->noWhitespace()->intVal()->between(3, 4, true),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(admin_edit);
+            }
+            try{
+                $name = filter_var($array['name'], FILTER_SANITIZE_STRING);
+                $email = filter_var($array['email'], FILTER_SANITIZE_EMAIL);
+                $address = filter_var($array['address'], FILTER_SANITIZE_STRING);
+                $number = filter_var($array['number'], FILTER_SANITIZE_NUMBER_INT);
+                $gender = filter_var($array['gender'], FILTER_SANITIZE_STRING);
+                $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
+
+                $check= $adminModel->updateUsers($db_handle,$SQLQueries,$wrapper_mysql,$email,$name,$address,$number,$rank,$gender,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"Admin Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(admin_edit);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                    return $response->withRedirect(admin_edit);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                return $response->withRedirect(admin_edit);
+
+            }
+            break;
+        case "10":
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'announcement_title' => v::stringType()->notEmpty(),
+                "description"=> v::stringType()->notEmpty(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(course_announcement);
+            }
+            try{
+                $title = filter_var($array['announcement_title'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+
+
+                $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"Attendance Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(course_announcement);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                    return $response->withRedirect(course_announcement);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                return $response->withRedirect(course_announcement);
+
+            }
+            break;
+        case "11":
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'announcement_title' => v::stringType()->notEmpty(),
+                "description"=> v::stringType()->notEmpty(),
+
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(module_announcement);
+            }
+            try{
+                $title = filter_var($array['announcement_title'], FILTER_SANITIZE_STRING);
+                $description = filter_var($array['description'], FILTER_SANITIZE_STRING);
+
+
+                $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
+                if ($check == true){
+                    $this->flash->addMessage('success',"Attendance Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(module_announcement);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                    return $response->withRedirect(module_announcement);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                return $response->withRedirect(module_announcement);
+
+            }
+            break;
+
 
     }
 

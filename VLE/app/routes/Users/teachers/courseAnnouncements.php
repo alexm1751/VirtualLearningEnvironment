@@ -51,16 +51,23 @@ $app->get('/courseAnnouncements', function(Request $request, Response $response)
     $courseName = '';
     $moduleTitle = '';
     $courseName = $request->getParam('course');
+    if($courseName != null){
+        $_SESSION['course_name']= $courseName;
+    }
+
+
     $courseName = filter_var($courseName, FILTER_SANITIZE_STRING);
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
-    $announcements = $teacherModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user']);
-    var_dump($announcements);
+    $announcements = $teacherModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user'], $_SESSION['course_name']);
     $home = teacherDashboard;
 
     return $this->view->render($response,
         'te_cAnnouncement.html.twig',
         [
+
+            'flag' => $_SESSION['form_flag'],
+            'value' => $_SESSION['value'],
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'home' => $home,
@@ -72,7 +79,8 @@ $app->get('/courseAnnouncements', function(Request $request, Response $response)
             'rank' => $_SESSION['rank'],
             'module'=> $moduleTitle,
             'announcements' => $announcements,
-            'course'=> $courseName,
+            'course_id' => $announcements[0]['dbCourseID'],
+            'course'=> $_SESSION['course_name'],
             'contact' => contact,
             'profile' => profile,
             'assignments'=> assignments,
@@ -81,9 +89,8 @@ $app->get('/courseAnnouncements', function(Request $request, Response $response)
             'course_announcement' => course_announcement,
             'module_announcement' => module_announcement,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
 
 
         ]);

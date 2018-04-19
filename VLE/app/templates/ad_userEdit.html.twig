@@ -85,6 +85,8 @@
                                                     <div class="panel-body">
                                                         <form action="{{ action2 }}" method="POST">
                                                             <input type="hidden" name="id" value="4">
+                                                            <input type="hidden" name="user_id" value="{{  user.dbUniqueID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete user:</p>
                                                                 <p>{{  user.dbUniqueID }} - {{ user.dbFullName }}?</p>
@@ -121,10 +123,12 @@
                                             <div class="panel-body">
                                                 <div class="text-center">
 
-                                                    <p>Please Enter User Details Below.</p>
+                                                    <p>Please Edit {{  user.dbUniqueID }} User Details Below.</p>
                                                     <div class="panel-body">
                                                         <form action="{{ action }}" method="POST">
                                                             <input type="hidden" name="id" value="6">
+                                                            <input type="hidden" name="value" value="{{  user.dbUniqueID }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Name:</label>
                                                                 <input class="form-control" placeholder="John Smith" value="{{ user.dbFullName }}" name="name" type="text">
@@ -380,6 +384,8 @@
                                                     <div class="panel-body">
                                                         <form action="{{ action2 }}" method="POST">
                                                             <input type="hidden" name="id" value="5">
+                                                            <input type="hidden" name="user_id" value="{{  allocation.dbUniqueID }}">
+                                                            <input type="hidden" name="course_id" value="{{  allocation.dbCourseID }}">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete allocation for user:</p>
                                                                 <p>{{  allocation.dbUniqueID }} - {{ allocation.dbFullName }}?</p>

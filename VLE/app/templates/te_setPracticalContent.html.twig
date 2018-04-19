@@ -1,3 +1,4 @@
+{% extends 'tableLayout.html.twig' %}
 
 {% block content %}
     <div class="container">
@@ -22,12 +23,13 @@
 
                 </li>
             </ul>
+            {% include 'messages.html.twig' %}
 
             <h2>Set Practical Content</h2>
             <div class="line"></div>
             <form>
                 <div class="form-group">
-                    <a href="#edit<?php echo $id;?>" data-toggle="modal">Set New Practical Work: <button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
+                    <a href="#createModal" data-toggle="modal"><strong>Set New Practical Work: </strong><button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></a>
                 </div>
             </form>
             <div class="line"></div>
@@ -38,35 +40,41 @@
                 {% for practice in practical %}
                     <h4>{{ practice.dbLearningTitle }}</h4>
                     <p>{{ practice.dbDescription }}</p>
+                    <p>{{ practice.dbDate }}</p>
 
 
-                    <a href="" data-target="#upModal" data-toggle="modal">
-                        <label>Edit</label>
-                    </a>
-                    <a href="" data-target="#upModal2" data-toggle="modal">
-                        <label style="padding-left: 5px;">Delete</label>
-                    </a>
-                    <div class="line"></div>
-                    <div id="upModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
+                    <div class='btn-group' role='group' aria-label='...'>
+                        <a href="#view{{ practice.dbResID }}" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+                        <a href="#del{{ practice.dbResID }}" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></a>
                     </div>
-                    <div id="upModal2" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="line"></div>
+                    <!--modal Delete Course-->
+                    <div id="del{{ practice.dbResID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <div class="panel-heading">Upload your Assignment</div>
+                                    <div class="panel-heading">Delete Practical Work:</div>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12">
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="text-center">
+
                                                     <div class="panel-body">
-                                                        <form action="{{ action }}" method="{{ method }}">
+                                                        <form action="{{ action2 }}" method="POST">
+                                                            <input type="hidden" name="id" value="13">
+                                                            <input type="hidden" name="table_id" value="{{ practice.dbResID }}">
+
+                                                            <input type="hidden" name="delete_file" value="{{ practice.dbPDF  }}">
+
                                                             <div class="form-group" style="text-align: left;">
-                                                                <input type="file" name="upload" accept="application/pdf"/>
+                                                                <p>Are you sure you want to delete this Practical Work:</p>
+                                                                <p>{{  practice.dbResID }} - {{ practice.dbDescription }}?</p>
+
                                                             </div>
-                                                            <input class="btn btn-lg btn-primary btn-default" value="Submit Your Assignment" type="submit">
+                                                            <input class="btn btn-lg btn-danger " value="Delete" type="submit">
                                                             {{ csrf.field| raw }}
                                                         </form>
                                                     </div>
@@ -83,18 +91,95 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--modal view Course-->
+                    <div id="view{{ practice.dbResID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Coursework Details:</div>
+                                </div>
+                                <div class="modal-body" style="height: 400px;">
+                                    <iframe src="{{ practice.dbPDF }}#zoom=50" width="100%" height="100%"></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
+
             {% endif %}
+            <!--modal Create Course-->
+            <div id="createModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <div class="panel-heading">Create New Practical Work:</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="text-center">
+
+                                            <p>Please Enter Practical Details Below.</p>
+                                            <div class="panel-body">
+                                                <form action="{{ action3 }}" method="POST" enctype="multipart/form-data">
+                                                    <input type="hidden" name="id" value="14">
+                                                    <input type="hidden" name="module_id" value="{{ module_id }}">
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <label>Title:</label>
+                                                        <input class="form-control" placeholder="" name="title" type="text">
+                                                        {% if errors.title %}
+                                                            <span class="help-block">{{ errors.title | first }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <label>Description:</label>
+                                                        <input class="form-control" placeholder="" name="description" type="text">
+                                                        {% if errors.description %}
+                                                            <span class="help-block">{{ errors.description | first }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <label>Upload PDF:</label>
+                                                        <input type="file" name="file" accept="application/pdf"/>
+                                                    </div>
+
+
+                                                    <input class="btn btn-lg btn-primary" value="Create Coursework" type="submit">
+                                                    {{ csrf.field| raw }}
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.</p></div>
+                deserunt mollit anim id est laborum.</p>
 
-    </div>
+        </div>
     </div>
 
     {% include 'footer.html.twig' %}
-    </div>
 {% endblock %}

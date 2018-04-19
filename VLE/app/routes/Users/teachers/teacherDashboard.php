@@ -59,6 +59,8 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
 
     $_SESSION['form_flag'] = 0;
 
+    $_SESSION['value'] = 0;
+
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -80,9 +82,8 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
             'course_announcement' => course_announcement,
             'module_announcement' => module_announcement,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
 
 
         ]);

@@ -64,6 +64,7 @@ $app->get('/adminEdit', function(Request $request, Response $response) {
             'ad_adminEdit.html.twig',
             [
                 'flag' => $_SESSION['form_flag'],
+                'value' => $_SESSION['value'],
                 'action' => update,
                 'action2' => delete,
                 'action3' => insert,

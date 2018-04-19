@@ -18,6 +18,8 @@
 
         </ul>
         {% include 'messages.html.twig' %}
+        <h3>Timetables:</h3>
+
         {% if course_timetables is null %}
             <p>There is no Timetable data to display at this time.</p>
         {% else %}
@@ -72,6 +74,10 @@
                                                     <div class="panel-body">
                                                         <form action="{{ action2 }}" method="POST">
                                                             <input type="hidden" name="id" value="7">
+                                                            <input type="hidden" name="table_id" value="{{ timetable.dbTimeTableID }}">
+
+                                                            <input type="hidden" name="delete_file" value="{{ timetable.dbtablepdf }}">
+
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Timetable:</p>
                                                                 <p>{{  timetable.dbTimeTableID }} - {{ timetable.dbCourseName }}?</p>

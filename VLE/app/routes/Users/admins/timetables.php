@@ -23,6 +23,19 @@ $app->get('/timetables', function(Request $request, Response $response) {
             ->withRedirect(LANDING_PAGE);
         exit;
     }
+    if(($_SESSION['rank'] < 3)){
+        session_destroy();
+        session_start();
+        $this->flash->addMessage('danger',"Invalid Request! No Access!");
+        return $response
+            ->withHeader("Cache-Control"," no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control"," post-check=0, pre-check=0, false")
+            ->withHeader("Pragma","no-cache")
+            ->withHeader('Expires','Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withHeader('Expires','0')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }
 
     $validator = $this->get('validator');
 
@@ -36,7 +49,7 @@ $app->get('/timetables', function(Request $request, Response $response) {
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
     $timetables = $adminModel->getTimeTables($db_handle,$SQLQueries,$wrapper_mysql);
-var_dump($timetables);
+
     //if Rank 4 super admin, delete or add new admins!! :D
     $home = adminDashboard;
 
@@ -49,6 +62,7 @@ var_dump($timetables);
         'ad_timetables.html.twig',
         [
             'flag' => $_SESSION['form_flag'],
+            'value' => $_SESSION['value'],
             'action' => update,
             'action2' => delete,
             'action3' => insert,

@@ -50,7 +50,9 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
     $_SESSION['modules'] = $modules;
 
     $course = $studentModel->getCourse($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
-    $announcements = $studentModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+
+    $courseName = $course[0]['dbCourseName'];
+    $announcements = $studentModel->getCourseAnnouncements($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user'],$courseName);
 
     $_SESSION['form_flag'] = 0;
 

@@ -48,6 +48,9 @@ var_dump($timetables);
     return $this->view->render($response,
         'ad_timetables.html.twig',
         [
+            'action' => update,
+            'action2' => delete,
+            'action3' => insert,
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',

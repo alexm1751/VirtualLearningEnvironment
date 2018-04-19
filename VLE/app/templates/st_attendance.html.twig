@@ -21,25 +21,11 @@
             </li>
 
         </ul>
-        {#update user#}
-
         <h2>Attendance Information:</h2>
 
         <div class="line"></div>
-
-        <h3>Absences:</h3>
-
-        {% for absence in absences %}
-            <div>
-                <h5>{{ absence.dbModuleTitle }} - {{ absence.dbDescAndWeek }} : Did not attend - {{ absence.date}}</h5>
-            </div>
-
-        {% endfor %}
-
-        <div class="line"></div>
+        {#update user#}
         <h3>Current Attendance Percentage:</h3>
-        <div class="line"></div>
-        <div class=""></div>
         {#Page Padder incase of large content#}
         <div class="progress">
             {% if percent >= 80 %}
@@ -48,21 +34,21 @@
                 {{ percent }}%  (Excellent!)
             </div>
         </div>
-        {% elseif percent > 60 %}
+    {% elseif percent > 60 %}
         <div class="progress">
             <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
                  aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ percent }}%">
                 {{ percent }}%  (Mediocre)
             </div>
         </div>
-        {% elseif percent > 40 %}
+    {% elseif percent > 40 %}
         <div class="progress">
             <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar"
                  aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ percent }}%">
                 {{ percent }}%  (Needs Improvement)
             </div>
         </div>
-        {%  else %}
+    {%  else %}
         <div class="progress">
             <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
                  aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ percent }}%">
@@ -70,6 +56,23 @@
             </div>
         </div>
         {% endif %}
+    </div>
+    <div class="line"></div>
+
+
+
+        <h3>Absences:</h3>
+
+        {% for absence in absences %}
+            <div>
+                <h5>{{ absence.dbModuleTitle }}</h5>
+                <p>{{ absence.dbDescAndWeek }} : Did not attend - {{ absence.date}}</p>
+            </div>
+
+        {% endfor %}
+
+        <div class="line"></div>
+
         <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -77,9 +80,10 @@
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
             deserunt mollit anim id est laborum.</p></div>
 
-</div>
 
+</div>
     {% include 'footer.html.twig' %}
+
     </div>
 
 {% endblock %}

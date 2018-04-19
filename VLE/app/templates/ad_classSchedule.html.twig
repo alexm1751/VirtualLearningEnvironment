@@ -72,8 +72,7 @@
                                                 <div class="text-center">
 
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="4">
+                                                        <form action="{{ action2 }}?id=6" method="POST">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Class:</p>
                                                                 <p>{{ class.dbClassID }} - {{ class.dbDescAndWeek }}?</p>
@@ -112,8 +111,7 @@
 
                                                     <p>Please Enter Class Details Below.</p>
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="3">
+                                                        <form action="{{ action }}?id=7" method="POST">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Module ID:</label>
                                                                 <input class="form-control" placeholder="" name="module_id" value="{{ class.dbModuleID }}" type="number">
@@ -217,8 +215,7 @@
 
                                         <p>Please Enter Class Details Below.</p>
                                         <div class="panel-body">
-                                            <form action="{{ action4 }}" method="{{ method4 }}">
-                                                <input type="hidden" name="id" value="3">
+                                            <form action="{{ action3 }}?id=7" method="POST">
                                                 <div class="form-group" style="text-align: left;">
                                                     <label>Module ID:</label>
                                                     <input class="form-control" placeholder="2100" name="module_id" type="number">

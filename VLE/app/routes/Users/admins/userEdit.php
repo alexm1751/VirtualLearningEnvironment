@@ -35,6 +35,7 @@ $app->get('/userEdit', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
     $users = $adminModel->getUsers($db_handle,$SQLQueries,$wrapper_mysql);
+    $allocation = $adminModel->getAllocation($db_handle,$SQLQueries,$wrapper_mysql);
 
     //if Rank 4 super admin, delete or add new admins!! :D
     $home = adminDashboard;
@@ -47,6 +48,9 @@ $app->get('/userEdit', function(Request $request, Response $response) {
     return $this->view->render($response,
         'ad_userEdit.html.twig',
         [
+            'action' => update,
+            'action2' => delete,
+            'action3' => insert,
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'page_heading_2' => 'Virtual Learning Environment',
@@ -55,6 +59,7 @@ $app->get('/userEdit', function(Request $request, Response $response) {
             'rank' => $_SESSION['rank'],
             'home' => $home,
             'users' => $users,
+            'allocations' => $allocation,
             'course_edit' => course_edit,
             'module_edit' => module_edit,
             'user_edit' => user_edit,

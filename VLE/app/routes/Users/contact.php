@@ -91,6 +91,7 @@ $app->get('/contact', function(Request $request, Response $response)
             'timetable' => timetable,
             'name' => $_SESSION['name'],
             'modules' =>  $_SESSION['modules'],
+            'courses' =>  $_SESSION['courses'],
             'logout_page' => LOGOUT_PAGE,
             'course_edit' => course_edit,
             'module_edit' => module_edit,

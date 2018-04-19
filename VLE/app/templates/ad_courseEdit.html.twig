@@ -75,8 +75,8 @@
                                                 <div class="text-center">
 
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="4">
+                                                        <form action="{{ action2 }}" method="POST">
+                                                            <input type="hidden" name="id" value="2">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Course:</p>
                                                                 <p>{{  course.dbCourseID }} - {{ course.dbCourseName }}?</p>
@@ -115,8 +115,8 @@
 
                                                     <p>Please Enter Course Details Below.</p>
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="3">
+                                                        <form action="{{ action }}" method="POST">
+                                                            <input type="hidden" name="id" value="4">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Course Name:</label>
                                                                 <input class="form-control" placeholder="Computer Science" name="course_name" value="{{ course.dbCourseID }}" type="text">
@@ -235,7 +235,7 @@
 
                                         <p>Please Enter Course Details Below.</p>
                                         <div class="panel-body">
-                                            <form action="{{ action4 }}" method="{{ method4 }}">
+                                            <form action="{{ action3 }}" method="POST">
                                                 <input type="hidden" name="id" value="3">
                                                 <div class="form-group" style="text-align: left;">
                                                     <label>Course Name:</label>

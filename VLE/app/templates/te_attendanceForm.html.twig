@@ -1,3 +1,4 @@
+{% extends 'tableLayout.html.twig' %}
 
 {% block content %}
     <div class="container">
@@ -13,24 +14,98 @@
                     <a href="{{ home }}">Home</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="{{ atendance_form }}">Attendance</a></li>
+                <li><a href="{{ attendance_form }}">Attendance</a></li>
             </ul>
+            {% include 'messages.html.twig' %}
 
             <h2>Classes:</h2>
+    {% if classes == null %}
+    <p>No Class information to display at this time</p>
+    {% else %}
+        <table id="courses" class="table table-striped table-bordered bootstrap-datatable datatable" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Class ID</th>
+            <th>Class Information</th>
+            <th>Module Name</th>
+            <th>New/Clear</th>
 
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">HTML</a></li>
-                    <li><a href="#">CSS</a></li>
-                    <li><a href="#">JavaScript</a></li>
-                </ul>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Date</th>
+            <th>Class ID</th>
+            <th>Class Information</th>
+            <th>Module Name</th>
+            <th>New/Clear</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        {% for class in classes %}
+            <tr>
+
+                <td style="min-width: 76px;">{{ class.dbDate | date('d-m-y')}}</td>
+                <td>{{ class.dbClassID }}</td>
+                <td>{{ class.dbDescAndWeek }}</td>
+                <td>{{ class.dbModuleTitle }}</td>
+                <td style="min-width: 87px;">
+                    <div class='btn-group' role='group' aria-label='...'>
+                        <a href="{{ attendance_form }}?id={{ class.dbClassID }}"><button type='button' class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus' ></span></button></a>
+                        <a href="#del{{ class.dbClassID }}" data-toggle="modal"><button type='button' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash' ></span></button></a>
+                    </div>
+                </td>
+            </tr>
+            <div id="del{{ class.dbClassID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <div class="panel-heading">Clear Attendance:</div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="text-center">
+
+                                            <div class="panel-body">
+                                                <form action="{{ action2 }}" method="POST">
+                                                    <input type="hidden" name="id" value="9">
+                                                    <input type="hidden" name="class_id" value="{{ class.dbClassID }}">
+
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <p>Are you sure you want to Clear Attendance for:</p>
+                                                        <p>{{ class.dbClassID }}?</p>
+
+                                                    </div>
+                                                    <input class="btn btn-lg btn-danger " value="Delete" type="submit">
+                                                    {{ csrf.field| raw }}
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        {% endfor %}
+        </tbody>
+        </table>
 
-        </div>
+
+        {% endif %}
+
     </div>
-
+    </div>
     {% include 'footer.html.twig' %}
-    </div>
+
 {% endblock %}

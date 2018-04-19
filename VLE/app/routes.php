@@ -37,6 +37,7 @@ require 'routes/Users/teachers/setTheory.php';
 require 'routes/Users/teachers/setPractical.php';
 require 'routes/Users/teachers/setCoursework.php';
 require 'routes/Users/teachers/assignments.php';
+require 'routes/Users/teachers/classAttendance.php';
 require 'routes/Users/admins/adminEdit.php';
 require 'routes/Users/admins/courseEdit.php';
 require 'routes/Users/admins/moduleEdit.php';

@@ -267,20 +267,28 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_classes($email){
-        $m_sql_query_string  = "SELECT a.dbClassID, a.dbDate, a.dbDescAndWeek
-        FROM vle_classes a , vle_allocation b, vle_users c
+        $m_sql_query_string  = "SELECT a.dbClassID, a.dbDate, a.dbDescAndWeek, d.dbModuleTitle
+        FROM vle_classes a , vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID
+        AND b.dbModuleID = d.dbModuleID
         AND b.dbTeaches = 1
         AND c.dbEmail = '$email'";
         return $m_sql_query_string;
     }
+    public static function check_student_attendance($classID){
+        $m_sql_query_string  = "SELECT dbClassID
+                FROM vle_attendance 
+                WHERE dbClassID = '$classID'";
+        return $m_sql_query_string;
+    }
     public static function get_student_attendance($classID){
-        $m_sql_query_string  = "SELECT c.dbDescAndWeek, b.dbFullName, a.dbAttended
-        FROM vle_attendance a, vle_users b, vle_classes c  
-        WHERE a.dbUniqueID = b.dbUniqueID
-        AND a.dbClassID = c.dbClassID
-        AND a.dbClassID = '$classID'";
+        $m_sql_query_string  = "SELECT a.dbUniqueID,a.dbFullName, b.dbClassID,d.dbModuleID
+                FROM vle_users a ,vle_allocation d, vle_classes b 
+                WHERE a.dbUniqueID = d.dbUniqueID
+                AND d.dbModuleID = b.dbModuleID
+                AND d.dbTeaches = 0
+                AND b.dbClassID = '$classID'";
         return $m_sql_query_string;
     }
 
@@ -289,11 +297,9 @@ class SQLQueries
         VALUES($classID,$uniqueID,$bool)";
         return $m_sql_query_string;
     }
-    public static function update_student_attendance($classID,$uniqueID,$bool){
-        $m_sql_query_string  = "UPDATE vle_attendance
-        SET dbAttended = $bool
-        WHERE dbUniqueID = $uniqueID
-        AND dbClassID = $classID";
+    public static function delete_student_attendance($classID){
+        $m_sql_query_string  = "DELETE FROM vle_attendance
+        WHERE dbClassID = $classID";
         return $m_sql_query_string;
     }
     public static function get_coursework($module){
@@ -558,6 +564,19 @@ WHERE dbTimeTableID = '$timetableID'";
         $m_sql_query_string  =
             "INSERT INTO vle_users (dbpass,dbEmail,dbFullName, dbAddress,dbNumber,dbRank,dbGender, dbRecover_Hash,dbregistration_date)
             VALUES ('$password','$email', '$name','$address','$number', '$rank', '$gender','', DEFAULT)";
+
+        return $m_sql_query_string;
+    }
+    public static function admin_get_allocation(){
+        $m_sql_query_string= "SELECT DISTINCT b.dbUniqueID,a.dbFullName,a.dbRank, b.dbCourseID, c.dbCourseName, b.dbTeaches
+        FROM vle_users a, vle_allocation b, vle_courses c
+        WHERE a.dbUniqueID = b.dbUniqueID
+        AND b.dbCourseID = c.dbCourseID";
+        return $m_sql_query_string;
+}
+    public static function admin_set_allocation($user_id,$course_id,$module_id,$rank){
+        $m_sql_query_string  = "INSERT INTO vle_allocation(dbTeacher, dbUniqueID, dbCourseID, dbModuleID)
+        VALUES($rank,$user_id,$course_id,$module_id)";
 
         return $m_sql_query_string;
     }

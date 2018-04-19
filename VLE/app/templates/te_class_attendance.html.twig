@@ -1,0 +1,92 @@
+{% extends 'tableLayout.html.twig' %}
+{% block content %}
+    <div class="container">
+        {% include 'navigation.html.twig' %}
+
+        {% include 'te_attendanceNav.html.twig' %}
+
+        <!-- Page Content Holder -->
+        <div id="content">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="{{ home }}">Home</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="{{ attendance }}">Attendance</a>
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Class:</a>
+
+                </li>
+            </ul>
+
+            <h2>Class Attendance:</h2>
+            <div class="line"></div>
+
+            {% if students is null %}
+                <p>There is no Attendance data to display at this time.</p>
+            {% else %}
+                <form action="{{ action3 }}" method="POST">
+                    <input type="hidden" name="id" value="10">
+                    <table  class="table table-striped bordered" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ClassID</th>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Present</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ClassID</th>
+                            <th>UserID</th>
+                            <th>Full Name</th>
+                            <th>Present</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for student in students %}
+                            <tr>
+
+                                <td>{{ student.dbClassID }}
+                                <input type="hidden" name="class_id[]" value="{{ student.dbClassID }}">
+                                </td>
+                                <td>{{ student.dbUniqueID }}
+                                <input type="hidden" name="unique_id[]" value="{{ student.dbUniqueID }}">
+                                </td>
+                                <td>{{ student.dbFullName }}</td>
+
+                                <td>
+                                    <input type="hidden" name="present[]" value="0">
+                                    <input type="checkbox" name="present[]" value="1">
+
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+                    {{ csrf.field| raw }}
+                </form>
+
+            {% endif %}
+
+            <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.</p></div>
+
+    </div>
+    </div>
+
+    {% include 'footer.html.twig' %}
+    </div>
+{% endblock %}

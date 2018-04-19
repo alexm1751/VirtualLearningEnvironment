@@ -2,13 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: alexmason
- * Date: 09/04/2018
- * Time: 20:30
+ * Date: 19/04/2018
+ * Time: 00:33
  */
+
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-$app->get('/setAttendance', function(Request $request, Response $response) {
+$app->get('/classAttendance', function(Request $request, Response $response) {
 
     if($_SESSION['rank'] != 2){
         session_destroy();
@@ -38,9 +39,6 @@ $app->get('/setAttendance', function(Request $request, Response $response) {
     }
 
 
-    $validator = $this->get('validator');
-
-    $userModel = $this->get('user_model');
     $teacherModel = $this->get('teacher_model');
 
     $db_handle = $this->get('dbase');
@@ -49,36 +47,44 @@ $app->get('/setAttendance', function(Request $request, Response $response) {
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-    $classes = $teacherModel->getClasses($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+    $classID = $request->getParam('id');
+
+
+    $students = $teacherModel->getAttendance($db_handle,$SQLQueries,$wrapper_mysql, $classID);
+
+
 
     $home = teacherDashboard;
 
     return $this->view->render($response,
-        'te_attendanceForm.html.twig',
+        'te_class_attendance.html.twig',
         [
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
+            'action3' => insert,
             'home' => $home,
             'page_heading_2' => 'Virtual Learning Environment',
             'logout_page' => LOGOUT_PAGE,
             'name' => $_SESSION['name'],
+            'students' => $students,
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
-            'classes' => $classes,
             'contact' => contact,
             'profile' => profile,
+            'attendance' => setAttendance,
             'attendance_form' => attendance_form,
-            'assignments'=> assignments,
             'module_content' => module_content,
-            'course_announcement' => course_announcement,
-            'module_announcement' => module_announcement,
+            'assignments'=> assignments,
+            'set_theory' => setTheory,
+            'set_practical' => setPractical,
+            'set_coursework' => setCoursework,
             'action' => update,
             'method' => 'post',
-            'action2' => delete,
+            'action2' => update,
             'method2' => 'post',
 
 
         ]);
 
-})->setName('attendanceForm');
+})->setName('classAttendance');

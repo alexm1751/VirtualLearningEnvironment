@@ -30,6 +30,8 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
     $validator = $this->get('validator');
 
     $studentModel = $this->get('student_model');
+    $teacherModel = $this->get('teacher_model');
+
 
     $db_handle = $this->get('dbase');
 
@@ -127,7 +129,67 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
         }
         break;
-    }
+        case "3":
+            $this->flash->addMessage('success',"New Course Success!");
+            return $response->withRedirect(course_edit);
+        case "4":
+            $this->flash->addMessage('success',"New Module Success!");
+            return $response->withRedirect(module_edit);
+        case "5":
+            $this->flash->addMessage('success',"New User Success!");
+            return $response->withRedirect(user_edit);
+        case "6":
+            $this->flash->addMessage('success',"New allocation Success!");
+            return $response->withRedirect(user_edit);
+
+        case "7":
+            $this->flash->addMessage('success',"New Class Success!");
+            return $response->withRedirect(class_schedule);
+
+        case "8":
+            $this->flash->addMessage('success',"New Timetable Success!");
+            return $response->withRedirect(timetables);
+
+        case "9":
+            $this->flash->addMessage('success',"New Admin Success!");
+            return $response->withRedirect(admin_edit);
+        case "10":
+            $checkID= $request->getParam('class_id');
+            $checkID = $checkID[0];
+            $check = $teacherModel->check_attendance($db_handle, $SQLQueries, $wrapper_mysql, $checkID);
+            if($check != true){
+                $this->flash->addMessage('warning', "Attendance for ". $checkID ." is already set please clear before resubmitting.");
+                return $response->withRedirect(setAttendance);
+            }
+            else{
+                try{
+                    $classID= $request->getParam('class_id');
+                    $uniqueID= $request->getParam('unique_id');
+                    $present = $request->getParam('present');
+
+
+                    for ($i = 0; $i<count($uniqueID); $i++) {
+                        $n_cid = $classID[$i];
+                        $n_uid = $uniqueID[$i];
+                        $n_present = $present[$i];
+
+                        $teacherModel->setAttendance($db_handle, $SQLQueries, $wrapper_mysql, $n_cid, $n_uid, $n_present);
+
+                    }
+                    $this->flash->addMessage('success',"Attendance Recorded!");
+                    return $response->withRedirect(setAttendance);
+                }catch (Exception $e){
+                    $this->flash->addMessage('warning', "Oops There was an Error please try again.");
+                    return $response->withRedirect(setAttendance);
+                }
+            }
+
+
+
+
+}
+
+
 
 
     // Check user rank and check id else kick back

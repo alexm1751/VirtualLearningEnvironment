@@ -82,8 +82,7 @@
                                                 <div class="text-center">
 
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="4">
+                                                        <form action="{{ action2 }}?id=8" method="POST">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <p>Are you sure you want to delete Admin:</p>
                                                                 <p>{{  admin.dbUniqueID }} - {{ admin.dbFullName }}?</p>
@@ -122,8 +121,7 @@
 
                                                     <p>Please Enter Admin Details Below.</p>
                                                     <div class="panel-body">
-                                                        <form action="{{ action4 }}" method="{{ method4 }}">
-                                                            <input type="hidden" name="id" value="3">
+                                                        <form action="{{ action }}?id=9" method="POST">
                                                             <div class="form-group" style="text-align: left;">
                                                                 <label>Name:</label>
                                                                 <input class="form-control" placeholder="John Smith" value="{{ admin.dbFullName }}" name="name" type="text">
@@ -249,8 +247,7 @@
 
                                         <p>Please Enter Admin Details Below.</p>
                                         <div class="panel-body">
-                                            <form action="{{ action4 }}" method="{{ method4 }}">
-                                                <input type="hidden" name="id" value="3">
+                                            <form action="{{ action3 }}?id=9" method="POST">
                                                 <div class="form-group" style="text-align: left;">
                                                     <label>Name:</label>
                                                     <input class="form-control" placeholder="John Smith" name="name" type="text">

@@ -25,11 +25,6 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
         exit;
     }
 
-        try{
-
-        } catch (Exception $e){
-            return view;
-        }
 
     $validator = $this->get('validator');
 
@@ -137,6 +132,24 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $this->flash->addMessage('danger',"There was an issue resetting your password. Please try again.");
                 return $response->withRedirect(profile);
             }
+        case "4":
+            $this->flash->addMessage('success',"Course Edit Success!");
+            return $response->withRedirect(course_edit);
+        case "5":
+            $this->flash->addMessage('success',"Module Edit Success!");
+            return $response->withRedirect(module_edit);
+        case "6":
+            $this->flash->addMessage('success',"User Edit Success!");
+            return $response->withRedirect(user_edit);
+        case "7":
+            $this->flash->addMessage('success',"Class Edit Success!");
+            return $response->withRedirect(class_schedule);
+        case "8":
+            $this->flash->addMessage('success',"Timetable Edit Success!");
+            return $response->withRedirect(timetables);
+        case "9":
+            $this->flash->addMessage('success',"Admin Edit Success!");
+            return $response->withRedirect(admin_edit);
 
     }
 

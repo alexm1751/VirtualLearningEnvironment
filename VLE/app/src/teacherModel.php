@@ -168,6 +168,24 @@ class teacherModel
         }
     }
 
+    public function check_attendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID)
+    {
+        try {
+            $query_name = $p_sql_queries->check_student_attendance($classID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            $rows = $p_wrapper_mysql->count_rows();
+            if ($rows <= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            var_dump($e);
+            return false;
+        }
+    }
+
     public function setAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID,$uniqueID,$bool){
         try{
             $query_name = $p_sql_queries->set_student_attendance($classID,$uniqueID,$bool);
@@ -182,9 +200,9 @@ class teacherModel
             return false;
         }
     }
-    public function updateAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID,$uniqueID,$bool){
+    public function deleteAttendance($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$classID){
         try{
-            $query_name = $p_sql_queries->update_student_attendance($classID,$uniqueID,$bool);
+            $query_name = $p_sql_queries->delete_student_attendance($classID);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
 

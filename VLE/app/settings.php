@@ -63,7 +63,8 @@ define('class_schedule', $_SERVER['SCRIPT_NAME']. '/classSchedule');
 define('timetables', $_SERVER['SCRIPT_NAME']. '/timetables');
 define('admin_edit', $_SERVER['SCRIPT_NAME']. '/adminEdit');
 define('insert', $_SERVER['SCRIPT_NAME']. '/insert');
-
+define('delete', $_SERVER['SCRIPT_NAME']. '/delete');
+define('attendance_form', $_SERVER['SCRIPT_NAME']. '/classAttendance');
 define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);
 $m_max_length_password = 25;

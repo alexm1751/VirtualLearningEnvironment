@@ -27,7 +27,7 @@ class studentModel
 
         return ($array);
          }catch(Exception $e){
-            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            throwException($e);
             return false;
         }
     }
@@ -45,7 +45,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -61,7 +62,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -78,7 +80,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -95,7 +98,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -111,7 +115,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -129,7 +134,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -146,7 +152,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -164,7 +171,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -182,7 +190,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -200,7 +209,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -220,7 +230,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -240,7 +251,8 @@ class studentModel
                 return false;
             }
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -253,7 +265,8 @@ class studentModel
             $p_wrapper_mysql->safe_query($query_name);
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 
@@ -273,7 +286,8 @@ class studentModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
 

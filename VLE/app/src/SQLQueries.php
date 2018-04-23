@@ -222,7 +222,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_feedback($email,$module){
-        $m_sql_query_string  = "SELECT a.dbDescription, b.dbFeedback, b.dbMarked
+        $m_sql_query_string  = "SELECT a.dbDescription, b.dbFeedback, b.dbMarked, b.dbSubPdf
                 FROM vle_coursework a, vle_submissions b, vle_allocation c, vle_users d, vle_modules e
                 WHERE a.dbCourseWorkID = b.dbCourseWorkID
                 AND b.dbUniqueID = c.dbUniqueID
@@ -373,7 +373,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_submissions($module){
-        $m_sql_query_string  = "SELECT  a.dbUniqueID, d.dbFullName,b.dbDescription, a.dbDate, b.dbDeadline
+        $m_sql_query_string  = "SELECT  a.dbSubmissionID,a.dbFeedback ,a.dbUniqueID, d.dbFullName,b.dbDescription, a.dbDate, b.dbDeadline, a.dbSubPdf
          FROM vle_submissions a , vle_coursework b ,vle_modules c, vle_users d
          WHERE a.dbCourseWorkID = b.dbCourseWorkID
          AND b.dbModuleID = c.dbModuleID
@@ -384,7 +384,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_marked_submissions($module){
-        $m_sql_query_string  = "SELECT  a.dbUniqueID, d.dbFullName,b.dbDescription, a.dbDate, b.dbDeadline
+        $m_sql_query_string  = "SELECT a.dbSubmissionID,a.dbFeedback, a.dbUniqueID, d.dbFullName,b.dbDescription, a.dbDate, b.dbDeadline, a.dbSubPdf
          FROM vle_submissions a , vle_coursework b ,vle_modules c, vle_users d
          WHERE a.dbCourseWorkID = b.dbCourseWorkID
          AND b.dbModuleID = c.dbModuleID
@@ -395,15 +395,15 @@ class SQLQueries
         return $m_sql_query_string;
     }
 
-    public static function update_submissions($feedback){
+    public static function update_submissions($feedback,$value){
         $m_sql_query_string  = " UPDATE vle_submissions
-         SET dbFeedback='$feedback', dbMarked=1";
+         SET dbFeedback='$feedback', dbMarked=1 WHERE dbSubmissionID='$value'";
 
         return $m_sql_query_string;
     }
     public static function remove_submissions($subID){
         $m_sql_query_string  =  "DELETE FROM vle_submissions
-          WHERE dbSumissionID='$subID'";
+          WHERE dbSubmissionID='$subID'";
 
         return $m_sql_query_string;
     }

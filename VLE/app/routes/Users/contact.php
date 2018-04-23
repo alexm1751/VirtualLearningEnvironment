@@ -102,6 +102,8 @@ $app->get('/contact', function(Request $request, Response $response)
             'class_schedule' => class_schedule,
             'timetables' => timetables,
             'admin_edit' => admin_edit,
+            'attendance_form' => setAttendance,
+
 
 
 

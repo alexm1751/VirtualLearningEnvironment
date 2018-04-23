@@ -102,17 +102,18 @@
     });
     </script>
 {% endif %}
-{% if flag == 4 and errors != null%}
-    <script type="text/javascript">
-        $(window).load(function(){
-            $('#createAllo').modal('show');
-        });
-    </script>
-{% endif %}
+
 {% if flag == 5 and errors != null %}
     <script type="text/javascript">
         $(window).load(function(){
             $('#edit{{ value }}').modal('show');
+        });
+    </script>
+{% endif %}
+{% if flag == 6 and errors != null%}
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#edit2{{ value }}').modal('show');
         });
     </script>
 {% endif %}

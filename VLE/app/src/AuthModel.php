@@ -73,7 +73,7 @@ class authModel{
         $stored_pass = $p_wrapper_mysql->safe_fetch_array();
         $stored_pass = $stored_pass['dbpass'];
         if(password_verify($pass, $stored_pass) != true){
-            throw new Exception('Failed Password Try');
+            throwException($e);
             return false;
 
         }
@@ -91,7 +91,7 @@ class authModel{
         try{
             $p_wrapper_mysql->safe_query($query_name);
         } catch(Exception $e){
-            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            throwException($e);
             return false;
         }
         return true;
@@ -128,7 +128,7 @@ class authModel{
         }
         else{
 
-            throw new Exception('Somethings Not right');
+            throwException($e);
             return false;
         }
     }
@@ -162,7 +162,7 @@ class authModel{
             $p_wrapper_mysql->safe_query($query_hash);
 
         } catch(Exception $e){
-            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            throwException($e);
             return false;
         }
         return true;
@@ -202,7 +202,7 @@ class authModel{
 
             return ($array);
         }catch(Exception $e){
-            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            throwException($e);
             return false;
         }
     }
@@ -219,7 +219,7 @@ class authModel{
             return true;
 
         }catch(Exception $e){
-            throw new Exception('Password Reset Denied. Please attempt again or contact admin.');
+            throwException($e);
             return false;
         }
     }

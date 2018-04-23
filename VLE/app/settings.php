@@ -56,7 +56,7 @@ define('module_announcement', $_SERVER['SCRIPT_NAME']. '/moduleAnnouncements');
 define('setTheory', $_SERVER['SCRIPT_NAME'] . '/setTheory');
 define('setPractical', $_SERVER['SCRIPT_NAME'] . '/setPractical');
 define('setCoursework', $_SERVER['SCRIPT_NAME'] . '/setCoursework');
-define('assignments', $_SERVER['SCRIPT_NAME'] . '/assignments');
+define('assignments', $_SERVER['SCRIPT_NAME'] . '/markAssignments');
 define('course_edit', $_SERVER['SCRIPT_NAME']. '/courseEdit');
 define('module_edit', $_SERVER['SCRIPT_NAME']. '/moduleEdit');
 define('user_edit', $_SERVER['SCRIPT_NAME']. '/userEdit');

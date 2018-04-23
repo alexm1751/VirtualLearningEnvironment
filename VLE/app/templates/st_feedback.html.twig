@@ -24,7 +24,7 @@
             </ul>
 
             <h2>Feedback</h2>
-            <p>Assignment Marks</p>
+
             <div class="line"></div>
 
             {% if feedback is null %}
@@ -32,8 +32,42 @@
                 <div class="line"></div>
             {% else %}
                 {% for row in feedback %}
-                    <p>{{ row.dbDescription }}</p>
-                    <p>{{ row.dbFeedback }}</p>
+            <h4>Title:</h4> <h5>{{ row.dbDescription }}</h5>
+                   <h4>Feedback:</h4> <p>{{ row.dbFeedback }}</p>
+
+                    <div class='btn-group' role='group' aria-label='...'>
+                        <a href="#view{{ row.dbSubmissionID }}" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
+
+                    <div id="view{{ row.dbSubmissionID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <div class="panel-heading">Assignment Submission:</div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="text-center">
+
+                                                    <div class="modal-body" style="height: 400px;">
+                                                        <iframe src="{{ row.dbSubPdf }}#zoom=50" width="100%" height="100%"></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="line"></div>
                     {% endfor %}
 
             {% endif %}

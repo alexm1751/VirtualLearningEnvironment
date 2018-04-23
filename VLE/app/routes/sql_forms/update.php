@@ -118,7 +118,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
 
-                if($userModel->check_pass($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user'],$old_pass ) == true){
+                if($userModel->check_pass($db_handle,$SQLQueries,$wrapper_mysql,$_SESSION['user'],$old_pass ) === true){
                     $userModel->update_pass( $db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper,$_SESSION['user'],$pass);
                     $this->flash->addMessage('success',"Your Password has been reset");
                     $_SESSION['form_flag'] = 0;
@@ -160,7 +160,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $degree = filter_var($array['degree'], FILTER_SANITIZE_STRING);
 
               $check= $adminModel->updateCourses($db_handle,$SQLQueries,$wrapper_mysql,$course_name,$course_description,$credits,$years,$degree,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Course Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -203,7 +203,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $course_id = filter_var($array['course_id'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->updateModules($db_handle,$SQLQueries,$wrapper_mysql, $module_title,$module_description,$credits,$course_id,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Module Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -250,7 +250,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->updateUsers($db_handle,$SQLQueries,$wrapper_mysql,$email,$name,$address,$number,$rank,$gender,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"User Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -294,7 +294,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $check = $adminModel->updateClasses($db_handle, $SQLQueries, $wrapper_mysql,$value,$module_id,$date,$description);
 
 
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Class Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -341,7 +341,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $rank = filter_var($array['rank'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->updateUsers($db_handle,$SQLQueries,$wrapper_mysql,$email,$name,$address,$number,$rank,$gender,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Admin Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -382,7 +382,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
 
                 $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Attendance Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -423,7 +423,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
 
                 $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Attendance Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
@@ -441,6 +441,94 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        case "12":
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'feedback' => v::stringType()->notEmpty(),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 5;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(assignments);
+            }
+            try{
+
+                $feedback = filter_var($array['feedback'], FILTER_SANITIZE_STRING);
+
+
+                $check= $teacherModel->updateSubmissions($db_handle,$SQLQueries,$wrapper_mysql,$feedback,$value);
+                if ($check === true){
+                    $this->flash->addMessage('success',"Marking Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(assignments);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error marking the submission.");
+                    return $response->withRedirect(assignments);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error marking the submission.");
+                return $response->withRedirect(assignments);
+
+            }
+            break;
+        case "13";
+            $_SESSION['form_flag'] = 0;
+            $_SESSION['value'] = 0;
+
+            $array = $request->getParsedBody();
+            $value = $array['value'];
+
+            $validator->validate($request,[
+                'feedback' => v::stringType()->notEmpty(),
+            ]);
+            if ($validator->failed()){
+                $_SESSION['form_flag'] = 6;
+                $_SESSION['value'] = $value;
+                return $response->withRedirect(assignments);
+            }
+            try{
+
+                $feedback = filter_var($array['feedback'], FILTER_SANITIZE_STRING);
+
+
+                $check= $teacherModel->updateSubmissions($db_handle,$SQLQueries,$wrapper_mysql,$feedback,$value);
+                if ($check === true){
+                    $this->flash->addMessage('success',"Feedback Edit Success!");
+                    $_SESSION['form_flag'] = 0;
+                    $_SESSION['value'] = 0;
+                    session_regenerate_id();
+                    return $response->withRedirect(assignments);
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error editing the submission.");
+                    return $response->withRedirect(assignments);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error editing the submission.");
+                return $response->withRedirect(assignments);
+
+            }
+            break;
+        default:
+            $_SESSION = array();
+            $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
+            return $response
+                ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+                ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+                ->withHeader("Pragma:", "no-cache")
+                ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+                ->withRedirect(LANDING_PAGE);
+            exit;
 
 
     }

@@ -29,7 +29,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -41,7 +42,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -53,7 +55,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -65,7 +68,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -83,7 +87,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -96,7 +101,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -108,7 +114,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -120,7 +127,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -138,7 +146,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -162,7 +171,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -174,7 +184,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -190,7 +201,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -206,7 +218,8 @@ class adminModel
                 return false;
             }
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -219,7 +232,8 @@ class adminModel
             $rank = $rank['dbRank'];
             return ($rank);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -230,7 +244,8 @@ class adminModel
             $p_wrapper_mysql->safe_query($query_name);
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -241,7 +256,8 @@ class adminModel
             $p_wrapper_mysql->safe_query($query_name);
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -256,7 +272,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -274,7 +291,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -286,7 +304,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -298,7 +317,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -310,7 +330,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -329,7 +350,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -341,7 +363,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -358,7 +381,8 @@ class adminModel
                 return false;
             }
         } catch (Exception $e) {
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -370,7 +394,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -389,7 +414,8 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }
@@ -401,7 +427,8 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            var_dump($e);
+                        throwException($e);
+
             return false;
         }
     }

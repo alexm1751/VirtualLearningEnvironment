@@ -28,7 +28,7 @@ class teacherModel
             return ($json);
 
         }catch(Exception $e){
-            throw new Exception('Error Collecting Modules');
+            throwException($e);
             return false;
         }
     }
@@ -48,7 +48,7 @@ class teacherModel
             return ($array);
 
         }catch(Exception $e){
-            throw new Exception('Error Collecting Modules');
+            throwException($e);
             return false;
         }
     }
@@ -69,7 +69,7 @@ class teacherModel
             return ($json);
 
         }catch(Exception $e){
-            throw new Exception('Error Collecting Modules');
+            throwException($e);
             return false;
         }
     }
@@ -86,7 +86,7 @@ class teacherModel
             return ($array);
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -99,7 +99,7 @@ class teacherModel
             return true;
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -113,7 +113,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -127,7 +127,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -146,7 +146,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -166,7 +166,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -183,7 +183,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -201,7 +201,7 @@ class teacherModel
                 return false;
             }
         } catch (Exception $e) {
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -216,7 +216,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -230,7 +230,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -250,7 +250,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -264,7 +264,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -279,7 +279,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -294,7 +294,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -314,7 +314,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -328,7 +328,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -342,7 +342,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -356,7 +356,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -374,7 +374,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -387,7 +387,7 @@ class teacherModel
             return true;
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -409,7 +409,7 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -426,21 +426,21 @@ class teacherModel
 
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
 
-    public function updateSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$feedback){
+    public function updateSubmissions($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$feedback,$value){
         try{
-            $query_name = $p_sql_queries->update_submissions($feedback);
+            $query_name = $p_sql_queries->update_submissions($feedback,$value);
             $p_wrapper_mysql->set_db_handle($p_db_handle);
             $p_wrapper_mysql->safe_query($query_name);
 
             return true;
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }
@@ -453,7 +453,7 @@ class teacherModel
             return true;
 
         } catch (Exception $e){
-            var_dump($e);
+            throwException($e);
             return false;
         }
     }

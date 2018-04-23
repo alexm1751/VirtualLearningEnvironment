@@ -51,7 +51,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 $course_id = filter_var($array['course_id'], FILTER_SANITIZE_NUMBER_INT);
 
               $check= $adminModel->removeCourses($db_handle,$SQLQueries,$wrapper_mysql,$course_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Course Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(course_edit);
@@ -74,7 +74,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 $module_id = filter_var($array['module_id'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->removeModules($db_handle,$SQLQueries,$wrapper_mysql,$module_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Module Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(module_edit);
@@ -97,7 +97,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 $user_id = filter_var($array['user_id'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->removeUsers($db_handle,$SQLQueries,$wrapper_mysql,$user_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"User Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(user_edit);
@@ -122,7 +122,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
 
                 $check= $adminModel->removeAllocation($db_handle,$SQLQueries,$wrapper_mysql,$user_id,$course_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Delete Allocation Success!");
                     session_regenerate_id();
                     return $response->withRedirect(user_edit);
@@ -146,7 +146,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
 
                 $check= $adminModel->removeClasses($db_handle,$SQLQueries,$wrapper_mysql,$class_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Class Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(class_schedule);
@@ -173,7 +173,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 if(file_exists($filename)){
                     unlink($filename);
                     $check= $adminModel->removeTimetables($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
-                    if ($check == true){
+                    if ($check === true){
                         $this->flash->addMessage('success',"Timetable Delete Success!");
                         session_regenerate_id();
                         return $response->withRedirect(timetables);
@@ -200,7 +200,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             $email = filter_var($array['email'], FILTER_SANITIZE_EMAIL);
 
-            if($email == $_SESSION['user']){
+            if($email === $_SESSION['user']){
                 $this->flash->addMessage('danger',"You are not able to delete yourself while signed in.");
                 return $response->withRedirect(admin_edit);
             }
@@ -209,7 +209,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 $user_id = filter_var($array['user_id'], FILTER_SANITIZE_NUMBER_INT);
 
                 $check= $adminModel->removeUsers($db_handle,$SQLQueries,$wrapper_mysql,$user_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Admin Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(admin_edit);
@@ -248,7 +248,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
 
                 $check= $teacherModel->removeCourseAnnouncement($db_handle,$SQLQueries,$wrapper_mysql,$announcement_id);
-                if ($check == true){
+                if ($check === true){
                     $this->flash->addMessage('success',"Announcement Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(course_announcement);
@@ -272,7 +272,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
 
                 $bool= $teacherModel->removeCourseAnnouncement($db_handle,$SQLQueries,$wrapper_mysql,$announcement_id);
-                if ($bool == true){
+                if ($bool === true){
                     $this->flash->addMessage('success',"Announcement Delete Success!");
                     session_regenerate_id();
                     return $response->withRedirect(module_announcement);
@@ -299,7 +299,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 if(file_exists($filename)){
                     unlink($filename);
                     $check= $teacherModel->removeCoursework($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
-                    if ($check == true){
+                    if ($check === true){
                         $this->flash->addMessage('success',"Timetable Delete Success!");
                         session_regenerate_id();
                         return $response->withRedirect(setCoursework);
@@ -331,7 +331,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 if(file_exists($filename)){
                     unlink($filename);
                     $check= $teacherModel->removeLearning($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
-                    if ($check == true){
+                    if ($check === true){
                         $this->flash->addMessage('success'," Practical Work Delete Success!");
                         session_regenerate_id();
                         return $response->withRedirect(setPractical);
@@ -363,7 +363,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 if(file_exists($filename)){
                     unlink($filename);
                     $check= $teacherModel->removeLearning($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
-                    if ($check == true){
+                    if ($check === true){
                         $this->flash->addMessage('success',"Theory Work Delete Success!");
                         session_regenerate_id();
                         return $response->withRedirect(setTheory);
@@ -384,6 +384,48 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+        case "15":
+            try{
+                $array = $request->getParsedBody();
+
+                $filename = $array['delete_file'];
+                $table_id = $array['table_id'];
+                $base = base_url;
+                $filename = ($base . $filename);
+                if(file_exists($filename)){
+                    unlink($filename);
+                    $check= $teacherModel->removeSubmissions($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
+                    if ($check === true){
+                        $this->flash->addMessage('success',"Assignment Delete Success!");
+                        session_regenerate_id();
+                        return $response->withRedirect(assignments);
+                    }
+                    else{
+                        $this->flash->addMessage('danger',"There was an error Deleting the  Assignment.");
+                        return $response->withRedirect(assignments);
+                    }
+                }
+                else{
+                    $this->flash->addMessage('danger',"There was an error Deleting the Assignment.");
+                    return $response->withRedirect(assignments);
+                }
+
+            } catch (Exception $e){
+                $this->flash->addMessage('danger',"There was an error Deleting the  Assignment.");
+                return $response->withRedirect(assignments);
+
+            }
+            break;
+        default:
+            $_SESSION = array();
+            $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
+            return $response
+                ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+                ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+                ->withHeader("Pragma:", "no-cache")
+                ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+                ->withRedirect(LANDING_PAGE);
+            exit;
 
 
     }

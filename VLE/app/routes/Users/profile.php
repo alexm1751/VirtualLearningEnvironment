@@ -99,6 +99,7 @@ $app->map(['GET', 'POST'],'/profile', function(Request $request, Response $respo
             'class_schedule' => class_schedule,
             'timetables' => timetables,
             'admin_edit' => admin_edit,
+            'attendance_form' => setAttendance,
 
 
 

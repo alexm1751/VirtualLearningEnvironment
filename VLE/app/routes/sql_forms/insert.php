@@ -861,6 +861,16 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+        default:
+            $_SESSION = array();
+            $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
+            return $response
+                ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+                ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+                ->withHeader("Pragma:", "no-cache")
+                ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+                ->withRedirect(LANDING_PAGE);
+            exit;
 
 
 

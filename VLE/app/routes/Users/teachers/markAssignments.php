@@ -8,7 +8,7 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-$app->get('/assignments', function(Request $request, Response $response) {
+$app->get('/markAssignments', function(Request $request, Response $response) {
 
     if($_SESSION['rank'] != 2){
         session_destroy();
@@ -42,6 +42,10 @@ $app->get('/assignments', function(Request $request, Response $response) {
     $courseName = filter_var($courseName, FILTER_SANITIZE_STRING);
     $moduleTitle = $request->getParam('module');
     $moduleTitle = filter_var($moduleTitle, FILTER_SANITIZE_STRING);
+    if($moduleTitle != null){
+        $_SESSION['module_name']= $moduleTitle;
+    }
+
 
 
     $validator = $this->get('validator');
@@ -54,9 +58,9 @@ $app->get('/assignments', function(Request $request, Response $response) {
     $SQLQueries = $this->get('SQLQueries');
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
-    $submissions = $teacherModel->getSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    $submissions = $teacherModel->getSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['module_name']);
 
-    $m_submissions = $teacherModel->getMarkedSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $moduleTitle);
+    $m_submissions = $teacherModel->getMarkedSubmissions($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['module_name']);
     $home = teacherDashboard;
 
     return $this->view->render($response,
@@ -70,6 +74,7 @@ $app->get('/assignments', function(Request $request, Response $response) {
             'page_heading_2' => 'Virtual Learning Environment',
             'logout_page' => LOGOUT_PAGE,
             'name' => $_SESSION['name'],
+            'module_id' => $_SESSION['module_id'],
             'modules' =>  $_SESSION['modules'],
             'courses' =>  $_SESSION['courses'],
             'rank' => $_SESSION['rank'],
@@ -78,16 +83,15 @@ $app->get('/assignments', function(Request $request, Response $response) {
             'module_content' => module_content,
             'submissions' => $submissions,
             'm_submissions' => $m_submissions,
-            'module'=> $moduleTitle,
+            'module'=> $_SESSION['module_name'],
             'course'=> $courseName,
             'assignments'=> assignments,
             'set_theory' => setTheory,
             'set_practical' => setPractical,
             'set_coursework' => setCoursework,
             'action' => update,
-            'method' => 'post',
-            'action2' => update,
-            'method2' => 'post',
+            'action2' => delete,
+            'action3' => insert,
 
 
         ]);

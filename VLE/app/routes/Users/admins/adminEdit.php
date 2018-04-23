@@ -10,6 +10,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/adminEdit', function(Request $request, Response $response) {
 
+    //Only  Super Admin can access this level
     if((!$_SESSION['logged_in'])){
         session_destroy();
         session_start();

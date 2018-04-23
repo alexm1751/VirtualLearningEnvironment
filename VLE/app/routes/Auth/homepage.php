@@ -13,7 +13,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app->get('/', function(Request $request, Response $response)
 {
-
+//Checking whether activity flag to tell whether user has become inactive. Displays info message to inform user has been logged out.
 
 if($_SESSION['activity'] == 1){
       session_destroy();

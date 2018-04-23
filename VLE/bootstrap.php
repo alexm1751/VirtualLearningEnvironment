@@ -6,6 +6,7 @@
  * Time: 12:41
  */
 
+//Start the Sessions user enters the site
 session_start();
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 870) && $_SESSION['user']) {

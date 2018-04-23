@@ -10,6 +10,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 $app->post( '/loggedOut', function(Request $request, Response $response) {
+
+    // forcing the user to redirect to landing page and re-validate preventing access to content whilst unauthorised.
     if($_SESSION['logged_in']){
         $_SESSION = array();
         session_destroy();

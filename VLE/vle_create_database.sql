@@ -1,7 +1,18 @@
 
-/*
+
+
+
+/*Create Database*/
 CREATE DATABASE vle;
-*/
+
+
+
+/*Select Data base*/
+use vle;
+
+
+
+
 /*DROP TABLE STATEMENTS*/
 DROP TABLE IF EXISTS vle_allocation;
 DROP TABLE IF EXISTS vle_learning;
@@ -16,13 +27,9 @@ DROP TABLE IF EXISTS vle_modules;
 DROP TABLE IF EXISTS vle_courses;
 DROP TABLE IF EXISTS vle_users;
 
-/*subject/teacher table?
-*/
+
 
 /*CREATE TABLE STATEMENTS*/
-
-/*Update User details
-Change password*/
 
 
 /*USER TABLE*/
@@ -227,15 +234,6 @@ INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,db
 VALUES (117,'NoSQL Module final year students', 1050, 2100, 'There will soon be a survey for those who are interested in a NoSQL module next semester. If I receive enough feedback for this I will consider rolling the program and integrating this for final year students. ~Ben', default);
 INSERT INTO vle_announcements(dbAnnouncementID,dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
 VALUES (118,'Course Trip', 1050, NULL, 'For any students interested in a course related trip there will be a Jet setter chance to go to Germany and work with BMW\'s development team. From previous years experience this has lead to possible placement and post grad success. ~Ben', default);
-
-
-/*Modules TABLE*/
-/*CREATE TABLE vle_module_allocation(
-dbModuleID INT(5),
-dbCourseID INT(5),
-PRIMARY KEY (dbModuleID,dbCourseID)
-
-);*/
 
 
 /*Classes TABLE*/

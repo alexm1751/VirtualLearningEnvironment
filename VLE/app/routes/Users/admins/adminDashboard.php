@@ -9,6 +9,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 $app->get('/adminDashboard', function(Request $request, Response $response) {
 
+    //Checks users rank is not below an admin
     if(($_SESSION['rank'] < 3)){
         session_destroy();
         session_start();
@@ -22,6 +23,7 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
             ->withRedirect(LANDING_PAGE);
         exit;
     }
+    //Are they logged in?
     if((!$_SESSION['logged_in'])){
         session_destroy();
         session_start();
@@ -52,6 +54,8 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
     $home = adminDashboard;
     $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
+
+    //flags used with javascript modal show when user has validation error for specific window
 
     $_SESSION['form_flag'] = 0;
 

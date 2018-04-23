@@ -29,7 +29,7 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
 
     $wrapper_mysql = $this->get('MYSQLWrapper');
 
-
+//Validation method allows no white space. Redirects if error is found
     $validator->validate($request,[
         'email' => v::email()->noWhitespace()->notEmpty(),
         'password' => v::noWhitespace()->notEmpty()
@@ -38,6 +38,8 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
     if ($validator->failed()){
         return $response->withRedirect(LANDING_PAGE);
     }
+
+    //Once details pass through validation sanitise them
 
     $email = $request->getParam('email');
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -52,7 +54,7 @@ $app->map(['GET', 'POST'], '/loginhome', function(Request $request, Response $re
         return $response->withRedirect(LANDING_PAGE);
    }
 
-
+//Switch statement check users rank from authenticated db call and then guide them to the correct homepage
 if ($_SESSION['logged_in'] == true){
 
         switch ($_SESSION['rank']){
@@ -74,6 +76,7 @@ if ($_SESSION['logged_in'] == true){
                 return $response->withRedirect(adminDashboard);
 
                 break;
+                //Default is to fail and kick user out.
             default:
                 $_SESSION = array();
                 $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
@@ -87,6 +90,7 @@ if ($_SESSION['logged_in'] == true){
         }
 }
 else {
+        //If the user gets to this point their authentication has failed in someway redirect with info message
     $_SESSION = array();
     $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");
     return $response

@@ -13,7 +13,7 @@ class validationErrors extends middleware
 {
     public function __invoke($request, $response, $next)
     {
-
+//Adds the name of the field then assers error into session array errors.
         if(isset($_SESSION['errors'])){
             $this->container->view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
 

@@ -101,6 +101,9 @@ class MySQLWrapper
         return $m_arr_row;
     }
 
+    /*
+     * For potential future expansion if the VLE decides to use database storage ofr files
+     */
     public function safe_file_fetch()
     {
         $m_file = $this->c_obj_stmt->fetch(PDO::PARAM_LOB);

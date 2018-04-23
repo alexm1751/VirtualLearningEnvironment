@@ -10,6 +10,17 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Respect\Validation\Validator as v;
 
+/*
+ * This Controller handles all new update calls from all users of the web application
+ * Each user form has an associated hidden ID value which corresponds to an action on this controller
+ * Default value is set to fail and kick user and request authentication.
+ * Using post method for this with hidden value protects the value to some extent
+ * If ID is not set initially the user will be redirected to login again.
+ * All users can edit for personal details and more.
+ * Form Flag is a global used to provide twig information on which form failed and then reopens the form for the user.
+ * Edit flag uses the primary identifier of the query to understand which modal the user failed to use. Pass them back to page and spring modal with validation errors.
+ */
+
 $app->map(['GET', 'POST'],'/update', function(Request $request, Response $response) use ($app) {
 
 //Needs auth Check
@@ -30,7 +41,6 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
     $userModel = $this->get('user_model');
 
-    $studentModel = $this->get('student_model');
     $teacherModel = $this->get('teacher_model');
     $adminModel = $this->get('admin_model');
     $bcryptwrapper = $this->get('BcryptWrapper');
@@ -45,6 +55,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
 
     switch ($id){
+        //Update Details
         case "2":
             if(!$_SESSION['rank']){
                 $_SESSION = array();
@@ -92,11 +103,13 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
             }
             catch (Exception $e){
                 $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please Check Your Details");
-                $response->withRedirect(profile);
-                return $e;
+                throwException($e);
+                return  $response->withRedirect(profile);
             }
             break;
+
         case "3":
+            //Update Password
             try{
                 $pass = $request->getParam('password');
 
@@ -133,6 +146,7 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
                 $this->flash->addMessage('danger',"There was an issue resetting your password. Please try again.");
                 return $response->withRedirect(profile);
             }
+            //Edit Course Details
         case "4":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -178,6 +192,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Module Details
+
         case "5":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -221,6 +237,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit User(Student and Teacher) Details
+
         case "6":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -268,6 +286,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Class Details
+
         case "7":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -312,6 +332,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Admin Details
+
         case "9":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -359,6 +381,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Course Announcement Details
+
         case "10":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -400,6 +424,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Module Announcement Details
+
         case "11":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -441,6 +467,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Coursework Feedback Details
+
         case "12":
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -480,6 +508,8 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
             }
             break;
+        //Edit Assignments Marking Details
+
         case "13";
             $_SESSION['form_flag'] = 0;
             $_SESSION['value'] = 0;
@@ -534,6 +564,6 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
     }
 
 
-    // Check user rank and check id else kick back
+
 
 })->setName('update');

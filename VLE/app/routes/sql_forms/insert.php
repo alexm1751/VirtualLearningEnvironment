@@ -11,6 +11,16 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Respect\Validation\Validator as v;
 use Slim\Http\UploadedFile;
 
+/*
+ * This Controller handles all new insertion calls from all users of the web application
+ * Each user form has an associated hidden ID value which corresponds to an action on this controller
+ * Default value is set to fail and kick user and request authentication.
+ * Using post method for this with hidden value protects the value to some extent
+ * If ID is not set initially the user will be redirected to login again.
+ * All users can insert into the database
+ * Form Flag is a global used to provide twig information on which form failed and then reopens the form for the user.
+ */
+
 $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $response) use ($app){
 
     if (!$id = $request->getParam('id')){
@@ -47,6 +57,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
 
     switch ($id){
+        //Submit Assignment - Student
         case "2":
             if($_SESSION['rank'] != 1){
                 $_SESSION = array();
@@ -74,6 +85,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 return $response->withRedirect(assessment);
             }
             else{
+                //Check file is not empty then check certain size and file type.
             try {
                 $directory = directory;
                 $m_directory = m_directory;
@@ -133,6 +145,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
         }
         break;
+            //Create Course
         case "3":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -146,7 +159,6 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
                 return $response->withRedirect(course_edit);
             }
             try{
@@ -167,6 +179,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+            //Create Module
         case "4":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -179,7 +192,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(module_edit);
             }
             try{
@@ -206,6 +219,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+            //Create User
         case "5":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -221,7 +235,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(user_edit);
             }
             try{
@@ -263,6 +277,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+            //Create User Allocation
         case "6":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -327,6 +342,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+            //Create New Class
         case "7":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -339,7 +355,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(class_schedule);
             }
             try{
@@ -366,7 +382,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
-
+            //Create Timetable
         case "8":
             $_SESSION['form_flag'] = 0;
             $uploadedFiles = $request->getUploadedFiles();
@@ -380,7 +396,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(timetables);
             }
 
@@ -447,12 +463,13 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 }
                 // handle single input with single file upload
             } catch (Exception $e) {
-                var_dump($e);
-
+                throwException($e);
+                    $this->flash->addMessage('danger', "Empty File Detected");
+                    return $response->withRedirect(timetables);
             }
             }
             break;
-
+            //Create Admin
         case "9":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -468,7 +485,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['value'] = $value;
+
                 return $response->withRedirect(admin_edit);
             }
             try{
@@ -510,7 +527,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
-
+            //Insert Attendance - Teacher
         case "10":
             $checkID= $request->getParam('class_id');
             $checkID = $checkID[0];
@@ -543,6 +560,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 }
             }
             break;
+            //Create Course Announcement
         case "11":
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
@@ -554,7 +572,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(course_announcement);
             }
             try{
@@ -583,6 +601,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             }
             break;
         case "12";
+        //Create Module Announcement
             $_SESSION['form_flag'] = 0;
             $array = $request->getParsedBody();
 
@@ -593,7 +612,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(module_announcement);
             }
             try{
@@ -619,6 +638,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
             }
             break;
+            //Create Coursework
         case "13":
             $_SESSION['form_flag'] = 0;
 
@@ -635,7 +655,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(setCoursework);
             }
 
@@ -695,10 +715,13 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                     }
                     // handle single input with single file upload
                 } catch (Exception $e) {
-                    var_dump($e);
+                    throwException($e);
+                    $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                    return $response->withRedirect(setCoursework);
 
                 }
             break;
+                //Create Practical Work
         case "14":
             $_SESSION['form_flag'] = 0;
 
@@ -713,7 +736,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
             ]);
             if ($validator->failed()){
                 $_SESSION['form_flag'] = 3;
-//                $_SESSION['form_id'] =
+
                 return $response->withRedirect(setPractical);
             }
 
@@ -775,14 +798,17 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 }
                 // handle single input with single file upload
             } catch (Exception $e) {
-                var_dump($e);
-
+                throwException($e);
+                $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                return $response->withRedirect(setPractical);
             }
             break;
 
 
         case "15":
-            $_SESSION['form_flag'] = 0;
+            //Create Theory Work
+
+        $_SESSION['form_flag'] = 0;
 
             $uploadedFiles = $request->getUploadedFiles();
             $array = $request->getParsedBody();
@@ -857,7 +883,9 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
                 }
                 // handle single input with single file upload
             } catch (Exception $e) {
-                var_dump($e);
+                throwException($e);
+                $this->flash->addMessage('danger', "There was an Error Uploading the File!");
+                return $response->withRedirect(setPractical);
 
             }
             break;
@@ -881,7 +909,7 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
 
 
-    // Check user rank and check id else kick back
+    // Change the files name and produce a file location file name. Move file to this location
 
 
 

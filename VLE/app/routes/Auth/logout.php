@@ -12,6 +12,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app->get('/logout', function(Request $request, Response $response) {
 
+    //If someone is attempting to access this page when not authenticated quit.
+
     if((!$_SESSION['logged_in'])){
         $this->flash->addMessage('danger',"Invalid Request! No Access!");
         echo time();

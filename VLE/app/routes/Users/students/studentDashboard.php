@@ -56,9 +56,6 @@ $app->get('/studentDashboard', function(Request $request, Response $response) {
 
     $_SESSION['form_flag'] = 0;
 
-    /*    //var_dump($course);
-    var_dump($course['0']['dbCourseName']);
-    var_dump($course['0']['dbCourseDescription']);*/
 
     $name= $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;

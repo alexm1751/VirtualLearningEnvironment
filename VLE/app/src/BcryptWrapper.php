@@ -29,23 +29,5 @@ class BcryptWrapper
         return $bcrypt_hashed_string;
     }
 
-    /**Verifies a given hashed password against a clean string password to check for equality
-     * @param $p_string_to_check clean string password
-     * @param $p_stored_user_password_hash hashed password to check against
-     * @return bool true if the hashed password and clean string are equal
-     */
-    public function authenticate_password($p_string_to_check, $p_stored_user_password_hash)
-    {
-        $user_authenticated = false;
-        $current_user_password = $p_string_to_check;
-        $stored_user_password_hash = $p_stored_user_password_hash;
-        if (!empty($current_user_password) && !empty($stored_user_password_hash))
-        {
-            if (password_verify($current_user_password, $stored_user_password_hash))
-            {
-                $user_authenticated = true;
-            }
-        }
-        return $user_authenticated;
-    }
+
 }

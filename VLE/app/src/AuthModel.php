@@ -12,14 +12,12 @@ class authModel{
     public function __destruct(){}
 
 
-    /**Safely checks if a user with the given details exists in the database
-     * @param $p_db_handle Database handle
-     * @param $p_sql_queries SQL query as a string
-     * @param $p_wrapper_mysql Instance of MySQLWrapper
-     * @param $arr_clean_auth Array of validated and sanitised user details
-     * @return bool true if the user exists in the database
-     * @throws Exception
-     */
+    /*
+     * This class lists all methods called by users attempting to use authentication tools or validate users for specific tasks
+     * This will deal with guest and other attempts to access the site.
+     * Will also pull in certain information about the user upon login such as name and other details.
+     *
+     * */
 
     public function check_db_login($p_db_handle, $p_sql_queries, $p_wrapper_mysql, $email, $password)
     {
@@ -73,7 +71,7 @@ class authModel{
         $stored_pass = $p_wrapper_mysql->safe_fetch_array();
         $stored_pass = $stored_pass['dbpass'];
         if(password_verify($pass, $stored_pass) != true){
-            throwException($e);
+
             return false;
 
         }

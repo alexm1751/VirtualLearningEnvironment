@@ -5,7 +5,12 @@
  * Date: 05/04/2018
  * Time: 19:42
  */
-
+/*
+ * This class lists all methods called by Admins for admin specific tasks
+ * Other users such as students and teachers should not have access to this class
+ * All Set, Get, Update and Remove functions to perform administrator roles
+ *
+ * */
 class adminModel
 {
     public function __construct(){}
@@ -17,7 +22,9 @@ class adminModel
     }
 
     /*Course Control*/
-
+    /*
+     * Get list of courses
+     */
     public function getCourses($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
         try{
             $query_name = $p_sql_queries->admin_get_courses();
@@ -29,7 +36,7 @@ class adminModel
 
             return ($array);
         } catch (Exception $e){
-                        throwException($e);
+          throwException($e);
 
             return false;
         }
@@ -159,7 +166,7 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-            throw new Exception('$e');
+            throwException($e);
             return false;
         }
     }
@@ -171,7 +178,7 @@ class adminModel
 
             return true;
         } catch (Exception $e){
-                        throwException($e);
+            throwException($e);
 
             return false;
         }

@@ -10,6 +10,15 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Respect\Validation\Validator as v;
 
+/*
+ * This Controller handles all Delete calls from all users of the web application
+ * Each user form has an associated hidden ID value which corresponds to an action on this controller
+ * Default value is set to fail and kick user and request authentication.
+ * Using post method for this with hidden value protects the value to some extent
+ * If ID is not set initially the user will be redirected to login again.
+ * Only Teachers and Admins have access to remove things from the Database
+ */
+
 $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $response) use($app){
     if (!$id = $request->getParam('id')){
         $_SESSION = array();
@@ -23,14 +32,10 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
         exit;
     }
 
-    $validator = $this->get('validator');
 
-    $userModel = $this->get('user_model');
-
-    $studentModel = $this->get('student_model');
     $teacherModel = $this->get('teacher_model');
     $adminModel = $this->get('admin_model');
-    $bcryptwrapper = $this->get('BcryptWrapper');
+
 
 
     $db_handle = $this->get('dbase');
@@ -44,6 +49,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
 
     switch ($id){
+        //Course Delete
         case "2":
             $array = $request->getParsedBody();
 
@@ -67,6 +73,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
         break;
+            //Module Delete
         case "3":
             $array = $request->getParsedBody();
 
@@ -90,6 +97,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //User Delete
         case "4":
             $array = $request->getParsedBody();
 
@@ -113,7 +121,9 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //User Allocation Delete
         case "5":
+
             $array = $request->getParsedBody();
 
             try{
@@ -138,6 +148,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Class Delete
         case "6":
             $array = $request->getParsedBody();
 
@@ -162,6 +173,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Timetable delete
         case "7":
             try{
                 $array = $request->getParsedBody();
@@ -194,7 +206,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
-
+            //Admin Delete
         case "8":
             $array = $request->getParsedBody();
 
@@ -225,6 +237,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Teacher Clear attendance
         case "9":
             $checkID= $request->getParam('class_id');
             $check = $teacherModel->check_attendance($db_handle, $SQLQueries, $wrapper_mysql, $checkID);
@@ -240,6 +253,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                 return $response->withRedirect(setAttendance);
             }
              break;
+            //Delete Course Announcement
         case "10":
             $array = $request->getParsedBody();
 
@@ -264,6 +278,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Delete Module Announcement
         case "11":
             $array = $request->getParsedBody();
 
@@ -288,6 +303,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Delete Coursework
         case "12";
             try{
                 $array = $request->getParsedBody();
@@ -320,6 +336,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Delete Practical Work
         case "13":
             try{
                 $array = $request->getParsedBody();
@@ -352,6 +369,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Delete Theory Work
         case "14":
             try{
                 $array = $request->getParsedBody();
@@ -384,6 +402,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //Delete Assignment
         case "15":
             try{
                 $array = $request->getParsedBody();
@@ -416,6 +435,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
 
             }
             break;
+            //If unknown ID is passed or random parameter
         default:
             $_SESSION = array();
             $this->flash->addMessage('info',"Oops! We aren't sure whats happened. Please try to login again.");

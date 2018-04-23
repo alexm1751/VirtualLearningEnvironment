@@ -6,6 +6,12 @@
  * Time: 19:42
  */
 
+/*
+ * This class lists all methods called by Students for Student specific tasks
+ * Other users such as admins and teachers should not be using this class where possible
+ * All course related requests and dashboard items to show the student their progress.
+ * */
+
 class studentModel
 {
     public function __construct(){}

@@ -6,6 +6,12 @@
  * Time: 19:42
  */
 
+/*
+ * This class lists all methods called by Teachers for Teacher specific tasks
+ * Other users such as admins and students should not be using this class where possible
+ * All course related requests and dashboard items to show the Lecturer their Courses and content.
+ * */
+
 class teacherModel
 {
     public function __construct(){}

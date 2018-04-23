@@ -27,7 +27,7 @@ $container['view'] = function ($container) {
 
     return $view;
 };
-
+//Adds Slim Flash messages to the container through the middleware class
 
 $container['flash'] = function ($container){
     return new \Slim\Flash\Messages;

@@ -28,6 +28,7 @@ $app->get('/recover', function(Request $request, Response $response)
     $_SESSION['email']= $email;
     $_SESSION['identifier']= $identifier;
 
+    //This controller is dealing with the password reset request, if the hash does not match or is not present then the user has already reset their password and the email link they are using has expired
     try{
         $hashWorks = $userModel->check_recover_hash($db_handle,$SQLQueries,$wrapper_mysql, $email,$identifier);
 
@@ -44,7 +45,7 @@ $app->get('/recover', function(Request $request, Response $response)
         exit;
     }
 
-
+//if either of these functions fail then the user is denied password reset request
 
     $userExists = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
 
@@ -58,7 +59,7 @@ $app->get('/recover', function(Request $request, Response $response)
             ->withRedirect(LANDING_PAGE);
         exit;
     }
-
+//proceed to password reset
 
     return $this->view->render($response,
         'resetPassword.html.twig',

@@ -35,7 +35,7 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
 
     $email = $_SESSION['email'];
     $identifier = $_SESSION['identifier'];
-
+//validation for password reset if the user does not enter a matching password
 
     $validator->validate($request,[
         'password' => v:: noWhitespace()->notEmpty()->stringType()
@@ -58,6 +58,7 @@ $app->map(['GET', 'POST'],'/recovered', function(Request $request, Response $res
 
     $pass2 = filter_var($pass2, FILTER_SANITIZE_STRING);
 
+    //after validation sanitise string
     $email = $_SESSION['email'];
     //Hash new password and enter into the DB
     $userModel->update_pass( $db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper,$email,$pass2);

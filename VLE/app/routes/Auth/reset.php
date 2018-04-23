@@ -36,10 +36,27 @@ $app->post( '/reset', function(Request $request, Response $response)  {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
 
-    $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
+    $check = $userModel->check_db_user($db_handle,$SQLQueries,$wrapper_mysql, $email);
+//check that the user exists before carrying on with any other process. Output none specific error
+    if($check !== true){
+        $this->flash->addMessage('info',"There was an error processing your request, please verify details or contact an Admin.");
+        return $response
+            ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
+            ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")
+            ->withHeader("Pragma:", "no-cache")
+            ->withHeader('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT')
+            ->withRedirect(LANDING_PAGE);
+        exit;
+    }
+    //Generate Random hash value to be stored in the system.
     $string_to_hash = bin2hex(random_bytes(20));
 
+
+    //Adds recovery hash to user in the database
     $userModel->update_Recover_Hash($db_handle,$SQLQueries,$wrapper_mysql,$bcryptwrapper, $email, $string_to_hash);
+
+
+
 
 
     $mail = new PHPMailer(true);
@@ -71,7 +88,6 @@ $app->post( '/reset', function(Request $request, Response $response)  {
         </p>";
     if(!$mail->send()) {
         $this->flash->addMessage('info',"We're having trouble with our mail servers at the moment.  Please try again later, or contact us directly by phone.");
-        error_log('Mailer Error: ' . $mail->errorInfo());
         return $response
             ->withHeader("Cache-Control", " no-store, no-cache, must-revalidate, max-age=0")
             ->withHeader("Cache-Control:", " post-check=0, pre-check=0, false")

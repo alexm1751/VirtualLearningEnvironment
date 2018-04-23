@@ -28,15 +28,15 @@
     <p>No Content Available at this time. Please check back soon.</p>
     <div class="line"></div>
     {% else %}
-            {% for set in practical %}
-                <h3>{{ set.dbLearningTitle }}</h3>
-                <p>{{ set.dbDescription }}</p>
-                <a href="" data-target="#upModal" data-toggle="modal">
-                    Subject Material
-                </a>
+            {% for row in practical %}
+                <h3>{{ row.dbLearningTitle }}</h3>
+                <p>{{ row.dbDescription }}</p>
+                <label>View Subject Material</label>
+                <a href="#view{{ row.dbResID }}" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
 
-                <div id="upModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
-                    <iframe src="{{ set.dbPDF }}#zoom=50" width="100%" height="90%"></iframe>
+
+                <div id="view{{ row.dbResID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
+                    <iframe src="{{ row.dbPDF }}#zoom=50" width="100%" height="80%"></iframe>
                     <div class="modal-footer">
                         <div class="col-md-12">
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -45,13 +45,14 @@
                 </div>
 
 
-                <p>{{ set.dbDate }}</p>
+                <p>{{ row.dbDate }}</p>
 
                 <div class="line"></div>
                 {% endfor %}
             <div class="line"></div>
         {% endif %}
             <h2>Theory:</h2>
+            <div class="line"></div>
             {% if theory is null %}
                 <p>No Content Available at this time. Please check back soon.</p>
                 <div class="line"></div>
@@ -60,11 +61,11 @@
             {% for set in theory %}
                 <h3>{{ set.dbLearningTitle }}</h3>
                 <p>{{ set.dbDescription }}</p>
-                <a href="" data-target="#upModal" data-toggle="modal">
-                    Subject Material
-                </a>
+                <label>View Subject Material</label>
+                <a href="#view{{ set.dbResID }}" data-toggle="modal"><button type='button' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></a>
 
-                <div id="upModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
+
+                <div id="view{{ set.dbResID }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true" STYLE="top: 10px; width: 50%;left: 25%; right: 25%;">
                     <iframe src="{{ set.dbPDF }}#zoom=50" width="100%" height="80%"></iframe>
                     <div class="modal-footer">
                         <div class="col-md-12">

@@ -175,7 +175,7 @@ class SQLQueries
         return $m_sql_query_string;
     }
     public static function get_theory_content($email,$module){
-        $m_sql_query_string  = "SELECT DISTINCT a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
+        $m_sql_query_string  = "SELECT DISTINCT a.dbResID, a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
         FROM vle_learning a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID
@@ -187,7 +187,7 @@ class SQLQueries
         return $m_sql_query_string;
     }    
     public static function get_practical_content($email,$module){
-    $m_sql_query_string  = "SELECT DISTINCT a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
+    $m_sql_query_string  = "SELECT DISTINCT a.dbResID, a.dbLearningTitle, a.dbDescription, a.dbPDF, date(a.dbDate)as dbDate
         FROM vle_learning a, vle_allocation b, vle_users c, vle_modules d
         WHERE a.dbModuleID = b.dbModuleID
         AND b.dbUniqueID = c.dbUniqueID

@@ -28,6 +28,7 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
         'R' => 
         array (
             'Respect\\Validation\\' => 19,
+            'ReCaptcha\\' => 10,
         ),
         'P' => 
         array (
@@ -82,6 +83,10 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
         array (
             0 => __DIR__ . '/..' . '/respect/validation/library',
         ),
+        'ReCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -112,10 +117,6 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
         ),
     );
 
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/bryanjhv/slim-session/src',
-    );
-
     public static $prefixesPsr0 = array (
         'T' => 
         array (
@@ -138,7 +139,6 @@ class ComposerStaticInitfa6316b81f4256398547137b582ff2f6
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitfa6316b81f4256398547137b582ff2f6::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitfa6316b81f4256398547137b582ff2f6::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitfa6316b81f4256398547137b582ff2f6::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitfa6316b81f4256398547137b582ff2f6::$prefixesPsr0;
 
         }, null, ClassLoader::class);

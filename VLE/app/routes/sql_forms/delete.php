@@ -304,7 +304,7 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
             }
             break;
             //Delete Coursework
-        case "12";
+        case "12":
             try{
                 $array = $request->getParsedBody();
 
@@ -316,22 +316,22 @@ $app->map(['GET', 'POST'],'/delete', function(Request $request, Response $respon
                     unlink($filename);
                     $check= $teacherModel->removeCoursework($db_handle,$SQLQueries,$wrapper_mysql,$table_id);
                     if ($check === true){
-                        $this->flash->addMessage('success',"Timetable Delete Success!");
+                        $this->flash->addMessage('success',"Coursework Delete Success!");
                         session_regenerate_id();
                         return $response->withRedirect(setCoursework);
                     }
                     else{
-                        $this->flash->addMessage('danger',"There was an error Deleting the Timetable.");
+                        $this->flash->addMessage('danger',"There was an error Deleting the Coursework.");
                         return $response->withRedirect(setCoursework);
                     }
                 }
                 else{
-                    $this->flash->addMessage('danger',"There was an error Deleting the Timetable.");
+                    $this->flash->addMessage('danger',"There was an error Deleting the Coursework.");
                     return $response->withRedirect(setCoursework);
                 }
 
             } catch (Exception $e){
-                $this->flash->addMessage('danger',"There was an error Deleting the Timetable.");
+                $this->flash->addMessage('danger',"There was an error Deleting the Coursework.");
                 return $response->withRedirect(setCoursework);
 
             }

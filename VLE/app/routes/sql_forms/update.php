@@ -407,19 +407,19 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
                 $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
                 if ($check === true){
-                    $this->flash->addMessage('success',"Attendance Edit Success!");
+                    $this->flash->addMessage('success',"Announcement Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
                     session_regenerate_id();
                     return $response->withRedirect(course_announcement);
                 }
                 else{
-                    $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                    $this->flash->addMessage('danger',"There was an error Editing the Announcement.");
                     return $response->withRedirect(course_announcement);
                 }
 
             } catch (Exception $e){
-                $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                $this->flash->addMessage('danger',"There was an error Editing the Announcement.");
                 return $response->withRedirect(course_announcement);
 
             }
@@ -450,19 +450,19 @@ $app->map(['GET', 'POST'],'/update', function(Request $request, Response $respon
 
                 $check= $teacherModel->updateAnnouncements($db_handle,$SQLQueries,$wrapper_mysql,$title,$description,$value);
                 if ($check === true){
-                    $this->flash->addMessage('success',"Attendance Edit Success!");
+                    $this->flash->addMessage('success',"Announcement Edit Success!");
                     $_SESSION['form_flag'] = 0;
                     $_SESSION['value'] = 0;
                     session_regenerate_id();
                     return $response->withRedirect(module_announcement);
                 }
                 else{
-                    $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                    $this->flash->addMessage('danger',"There was an error Editing the Announcement.");
                     return $response->withRedirect(module_announcement);
                 }
 
             } catch (Exception $e){
-                $this->flash->addMessage('danger',"There was an error Editing the Admin.");
+                $this->flash->addMessage('danger',"There was an error Editing the Announcement.");
                 return $response->withRedirect(module_announcement);
 
             }

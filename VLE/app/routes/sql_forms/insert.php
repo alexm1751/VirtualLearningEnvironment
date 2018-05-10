@@ -203,6 +203,14 @@ $app->map(['GET', 'POST'], '/insert', function(Request $request, Response $respo
 
                 try{
                     $adminModel->setModules($db_handle,$SQLQueries,$wrapper_mysql, $module_title,$module_description,$credits,$course_id);
+                   $users= $adminModel->allocateNewModule($db_handle,$SQLQueries,$wrapper_mysql,$module_title,$course_id);
+                    foreach ($users as $user) {
+                        $teacher = $user['dbTeaches'];
+                        $user_id = $user['dbUniqueID'];
+                        $course_id = $user['dbCourseID'];
+                        $module_id = $user['dbModuleID'];
+                        $adminModel->setAllocation($db_handle, $SQLQueries, $wrapper_mysql,$teacher,$user_id,$course_id,$module_id);
+                    }
 
                 } catch (Exception $e){
                     $this->flash->addMessage('danger',"There was an error creating a new Module.");

@@ -584,6 +584,14 @@ WHERE dbTimeTableID = '$timetableID'";
         AND b.dbUniqueID = '$unique_id'";
         return $m_sql_query_string;
     }
+    public static function admin_module_users($moduleName,$courseID){
+        $m_sql_query_string= "SELECT DISTINCT a.dbTeaches, a.dbUniqueID, a.dbCourseID, b.dbModuleID
+FROM vle_allocation a, vle_modules b
+WHERE a.dbCourseID = b.dbCourseID
+AND b.dbCourseID= '$courseID'
+AND b.dbModuleTitle = '$moduleName'";
+        return $m_sql_query_string;
+    }
     public static function admin_set_allocation($rank,$user_id,$course_id,$module_id){
         $m_sql_query_string  = "INSERT INTO vle_allocation(dbTeaches, dbUniqueID, dbCourseID, dbModuleID)
         VALUES('$rank','$user_id','$course_id','$module_id')";

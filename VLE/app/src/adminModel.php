@@ -113,6 +113,22 @@ class adminModel
             return false;
         }
     }
+    public function allocateNewModule($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleName,$courseID){
+        try{
+            $query_name = $p_sql_queries->admin_module_users($moduleName,$courseID);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        } catch (Exception $e){
+            throwException($e);
+
+            return false;
+        }
+    }
     public function updateModules($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$moduleName,$moduleDescription,$credits,$courseID, $moduleID){
         try{
             $query_name = $p_sql_queries->admin_update_modules($moduleName,$moduleDescription,$credits,$courseID, $moduleID);
@@ -439,5 +455,6 @@ class adminModel
             return false;
         }
     }
+
 
 }

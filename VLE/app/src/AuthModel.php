@@ -126,7 +126,7 @@ class authModel{
         }
         else{
 
-            throwException($e);
+
             return false;
         }
     }

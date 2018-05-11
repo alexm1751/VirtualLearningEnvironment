@@ -236,7 +236,16 @@ class SQLQueries
 
     /*Teacher Queries*/
 
-
+    public static function number_of_assignments($email){
+        $m_sql_query_string  = " SELECT DISTINCT COUNT(a.dbSubmissionID) AS count
+ FROM vle_submissions a, vle_coursework b, vle_allocation c, vle_users d
+ WHERE a.dbCourseworkID = b.dbCourseworkID
+ AND b.dbModuleID = c.dbModuleID
+ AND c.dbUniqueID = d.dbUniqueID
+ AND d.dbEmail = '$email'
+ AND a.dbMarked = 0";
+        return $m_sql_query_string;
+    }
 
     public static function set_announcement($name,$courseID,$moduleID,$description){
         $m_sql_query_string  = "INSERT INTO vle_announcements(dbAnnouncementTitle,dbCourseID,dbModuleID,dbDescription,dbDate)
@@ -615,4 +624,24 @@ AND b.dbModuleTitle = '$moduleName'";
 
         return $m_sql_query_string;
     }
+
+    public static function number_of_students(){
+        $m_sql_query_string  = "SELECT DISTINCT COUNT(dbEmail) AS count
+        FROM vle_users
+        WHERE dbRank = 1";
+        return $m_sql_query_string;
+    }
+
+public static function number_of_teachers(){
+    $m_sql_query_string  = "SELECT DISTINCT COUNT(dbEmail) AS count
+    FROM vle_users
+    WHERE dbRank= 2";
+    return $m_sql_query_string;
+}
+public static function number_of_recovery(){
+    $m_sql_query_string  = "SELECT DISTINCT COUNT(dbRecover_Hash) AS count
+    FROM vle_users
+    WHERE dbRecover_Hash <> ''";
+    return $m_sql_query_string;
+}
 }

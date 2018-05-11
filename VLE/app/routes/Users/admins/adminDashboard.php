@@ -54,7 +54,13 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
     $home = adminDashboard;
     $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
-
+    $students = $adminModel->getStudentNumber($db_handle, $SQLQueries, $wrapper_mysql);
+    $students = $students[0]['count'];
+    var_dump($students);
+    $teachers = $adminModel->getTeacherNumber($db_handle, $SQLQueries, $wrapper_mysql);
+    $teachers = $teachers[0]['count'];
+    $recovery = $adminModel->getRecoveryNumber($db_handle, $SQLQueries, $wrapper_mysql);
+    $recovery = $recovery[0]['count'];
     //flags used with javascript modal show when user has validation error for specific window
 
     $_SESSION['form_flag'] = 0;
@@ -81,6 +87,9 @@ $app->get('/adminDashboard', function(Request $request, Response $response) {
                         'admin_edit' => admin_edit,
                         'contact' => contact,
                         'profile' => profile,
+                        'students' => $students,
+                        'teachers' => $teachers,
+                        'recovery' => $recovery,
 
 
 

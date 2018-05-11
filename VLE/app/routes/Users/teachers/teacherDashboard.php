@@ -54,6 +54,9 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
     $courses = $teacherModel->getTeacherCourses($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
     $_SESSION['courses'] = $courses;
 
+    $assignments = $teacherModel->getAssignmentNumber($db_handle,$SQLQueries,$wrapper_mysql, $_SESSION['user']);
+    $assignments = $assignments[0]['count'];
+
    $name = $userModel->getUserName($db_handle, $SQLQueries, $wrapper_mysql, $_SESSION['user']);
     $_SESSION['name'] = $name;
 
@@ -69,6 +72,7 @@ $app->get('/teacherDashboard', function(Request $request, Response $response) {
             'page_title' => APP_NAME,
             'page_heading_1' => APP_NAME,
             'home' => $home,
+            'assignments' => $assignments,
             'page_heading_2' => 'Virtual Learning Environment',
             'logout_page' => LOGOUT_PAGE,
             'name' => $_SESSION['name'],

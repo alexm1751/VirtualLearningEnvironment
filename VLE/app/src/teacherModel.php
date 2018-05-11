@@ -464,6 +464,22 @@ class teacherModel
         }
     }
 
+    public function getAssignmentNumber($p_db_handle, $p_sql_queries, $p_wrapper_mysql,$email){
+        try{
+            $query_name = $p_sql_queries->number_of_assignments($email);
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_name);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
 
+            return ($array);
+        } catch (Exception $e){
+            throwException($e);
+
+            return false;
+        }
+
+    }
 
 }

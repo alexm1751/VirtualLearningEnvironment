@@ -455,6 +455,57 @@ class adminModel
             return false;
         }
     }
+    public function getStudentNumber($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+        try{
+            $query_students = $p_sql_queries->number_of_students();
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_students);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        } catch (Exception $e){
+            throwException($e);
+
+            return false;
+        }
+
+    }
+    public function getTeacherNumber($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+        try{
+            $query_teachers = $p_sql_queries->number_of_teachers();
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_teachers);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        } catch (Exception $e){
+            throwException($e);
+
+            return false;
+        }
+
+    }
+    public function getRecoveryNumber($p_db_handle, $p_sql_queries, $p_wrapper_mysql){
+        try{
+            $query_recover = $p_sql_queries->number_of_recovery();
+            $p_wrapper_mysql->set_db_handle($p_db_handle);
+            $p_wrapper_mysql->safe_query($query_recover);
+            while($row = $p_wrapper_mysql->safe_fetch_array()){
+                $array[] = $row;
+            }
+
+            return ($array);
+        } catch (Exception $e){
+            throwException($e);
+
+            return false;
+        }
+
+    }
 
 
 }

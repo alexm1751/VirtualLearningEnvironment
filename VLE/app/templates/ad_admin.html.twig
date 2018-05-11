@@ -18,7 +18,52 @@
             </ul>
             <h2>Creating New items:</h2>
             <div class="line"></div>
-            <p>Instructions etc...</p>
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>Number of Students: <span class="blue">{{ students }}</span></h3>
+                    </div>
+                    <div class="col-sm-6" >
+                        <h3>Number of Teachers: <span class="blue">{{ teachers }}</span></h3>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-4">
+
+                    </div>
+                    <div class="col-sm-4">
+                        {% if recovery < 1 %}
+                        <h3>Recovery: <span class="green">{{ recovery }}</span></h3>
+                            {% else %}
+                                <h3>Recovery: <span class="red">{{ recovery }}</span></h3>
+                                {% endif %}
+                    </div>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+            <div class="line"></div>
+
+            <h4 >Course Panel:</h4>
+            <p>Create, Edit, Delete and Remove Courses. Use Extreme Caustion as deleting a Course will delete its Modules</p>
+            <div class="line"></div>
+            <h4 >Module Panel:</h4>
+            <p>Create, Edit, Delete and Remove Modules. Use Extreme Caustion as deleting a Module will delete its Information Attatched to it.</p>
+            <div class="line"></div>
+            <h4 >User Panel:</h4>
+            <p>Create, Edit, Delete and Remove Users. This should only be used in extreme causes outside of regular onboarding process. If user has lost all details and has compromised email allow for editing.</p>
+            <p>In the event there is a change of courses reallocation can be done via User page to change courses.</p>
+            <div class="line"></div>
+            <h4 >Class Scheduling Panel:</h4>
+            <p>Create and Delete class schedules for relevant modules and courses so that Teachers are able to mark attendance for these. This should be done prior to semester starting.</p>
+            <div class="line"></div>
+            <h4 >Timetable Panel:</h4>
+            <p>Once course specific timetable has been created upload PDF version for download and distribution for Students to follow.</p>
+
+            <div class="line"></div>
 
             {#Content Padder for Display#}
             <p STYLE="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
